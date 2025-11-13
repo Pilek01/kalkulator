@@ -2,15 +2,19 @@
 
 Prosta aplikacja webowa do śledzenia produkcji rolek papieru podczas zmiany roboczej.
 
+**Wszystko w jednym pliku HTML** - łatwo kopiować, przenosić i używać offline!
+
 ## ✨ Funkcje
 
 - ➕ **Szybkie dodawanie rolek** - wprowadź wagę, opcjonalnie liczbę obrazków i ilość rolek
+- 🔢 **Numeracja rolek** - każda rolka ma swój numer (#1, #2, #3...) dla łatwego porównania z papierowym raportem
 - 📈 **Automatyczne podsumowanie** - na bieżąco aktualizowana suma wag i obrazków
 - 📋 **Lista wszystkich rolek** - z godziną dodania
 - 🗑️ **Usuwanie wpisów** - pojedynczo lub wszystkich naraz
 - 💾 **Automatyczny zapis** - dane zachowują się po odświeżeniu strony
 - 📱 **Responsywny design** - działa na telefonie, tablecie i komputerze
 - 🚀 **Działa offline** - nie wymaga połączenia z internetem
+- 🎨 **Ciemny motyw** - dopasowany do innych aplikacji produkcyjnych
 
 ## 🚀 Jak uruchomić
 
@@ -49,14 +53,17 @@ npx serve
 ## 💡 Wskazówki
 
 - Aplikacja działa najlepiej na urządzeniach mobilnych - trzymaj telefon przy stanowisku pracy
+- **Ilość rolek zapamięta się** - jeśli ustawisz 3, zostanie 3 dopóki nie zmienisz ręcznie (przydatne gdy przez całą zmianę robisz te same ilości)
+- **Numeracja rolek** pomaga w porównywaniu z papierowym raportem - "Rolka #5" w aplikacji = rolka nr 5 w raporcie
 - Na koniec zmiany możesz zrobić zrzut ekranu podsumowania
 - Dane są zapisywane lokalnie - jeśli wyczyścisz dane przeglądarki, stracisz historię
-- Używaj pola "Ilość rolek" gdy masz kilka rolek o identycznej wadze z jednego wyrzutu
+- To jest **jeden plik HTML** - możesz go skopiować na pendrive lub wysłać sobie mailem
 
 ## 🛠️ Technologie
 
+- **Pojedynczy plik HTML** - wszystko w jednym pliku (CSS i JavaScript wbudowane)
 - HTML5
-- CSS3 (Flexbox, Grid, responsywne)
+- CSS3 (CSS Variables, Flexbox, Grid, responsywne)
 - Vanilla JavaScript (ES6+)
 - LocalStorage API
 

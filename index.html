@@ -4,7 +4,357 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Licznik Produkcji Rolek</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset i podstawowe style */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --bg-tertiary: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #ff6b35;
+            --accent-hover: #ff8555;
+            --danger: #e74c3c;
+            --danger-hover: #c0392b;
+            --border: #3a3a3a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 1rem;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-bottom: 3px solid var(--accent);
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Sekcje */
+        section {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+        }
+
+        section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        /* Formularz */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Przyciski */
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-hover);
+        }
+
+        .btn-small {
+            width: auto;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* Podsumowanie */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .summary-card {
+            background: var(--bg-tertiary);
+            padding: 1.25rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid var(--accent);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        /* Lista rolek */
+        .rolls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .rolls-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .roll-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid var(--accent);
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .roll-item:hover {
+            background: #3a3a3a;
+            transform: translateX(4px);
+            box-shadow: 0 2px 4px rgba(255, 107, 53, 0.2);
+        }
+
+        .roll-info {
+            flex: 1;
+        }
+
+        .roll-number {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .roll-details {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.25rem;
+        }
+
+        .roll-detail {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .roll-detail strong {
+            color: var(--accent);
+        }
+
+        .roll-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .roll-actions {
+            margin-left: 1rem;
+        }
+
+        .btn-delete {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger-hover);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding: 1rem;
+        }
+
+        /* Scrollbar */
+        .rolls-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .rolls-list::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .rolls-list::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .rolls-list::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            section {
+                padding: 1rem;
+            }
+
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-value {
+                font-size: 1.75rem;
+            }
+
+            .roll-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .roll-actions {
+                margin-left: 0;
+                margin-top: 0.5rem;
+                width: 100%;
+            }
+
+            .btn-delete {
+                width: 100%;
+            }
+        }
+
+        /* Animacje */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .roll-item {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -90,6 +440,211 @@
         </footer>
     </div>
 
-    <script src="app.js"></script>
+    <script>
+        // Klasa do zarządzania aplikacją
+        class RollTracker {
+            constructor() {
+                this.rolls = this.loadFromStorage();
+                this.initElements();
+                this.attachEventListeners();
+                this.render();
+            }
+
+            // Inicjalizacja elementów DOM
+            initElements() {
+                this.form = document.getElementById('addRollForm');
+                this.weightInput = document.getElementById('weight');
+                this.imagesInput = document.getElementById('images');
+                this.quantityInput = document.getElementById('quantity');
+                this.rollsList = document.getElementById('rollsList');
+                this.totalRolls = document.getElementById('totalRolls');
+                this.totalWeight = document.getElementById('totalWeight');
+                this.totalImages = document.getElementById('totalImages');
+                this.clearAllBtn = document.getElementById('clearAllBtn');
+            }
+
+            // Dodanie event listenerów
+            attachEventListeners() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                this.clearAllBtn.addEventListener('click', () => this.clearAll());
+            }
+
+            // Obsługa wysłania formularza
+            handleSubmit(e) {
+                e.preventDefault();
+
+                const weight = parseFloat(this.weightInput.value);
+                const images = parseInt(this.imagesInput.value) || 0;
+                const quantity = parseInt(this.quantityInput.value) || 1;
+
+                if (!weight || weight <= 0) {
+                    alert('Proszę wprowadzić prawidłową wagę');
+                    return;
+                }
+
+                if (quantity <= 0) {
+                    alert('Ilość rolek musi być większa niż 0');
+                    return;
+                }
+
+                // Dodaj rolki
+                for (let i = 0; i < quantity; i++) {
+                    this.addRoll(weight, images);
+                }
+
+                // Wyczyść tylko pola wagi i obrazków (ilość rolek zostaje bez zmian)
+                this.weightInput.value = '';
+                this.imagesInput.value = '';
+                this.weightInput.focus();
+
+                // Zapisz i odśwież widok
+                this.saveToStorage();
+                this.render();
+            }
+
+            // Dodanie pojedynczej rolki
+            addRoll(weight, images) {
+                const roll = {
+                    id: Date.now() + Math.random(), // Unikalny ID
+                    weight: weight,
+                    images: images,
+                    timestamp: new Date().toISOString()
+                };
+                this.rolls.push(roll);
+            }
+
+            // Usunięcie rolki
+            deleteRoll(id) {
+                if (confirm('Czy na pewno chcesz usunąć tę rolkę?')) {
+                    this.rolls = this.rolls.filter(roll => roll.id !== id);
+                    this.saveToStorage();
+                    this.render();
+                }
+            }
+
+            // Wyczyszczenie wszystkich rolek
+            clearAll() {
+                if (confirm('Czy na pewno chcesz usunąć wszystkie rolki? Tej operacji nie można cofnąć.')) {
+                    this.rolls = [];
+                    this.saveToStorage();
+                    this.render();
+                }
+            }
+
+            // Obliczenie podsumowania
+            calculateSummary() {
+                const totalRolls = this.rolls.length;
+                const totalWeight = this.rolls.reduce((sum, roll) => sum + roll.weight, 0);
+                const totalImages = this.rolls.reduce((sum, roll) => sum + roll.images, 0);
+
+                return { totalRolls, totalWeight, totalImages };
+            }
+
+            // Renderowanie widoku
+            render() {
+                // Aktualizacja podsumowania
+                const { totalRolls, totalWeight, totalImages } = this.calculateSummary();
+                this.totalRolls.textContent = totalRolls;
+                this.totalWeight.textContent = totalWeight.toFixed(2);
+                this.totalImages.textContent = totalImages;
+
+                // Pokaż/ukryj przycisk czyszczenia
+                if (totalRolls > 0) {
+                    this.clearAllBtn.style.display = 'block';
+                } else {
+                    this.clearAllBtn.style.display = 'none';
+                }
+
+                // Renderowanie listy rolek
+                if (this.rolls.length === 0) {
+                    this.rollsList.innerHTML = '<p class="empty-message">Brak rolek. Dodaj pierwszą rolkę powyżej.</p>';
+                    return;
+                }
+
+                // Sortuj rolki chronologicznie (od najstarszych) i nadaj numery
+                const sortedChronologically = [...this.rolls].sort((a, b) =>
+                    new Date(a.timestamp) - new Date(b.timestamp)
+                );
+
+                // Nadaj numery rolkom (1, 2, 3...)
+                const rollsWithNumbers = sortedChronologically.map((roll, index) => ({
+                    ...roll,
+                    number: index + 1
+                }));
+
+                // Odwróć kolejność do wyświetlenia (najnowsze na górze)
+                const rollsForDisplay = [...rollsWithNumbers].reverse();
+
+                this.rollsList.innerHTML = rollsForDisplay.map(roll => this.createRollElement(roll)).join('');
+
+                // Dodaj event listenery do przycisków usuwania
+                this.rollsList.querySelectorAll('.btn-delete').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseFloat(e.target.dataset.id);
+                        this.deleteRoll(id);
+                    });
+                });
+            }
+
+            // Tworzenie elementu HTML dla rolki
+            createRollElement(roll) {
+                const date = new Date(roll.timestamp);
+                const timeString = date.toLocaleTimeString('pl-PL', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <div class="roll-item">
+                        <div class="roll-info">
+                            <div class="roll-number">Rolka #${roll.number}</div>
+                            <div class="roll-details">
+                                <div class="roll-detail">
+                                    <strong>Waga:</strong> ${roll.weight.toFixed(2)} kg
+                                </div>
+                                ${roll.images > 0 ? `
+                                    <div class="roll-detail">
+                                        <strong>Obrazki:</strong> ${roll.images}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="roll-time">Dodano: ${timeString}</div>
+                        </div>
+                        <div class="roll-actions">
+                            <button class="btn-delete" data-id="${roll.id}">
+                                Usuń
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Zapis do localStorage
+            saveToStorage() {
+                try {
+                    localStorage.setItem('rollTrackerData', JSON.stringify(this.rolls));
+                } catch (e) {
+                    console.error('Błąd zapisu do localStorage:', e);
+                    alert('Nie udało się zapisać danych. Sprawdź ustawienia przeglądarki.');
+                }
+            }
+
+            // Odczyt z localStorage
+            loadFromStorage() {
+                try {
+                    const data = localStorage.getItem('rollTrackerData');
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    console.error('Błąd odczytu z localStorage:', e);
+                    return [];
+                }
+            }
+        }
+
+        // Inicjalizacja aplikacji po załadowaniu DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            new RollTracker();
+        });
+    </script>
 </body>
 </html>
