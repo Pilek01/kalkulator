@@ -214,6 +214,13 @@ section h2 {
     flex: 1;
 }
 
+.roll-number {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
 .roll-details {
     display: flex;
     gap: 1rem;

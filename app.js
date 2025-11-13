@@ -118,12 +118,21 @@ class RollTracker {
             return;
         }
 
-        // Sortuj rolki od najnowszych
-        const sortedRolls = [...this.rolls].sort((a, b) =>
-            new Date(b.timestamp) - new Date(a.timestamp)
+        // Sortuj rolki chronologicznie (od najstarszych) i nadaj numery
+        const sortedChronologically = [...this.rolls].sort((a, b) =>
+            new Date(a.timestamp) - new Date(b.timestamp)
         );
 
-        this.rollsList.innerHTML = sortedRolls.map(roll => this.createRollElement(roll)).join('');
+        // Nadaj numery rolkom (1, 2, 3...)
+        const rollsWithNumbers = sortedChronologically.map((roll, index) => ({
+            ...roll,
+            number: index + 1
+        }));
+
+        // Odwróć kolejność do wyświetlenia (najnowsze na górze)
+        const rollsForDisplay = [...rollsWithNumbers].reverse();
+
+        this.rollsList.innerHTML = rollsForDisplay.map(roll => this.createRollElement(roll)).join('');
 
         // Dodaj event listenery do przycisków usuwania
         this.rollsList.querySelectorAll('.btn-delete').forEach(btn => {
@@ -145,6 +154,7 @@ class RollTracker {
         return `
             <div class="roll-item">
                 <div class="roll-info">
+                    <div class="roll-number">Rolka #${roll.number}</div>
                     <div class="roll-details">
                         <div class="roll-detail">
                             <strong>Waga:</strong> ${roll.weight.toFixed(2)} kg
