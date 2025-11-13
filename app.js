@@ -49,9 +49,9 @@ class RollTracker {
             this.addRoll(weight, images);
         }
 
-        // Wyczyść formularz
-        this.form.reset();
-        this.quantityInput.value = 1;
+        // Wyczyść tylko pola wagi i obrazków (ilość rolek zostaje bez zmian)
+        this.weightInput.value = '';
+        this.imagesInput.value = '';
         this.weightInput.focus();
 
         // Zapisz i odśwież widok
@@ -159,7 +159,7 @@ class RollTracker {
                 </div>
                 <div class="roll-actions">
                     <button class="btn-delete" data-id="${roll.id}">
-                        🗑️ Usuń
+                        Usuń
                     </button>
                 </div>
             </div>
