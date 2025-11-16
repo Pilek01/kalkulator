@@ -8,6 +8,7 @@ Prosta aplikacja webowa do śledzenia produkcji rolek papieru podczas zmiany rob
 
 - ➕ **Szybkie dodawanie rolek** - wprowadź wagę, opcjonalnie liczbę obrazków i ilość rolek
 - 🔢 **Numeracja rolek** - każda rolka ma swój numer (#1, #2, #3...) dla łatwego porównania z papierowym raportem
+- 🔄 **Kontynuacja zlecenia** - przejmujesz zlecenie w trakcie? Ustaw ostatnią rolkę z poprzedniej zmiany i zobacz podwójną numerację (numer w zleceniu + numer Twojej zmiany)
 - 📈 **Automatyczne podsumowanie** - na bieżąco aktualizowana suma wag i obrazków
 - 📋 **Lista wszystkich rolek** - z godziną dodania
 - 🗑️ **Usuwanie wpisów** - pojedynczo lub wszystkich naraz
@@ -41,20 +42,27 @@ npx serve
    - Wybierz ilość rolek (domyślnie 1) - przydatne gdy masz kilka rolek o tej samej wadze
    - Kliknij "Dodaj" lub naciśnij Enter
 
-2. **Przeglądanie podsumowania:**
+2. **Kontynuacja zlecenia (opcjonalnie):**
+   - Zaznacz checkbox "Kontynuacja zlecenia po poprzedniej zmianie"
+   - Wpisz numer ostatniej rolki z poprzedniej zmiany (np. 20)
+   - Twoje rolki będą numerowane od 21, 22, 23... w zleceniu
+   - Wyświetlą się dwa numery: "Rolka (zlecenie): #21" i "Rolka (zmiana): #1"
+
+3. **Przeglądanie podsumowania:**
    - U góry widoczne jest podsumowanie: liczba rolek, suma wag, suma obrazków
 
-3. **Usuwanie rolek:**
+4. **Usuwanie rolek:**
    - Użyj przycisku "Usuń" przy konkretnej rolce
    - Lub "Wyczyść wszystko" aby usunąć wszystkie rolki (np. na początku nowej zmiany)
 
-4. **Dane są automatycznie zapisywane** w przeglądarce - możesz odświeżyć stronę bez obaw o utratę danych
+5. **Dane są automatycznie zapisywane** w przeglądarce - możesz odświeżyć stronę bez obaw o utratę danych
 
 ## 💡 Wskazówki
 
 - Aplikacja działa najlepiej na urządzeniach mobilnych - trzymaj telefon przy stanowisku pracy
 - **Ilość rolek zapamięta się** - jeśli ustawisz 3, zostanie 3 dopóki nie zmienisz ręcznie (przydatne gdy przez całą zmianę robisz te same ilości)
 - **Numeracja rolek** pomaga w porównywaniu z papierowym raportem - "Rolka #5" w aplikacji = rolka nr 5 w raporcie
+- **Kontynuacja zlecenia** - idealna gdy przejmujesz pracę po poprzedniej zmianie. Zobacz zarówno numer w całym zleceniu jak i numer swojej rolki
 - Na koniec zmiany możesz zrobić zrzut ekranu podsumowania
 - Dane są zapisywane lokalnie - jeśli wyczyścisz dane przeglądarki, stracisz historię
 - To jest **jeden plik HTML** - możesz go skopiować na pendrive lub wysłać sobie mailem

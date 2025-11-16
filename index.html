@@ -108,6 +108,38 @@
             color: var(--text-secondary);
         }
 
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .continuation-group {
+            background: var(--bg-tertiary);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+        }
+
         /* Przyciski */
         .btn {
             width: 100%;
@@ -226,6 +258,27 @@
             font-weight: bold;
             color: var(--accent);
             margin-bottom: 0.5rem;
+        }
+
+        .roll-number-dual {
+            margin-bottom: 0.5rem;
+        }
+
+        .roll-number-dual .order-number,
+        .roll-number-dual .shift-number {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .roll-number-dual .order-number {
+            color: var(--accent);
+        }
+
+        .roll-number-dual .shift-number {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
         }
 
         .roll-details {
@@ -398,6 +451,24 @@
                             required>
                     </div>
 
+                    <div class="form-group continuation-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="continuationMode">
+                            <span>Kontynuacja zlecenia po poprzedniej zmianie</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group" id="lastRollGroup" style="display: none;">
+                        <label for="lastRollNumber">Ostatnia rolka z poprzedniej zmiany</label>
+                        <input
+                            type="number"
+                            id="lastRollNumber"
+                            min="0"
+                            value="0"
+                            placeholder="np. 20">
+                        <small class="help-text">Twoje rolki zaczną się od tego numeru + 1</small>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Dodaj</button>
                 </form>
             </section>
@@ -456,17 +527,61 @@
                 this.weightInput = document.getElementById('weight');
                 this.imagesInput = document.getElementById('images');
                 this.quantityInput = document.getElementById('quantity');
+                this.continuationMode = document.getElementById('continuationMode');
+                this.lastRollNumber = document.getElementById('lastRollNumber');
+                this.lastRollGroup = document.getElementById('lastRollGroup');
                 this.rollsList = document.getElementById('rollsList');
                 this.totalRolls = document.getElementById('totalRolls');
                 this.totalWeight = document.getElementById('totalWeight');
                 this.totalImages = document.getElementById('totalImages');
                 this.clearAllBtn = document.getElementById('clearAllBtn');
+
+                // Wczytaj ustawienia kontynuacji
+                this.loadContinuationSettings();
             }
 
             // Dodanie event listenerów
             attachEventListeners() {
                 this.form.addEventListener('submit', (e) => this.handleSubmit(e));
                 this.clearAllBtn.addEventListener('click', () => this.clearAll());
+                this.continuationMode.addEventListener('change', (e) => this.handleContinuationToggle(e));
+                this.lastRollNumber.addEventListener('change', () => this.saveContinuationSettings());
+            }
+
+            // Obsługa checkboxa kontynuacji
+            handleContinuationToggle(e) {
+                if (e.target.checked) {
+                    this.lastRollGroup.style.display = 'block';
+                } else {
+                    this.lastRollGroup.style.display = 'none';
+                }
+                this.saveContinuationSettings();
+                this.render(); // Odśwież wyświetlanie
+            }
+
+            // Zapisz ustawienia kontynuacji
+            saveContinuationSettings() {
+                const settings = {
+                    isContinuation: this.continuationMode.checked,
+                    lastRollNumber: parseInt(this.lastRollNumber.value) || 0
+                };
+                localStorage.setItem('continuationSettings', JSON.stringify(settings));
+            }
+
+            // Wczytaj ustawienia kontynuacji
+            loadContinuationSettings() {
+                try {
+                    const settings = JSON.parse(localStorage.getItem('continuationSettings'));
+                    if (settings) {
+                        this.continuationMode.checked = settings.isContinuation;
+                        this.lastRollNumber.value = settings.lastRollNumber;
+                        if (settings.isContinuation) {
+                            this.lastRollGroup.style.display = 'block';
+                        }
+                    }
+                } catch (e) {
+                    console.error('Błąd wczytywania ustawień kontynuacji:', e);
+                }
             }
 
             // Obsługa wysłania formularza
@@ -566,11 +681,22 @@
                     new Date(a.timestamp) - new Date(b.timestamp)
                 );
 
-                // Nadaj numery rolkom (1, 2, 3...)
-                const rollsWithNumbers = sortedChronologically.map((roll, index) => ({
-                    ...roll,
-                    number: index + 1
-                }));
+                // Sprawdź czy tryb kontynuacji jest włączony
+                const isContinuation = this.continuationMode.checked;
+                const lastRoll = parseInt(this.lastRollNumber.value) || 0;
+
+                // Nadaj numery rolkom
+                const rollsWithNumbers = sortedChronologically.map((roll, index) => {
+                    const shiftNumber = index + 1; // Numer w obecnej zmianie
+                    const orderNumber = isContinuation ? lastRoll + index + 1 : index + 1; // Numer w zleceniu
+
+                    return {
+                        ...roll,
+                        shiftNumber: shiftNumber,
+                        orderNumber: orderNumber,
+                        isContinuation: isContinuation
+                    };
+                });
 
                 // Odwróć kolejność do wyświetlenia (najnowsze na górze)
                 const rollsForDisplay = [...rollsWithNumbers].reverse();
@@ -594,10 +720,23 @@
                     minute: '2-digit'
                 });
 
+                // Wybierz odpowiedni format numeracji
+                let rollNumberText;
+                if (roll.isContinuation) {
+                    rollNumberText = `
+                        <div class="roll-number-dual">
+                            <span class="order-number">Rolka (zlecenie): #${roll.orderNumber}</span>
+                            <span class="shift-number">Rolka (zmiana): #${roll.shiftNumber}</span>
+                        </div>
+                    `;
+                } else {
+                    rollNumberText = `<div class="roll-number">Rolka #${roll.orderNumber}</div>`;
+                }
+
                 return `
                     <div class="roll-item">
                         <div class="roll-info">
-                            <div class="roll-number">Rolka #${roll.number}</div>
+                            ${rollNumberText}
                             <div class="roll-details">
                                 <div class="roll-detail">
                                     <strong>Waga:</strong> ${roll.weight.toFixed(2)} kg
