@@ -1478,6 +1478,79 @@
             transform: scale(1.1);
         }
 
+        /* Tooltip dla trybów kalkulacji */
+        .mode-label {
+            position: relative;
+        }
+
+        .mode-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 105%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            width: 320px;
+            z-index: 1000;
+            transition: opacity 0.3s, visibility 0.3s;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .mode-tooltip::before {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 8px solid transparent;
+            border-right-color: var(--accent);
+        }
+
+        .mode-label:hover .mode-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip-title {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .tooltip-example {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsywność tooltipów na mobile */
+        @media (max-width: 768px) {
+            .mode-tooltip {
+                left: 50%;
+                top: auto;
+                bottom: 110%;
+                transform: translateX(-50%);
+                width: 280px;
+            }
+
+            .mode-tooltip::before {
+                right: auto;
+                left: 50%;
+                top: 100%;
+                transform: translateX(-50%) rotate(180deg);
+            }
+        }
+
         /* Print Styles */
         @media print {
             body {
@@ -2080,25 +2153,83 @@
                         </div>
                     </div>
 
-                    <!-- Przełącznik trybów -->
+                    <!-- Przełącznik trybów - POPRAWIONE TOOLTIPS -->
                     <div style="background: var(--bg-tertiary); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; border: 2px solid var(--border);">
                         <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">🔄 Tryb kalkulacji:</div>
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                            <label style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="waga-metry" checked style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
+
+                            <!-- Waga → Metry -->
+                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
+                                <input type="radio" name="modeMetry" value="waga-metry" checked onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
                                 <span style="font-size: 1rem; font-weight: 600;">📦 Waga → Metry</span>
                                 <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile metrów dla X kg)</span>
+                                <div class="mode-tooltip">
+                                    <div class="tooltip-title">📦 Waga → Metry</div>
+                                    <div>Potrzebujesz osiągnąć określoną wagę do końca zlecenia. Oblicz ile metrów musisz jeszcze zadrukować.</div>
+                                    <div class="tooltip-example">💡 Przykład: Brakuje 150kg do końca zlecenia → ile metrów musisz zadrukować?</div>
+                                </div>
                             </label>
-                            <label style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="metry-waga" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
+
+                            <!-- Metry → Waga -->
+                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
+                                <input type="radio" name="modeMetry" value="metry-waga" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
                                 <span style="font-size: 1rem; font-weight: 600;">📏 Metry → Waga</span>
                                 <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile będzie ważyć X metrów)</span>
+                                <div class="mode-tooltip">
+                                    <div class="tooltip-title">📏 Metry → Waga</div>
+                                    <div>Zadrukowałeś określoną liczbę metrów i chcesz sprawdzić ile to będzie ważyć, żeby porównać z wagą docelową.</div>
+                                    <div class="tooltip-example">💡 Przykład: Zadrukowałeś 5000m → ile to kg? Czy wystarczy do zlecenia?</div>
+                                </div>
                             </label>
-                            <label style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="obrazki-metry" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
+
+                            <!-- Obrazki → Metry -->
+                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
+                                <input type="radio" name="modeMetry" value="obrazki-metry" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
                                 <span style="font-size: 1rem; font-weight: 600;">🖼️ Obrazki → Metry</span>
                                 <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile metrów dla X obrazków)</span>
+                                <div class="mode-tooltip">
+                                    <div class="tooltip-title">🖼️ Obrazki → Metry</div>
+                                    <div>Brakuje określonej liczby obrazków do końca zlecenia. Oblicz ile metrów papieru musisz zadrukować.</div>
+                                    <div class="tooltip-example">💡 Przykład: Brakuje 3000 obrazków → ile to metrów papieru ?</div>
+                                </div>
                             </label>
+
+                            <!-- Metry → Obrazki -->
+                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
+                                <input type="radio" name="modeMetry" value="metry-obrazki" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
+                                <span style="font-size: 1rem; font-weight: 600;">📏 Metry → Obrazki</span>
+                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile obrazków dla X metrów)</span>
+                                <div class="mode-tooltip">
+                                    <div class="tooltip-title">📏 Metry → Obrazki</div>
+                                    <div>Masz przygotowaną rolkę o określonej długości. Sprawdź ile obrazków z niej wyjdzie.</div>
+                                    <div class="tooltip-example">💡 Przykład: Przygotowałeś 8000m papieru → ile obrazków się zmieści?</div>
+                                </div>
+                            </label>
+
+                            <!-- Obrazki → Waga -->
+                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
+                                <input type="radio" name="modeMetry" value="obrazki-waga" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
+                                <span style="font-size: 1rem; font-weight: 600;">🖼️ Obrazki → Waga</span>
+                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile będzie ważyć X obrazków)</span>
+                                <div class="mode-tooltip">
+                                    <div class="tooltip-title">🖼️ Obrazki → Waga</div>
+                                    <div>Brakuje określonej liczby obrazków do zlecenia. Oblicz ile będzie ważyć papier potrzebny do ich produkcji.</div>
+                                    <div class="tooltip-example">💡 Przykład: Brakuje 5000 obrazków → jaka waga papieru potrzebna?</div>
+                                </div>
+                            </label>
+
+                            <!-- Waga → Obrazki -->
+                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
+                                <input type="radio" name="modeMetry" value="waga-obrazki" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
+                                <span style="font-size: 1rem; font-weight: 600;">📦 Waga → Obrazki</span>
+                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile obrazków dla X kg)</span>
+                                <div class="mode-tooltip">
+                                    <div class="tooltip-title">📦 Waga → Obrazki</div>
+                                    <div>Brakuje określonej wagi papieru do końca zlecenia. Sprawdź szybko ile obrazków z tego wyjdzie.</div>
+                                    <div class="tooltip-example">💡 Przykład: Brakuje 75kg do końca → ile obrazków da się zrobić?</div>
+                                </div>
+                            </label>
+
                         </div>
                     </div>
 
@@ -2178,16 +2309,68 @@
                 </button>
             </div>
 
+            <!-- Sekcja 1.5: Tryb Kalkulacji -->
+            <div class="calculator-card">
+                <div class="calculator-header">Tryb Kalkulacji</div>
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <!-- Przerabianie na beczkę -->
+                    <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.8rem; background: var(--bg-tertiary); border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,107,53,0.1)'" onmouseout="this.style.background='var(--bg-tertiary)'">
+                        <input type="radio" name="modeFarby" value="beczka" checked onclick="FarbyApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: var(--accent);">
+                        <div>
+                            <div style="font-size: 1rem; font-weight: 600;">🪣 Przerabianie na beczkę</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Przelicz recepturę z wiaderka na większą beczkę</div>
+                        </div>
+                        <div class="mode-tooltip">
+                            <div class="tooltip-title">🪣 Przerabianie na beczkę</div>
+                            <div>Masz recepturę w wiaderku (np. 20kg) i chcesz przeliczyć ile pigmentów potrzeba do większej beczki (np. 160kg).</div>
+                            <div class="tooltip-example">💡 Przykład: Recepta na 20kg → ile pigmentów trzeba dodać do 160kg beczki?</div>
+                        </div>
+                    </label>
+
+                    <!-- Skalowanie recepty -->
+                    <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.8rem; background: var(--bg-tertiary); border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,107,53,0.1)'" onmouseout="this.style.background='var(--bg-tertiary)'">
+                        <input type="radio" name="modeFarby" value="skalowanie" onclick="FarbyApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: var(--accent);">
+                        <div>
+                            <div style="font-size: 1rem; font-weight: 600;">⚖️ Skalowanie recepty</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Zrób określoną ilość farby zachowując proporcje</div>
+                        </div>
+                        <div class="mode-tooltip">
+                            <div class="tooltip-title">⚖️ Skalowanie recepty</div>
+                            <div>Masz gotową recepturę i chcesz przeskalować ją do dowolnej ilości (np. 15kg) zachowując dokładne proporcje pigmentów.</div>
+                            <div class="tooltip-example">💡 Przykład: Recepta na 15kg → potrzebuję dokładnie 20kg z tymi samymi proporcjami.</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
             <!-- Sekcja 2: Konfiguracja -->
             <div class="calculator-card">
                 <div class="calculator-header">Ilość Farby</div>
-                <div class="form-group">
-                    <label>Ilość w wiaderku (kg):</label>
-                    <input type="number" id="bucketAmountFarby" placeholder="np. 1" step="0.001">
+
+                <!-- Tryb: Przerabianie na beczkę -->
+                <div id="beczkaModeFarby">
+                    <div class="form-group">
+                        <label>Ilość w wiaderku (kg):</label>
+                        <input type="number" id="bucketAmountFarby" placeholder="np. 1" step="0.001">
+                    </div>
+                    <div class="form-group">
+                        <label>Ilość w beczce (kg):</label>
+                        <input type="number" id="barrelAmountFarby" placeholder="np. 25" step="0.001">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Ilość w beczce (kg):</label>
-                    <input type="number" id="barrelAmountFarby" placeholder="np. 25" step="0.001">
+
+                <!-- Tryb: Skalowanie recepty -->
+                <div id="skalowanieModeFarby" style="display: none;">
+                    <div class="form-group">
+                        <label>Suma pigmentów w oryginalnej recepcie (kg):</label>
+                        <input type="number" id="originalTotalFarby" placeholder="np. 5" step="0.001" readonly style="background: rgba(255,255,255,0.05);">
+                        <small class="help-text">To pole wypełni się automatycznie po wpisaniu ilości pigmentów</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Docelowa ilość farby (kg):</label>
+                        <input type="number" id="targetAmountFarby" placeholder="np. 15" step="0.001">
+                        <small class="help-text">Ile kilogramów farby chcesz uzyskać</small>
+                    </div>
                 </div>
             </div>
 
@@ -2241,7 +2424,7 @@
     </div>
 
     <footer>
-        Made by Kamil Matysek | v1.2.0
+        Made by Kamil Matysek | v1.3.3
     </footer>
 
     <!-- Modal edycji palety -->
@@ -3696,7 +3879,10 @@
                             cutsWord = 'wyrzutów';
                         }
 
-                        let cutsText = `<span class="cuts-info">~ ${cutsInfo.count} ${cutsWord}</span>`;
+                        // NOWE: Oznaczenie "wstępnie" dla < 3 wyrzutów danych
+                        let preliminaryTag = cutsInfo.isPreliminary ? '<span style="color: #ffc107; font-size: 0.85rem;"> (wstępnie)</span>' : '';
+
+                        let cutsText = `<span class="cuts-info">~ ${cutsInfo.count} ${cutsWord}${preliminaryTag}</span>`;
 
                         if (cutsInfo.shortage !== null && cutsInfo.shortage !== 0) {
                             if (cutsInfo.shortage > 0) {
@@ -3734,7 +3920,6 @@
                 const orderUnit = this.orderUnitSelect.value;
                 const orderCompleted = parseFloat(this.orderCompletedInput.value) || 0;
                 const rollsPerCut = parseInt(this.quantityInput.value) || 1;
-                const minRolls = 3 * rollsPerCut;
 
                 if (orderLength <= 0) {
                     return null;
@@ -3746,11 +3931,13 @@
                     (orderUnit === 'kg' || roll.images > 0)
                 );
 
-                if (validRolls.length < minRolls) {
+                const minRollsForPrediction = rollsPerCut; // Wystarczy 1 wyrzut (minimum rolek)
+
+                if (validRolls.length < minRollsForPrediction) {
                     return null;
                 }
 
-                // Calculate average per roll
+                // Oblicz średnią na rolkę
                 let avgPerRoll;
                 if (orderUnit === 'images') {
                     const totalImages = validRolls.reduce((sum, roll) => sum + roll.images, 0);
@@ -3776,34 +3963,54 @@
                 const remaining = orderLength - currentProgress;
 
                 if (remaining <= 0) {
-                    return { count: 0, shortage: null, unit: orderUnit };
+                    return { count: 0, shortage: null, unit: orderUnit, isPreliminary: false };
                 }
 
                 const exactCuts = remaining / valuePerCut;
 
-                let displayCount;
+                // Określ czy to wstępne oszacowanie (mniej niż 3 wyrzuty danych)
+                const numberOfCuts = validRolls.length / rollsPerCut;
+                const isPreliminary = numberOfCuts < 3;
+
+                // Oblicz shortage tylko jeśli:
+                // 1. Pozostało <= 3 wyrzuty DO KOŃCA
+                // 2. Mamy przynajmniej 3 wyrzuty danych (żeby kalkulacja była wiarygodna)
                 let shortage = null;
+                const shouldCalculateShortage = exactCuts <= 3 && numberOfCuts >= 3;
+
+                let displayCount;
 
                 if (exactCuts <= 1.49) {
                     displayCount = 1;
-                    const willProduce = valuePerCut * 1;
-                    // POPRAWKA: shortage = willProduce - remaining
-                    // Jeśli shortage > 0 → wyprodukujesz WIĘCEJ niż potrzeba (nadwyżka)
-                    // Jeśli shortage < 0 → wyprodukujesz MNIEJ niż potrzeba (niedobór)
-                    shortage = Math.round(willProduce - remaining);
 
-                    if (Math.abs(shortage) < orderLength * 0.01) {
-                        shortage = null;
+                    if (shouldCalculateShortage) {
+                        const willProduce = valuePerCut * 1;
+                        shortage = Math.round(willProduce - remaining);
+
+                        // Ignoruj bardzo małe różnice (< 1% zlecenia)
+                        if (Math.abs(shortage) < orderLength * 0.01) {
+                            shortage = null;
+                        }
                     }
                 } else {
                     displayCount = Math.round(exactCuts);
-                    shortage = null;
+
+                    // Jeśli dokładnie <= 3 wyrzuty pozostało I mamy >= 3 wyrzuty danych
+                    if (shouldCalculateShortage && displayCount <= 3) {
+                        const willProduce = valuePerCut * displayCount;
+                        shortage = Math.round(willProduce - remaining);
+
+                        if (Math.abs(shortage) < orderLength * 0.01) {
+                            shortage = null;
+                        }
+                    }
                 }
 
                 return {
                     count: displayCount,
                     shortage: shortage,
-                    unit: orderUnit === 'images' ? 'obrazków' : 'kg'
+                    unit: orderUnit === 'images' ? 'obrazków' : 'kg',
+                    isPreliminary: isPreliminary
                 };
             }
 
@@ -4028,6 +4235,13 @@
                 });
             },
 
+            handleModeChange() {
+                const selectedMode = document.querySelector('input[name="modeMetry"]:checked').value;
+                this.currentMode = selectedMode;
+                this.updateUI();
+                this.saveConfig();
+            },
+
             updateUI() {
                 const inputLabel = document.getElementById('inputLabelMetry');
                 const inputField = document.getElementById('inputMetry');
@@ -4060,6 +4274,30 @@
                         inputField.placeholder = '5000';
                         resultLabel.textContent = 'Metry potrzebne';
                         resultUnit.textContent = 'm';
+                        obrazkiFields.style.display = 'block';
+                        break;
+
+                    case 'metry-obrazki':
+                        inputLabel.textContent = '📏 Metry (m)';
+                        inputField.placeholder = '5000';
+                        resultLabel.textContent = 'Obrazki';
+                        resultUnit.textContent = 'obrazków';
+                        obrazkiFields.style.display = 'block';
+                        break;
+
+                    case 'obrazki-waga':
+                        inputLabel.textContent = '🖼️ Obrazki';
+                        inputField.placeholder = '10000';
+                        resultLabel.textContent = 'Waga papieru';
+                        resultUnit.textContent = 'kg';
+                        obrazkiFields.style.display = 'block';
+                        break;
+
+                    case 'waga-obrazki':
+                        inputLabel.textContent = '📦 Waga (kg)';
+                        inputField.placeholder = '400';
+                        resultLabel.textContent = 'Obrazki';
+                        resultUnit.textContent = 'obrazków';
                         obrazkiFields.style.display = 'block';
                         break;
                 }
@@ -4130,24 +4368,90 @@
                         break;
 
                     case 'obrazki-metry':
-                        const walek = parseFloat(document.getElementById('walekMetry').value);
-                        const motywy = parseInt(document.getElementById('motywyMetry').value);
+                        const walek1 = parseFloat(document.getElementById('walekMetry').value);
+                        const motywy1 = parseInt(document.getElementById('motywyMetry').value);
 
-                        if (!walek || walek <= 0) {
+                        if (!walek1 || walek1 <= 0) {
                             alert('Wałek musi być większy od 0');
                             return;
                         }
 
-                        if (!motywy || motywy <= 0) {
+                        if (!motywy1 || motywy1 <= 0) {
                             alert('Motywy muszą być większe od 0');
                             return;
                         }
 
                         // Wzór: Metry = (Obrazki / Motywy) × (Wałek / 100)
-                        // Ten wzór jest OK - pozostaje bez zmian
-                        result = (inputValue / motywy) * (walek / 100);
+                        result = (inputValue / motywy1) * (walek1 / 100);
                         resultUnit = 'm';
                         inputLabel = 'Obrazki';
+                        break;
+
+                    case 'metry-obrazki':
+                        const walek2 = parseFloat(document.getElementById('walekMetry').value);
+                        const motywy2 = parseInt(document.getElementById('motywyMetry').value);
+
+                        if (!walek2 || walek2 <= 0) {
+                            alert('Wałek musi być większy od 0');
+                            return;
+                        }
+
+                        if (!motywy2 || motywy2 <= 0) {
+                            alert('Motywy muszą być większe od 0');
+                            return;
+                        }
+
+                        // Wzór: Obrazki = ((Metry / Wałek) × 100) × Motywy
+                        result = Math.floor(((inputValue / walek2) * 100) * motywy2);
+                        resultUnit = 'obrazków';
+                        inputLabel = 'Metry';
+                        break;
+
+                    case 'obrazki-waga':
+                        const walek3 = parseFloat(document.getElementById('walekMetry').value);
+                        const motywy3 = parseInt(document.getElementById('motywyMetry').value);
+
+                        if (!walek3 || walek3 <= 0) {
+                            alert('Wałek musi być większy od 0');
+                            return;
+                        }
+
+                        if (!motywy3 || motywy3 <= 0) {
+                            alert('Motywy muszą być większe od 0');
+                            return;
+                        }
+
+                        // Najpierw obrazki → metry
+                        const metry = (inputValue / motywy3) * (walek3 / 100);
+                        // Potem metry → waga
+                        const szerokoscM_3 = szerokosc / 100;
+                        result = (metry * szerokoscM_3 * gramatura) / 1000;
+                        resultUnit = 'kg';
+                        inputLabel = 'Obrazki';
+                        break;
+
+                    case 'waga-obrazki':
+                        const walek4 = parseFloat(document.getElementById('walekMetry').value);
+                        const motywy4 = parseInt(document.getElementById('motywyMetry').value);
+
+                        if (!walek4 || walek4 <= 0) {
+                            alert('Wałek musi być większy od 0');
+                            return;
+                        }
+
+                        if (!motywy4 || motywy4 <= 0) {
+                            alert('Motywy muszą być większe od 0');
+                            return;
+                        }
+
+                        // POPRAWIONY WZÓR:
+                        // 1. Waga → Metry
+                        const szerokoscM_4 = szerokosc / 100;
+                        const metry4 = (inputValue * 1000) / (gramatura * szerokoscM_4);
+                        // 2. Metry → Obrazki
+                        result = Math.floor(((metry4 / walek4) * 100) * motywy4);
+                        resultUnit = 'obrazków';
+                        inputLabel = 'Waga';
                         break;
                 }
 
@@ -4463,6 +4767,7 @@
         const FarbyApp = {
             selectedPigments: [],
             chart: null,
+            currentMode: 'beczka',
 
             defaultPigments: [
                 { name: 'Yellow', color: '#FFFF00' },
@@ -4483,6 +4788,80 @@
             init() {
                 this.renderPigmentList();
                 this.renderSavedMixtures();
+                this.attachInputListeners();
+            },
+
+            handleModeChange() {
+                const selectedMode = document.querySelector('input[name="modeFarby"]:checked').value;
+                this.currentMode = selectedMode;
+
+                const beczkaMode = document.getElementById('beczkaModeFarby');
+                const skalowanieMode = document.getElementById('skalowanieModeFarby');
+
+                if (selectedMode === 'beczka') {
+                    beczkaMode.style.display = 'block';
+                    skalowanieMode.style.display = 'none';
+                } else {
+                    beczkaMode.style.display = 'none';
+                    skalowanieMode.style.display = 'block';
+                }
+
+                // Wyczyść wyniki
+                document.getElementById('resultsCardFarby').style.display = 'none';
+                document.getElementById('chartCardFarby').style.display = 'none';
+                document.getElementById('printBtnFarby').style.display = 'none';
+                document.getElementById('shareBtnFarby').style.display = 'none';
+            },
+
+            attachInputListeners() {
+                // Aktualizuj sumę pigmentów w trybie skalowania
+                document.addEventListener('input', (e) => {
+                    if (e.target.id && e.target.id.startsWith('pigment_')) {
+                        this.updateOriginalTotal();
+                    }
+                });
+
+                // NOWE: Obsługa klawisza ENTER w polach kalkulatora farb
+                const farbyInputs = [
+                    'bucketAmountFarby',
+                    'barrelAmountFarby',
+                    'targetAmountFarby'
+                ];
+
+                farbyInputs.forEach(inputId => {
+                    const element = document.getElementById(inputId);
+                    if (element) {
+                        element.addEventListener('keypress', (e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                this.calculate();
+                            }
+                        });
+                    }
+                });
+
+                // Obsługa ENTER w polach pigmentów (delegacja zdarzeń)
+                document.addEventListener('keypress', (e) => {
+                    if (e.target.id && e.target.id.startsWith('pigment_') && e.target.id.endsWith('_farby')) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.calculate();
+                        }
+                    }
+                });
+            },
+
+            updateOriginalTotal() {
+                if (this.currentMode !== 'skalowanie') return;
+
+                let total = 0;
+                this.selectedPigments.forEach(pigment => {
+                    const input = document.getElementById(`pigment_${pigment.name}_farby`);
+                    const value = parseFloat(input?.value) || 0;
+                    total += value;
+                });
+
+                document.getElementById('originalTotalFarby').value = total.toFixed(3);
             },
 
             getCustomPigments() {
@@ -4537,6 +4916,11 @@
             renderPigmentInputs() {
                 const inputsDiv = document.getElementById('pigmentInputsFarby');
                 inputsDiv.innerHTML = '';
+
+                if (this.selectedPigments.length === 0) {
+                    inputsDiv.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">Wybierz pigmenty powyżej</p>';
+                    return;
+                }
 
                 this.selectedPigments.forEach(pigment => {
                     const group = document.createElement('div');
@@ -4593,6 +4977,16 @@
             },
 
             calculate() {
+                const mode = this.currentMode;
+
+                if (mode === 'beczka') {
+                    this.calculateBeczka();
+                } else {
+                    this.calculateSkalowanie();
+                }
+            },
+
+            calculateBeczka() {
                 const bucket = parseFloat(document.getElementById('bucketAmountFarby').value) || 0;
                 const barrel = parseFloat(document.getElementById('barrelAmountFarby').value) || 0;
 
@@ -4617,13 +5011,60 @@
                     return;
                 }
 
-                this.displayResults(results);
+                this.displayResults(results, 'Dolewka do Beczki');
                 this.drawChart(results);
+                this.showActionButtons();
             },
 
-            displayResults(results) {
+            calculateSkalowanie() {
+                const originalTotal = parseFloat(document.getElementById('originalTotalFarby').value) || 0;
+                const targetAmount = parseFloat(document.getElementById('targetAmountFarby').value) || 0;
+
+                if (originalTotal === 0) {
+                    alert('Najpierw podaj ilości pigmentów w oryginalnej recepcie!');
+                    return;
+                }
+
+                if (targetAmount === 0) {
+                    alert('Podaj docelową ilość farby!');
+                    return;
+                }
+
+                const ratio = targetAmount / originalTotal;
+                const results = {};
+
+                this.selectedPigments.forEach(pigment => {
+                    const input = document.getElementById(`pigment_${pigment.name}_farby`);
+                    const amount = parseFloat(input.value) || 0;
+                    if (amount > 0) {
+                        results[pigment.name] = (amount * ratio).toFixed(3);
+                    }
+                });
+
+                if (Object.keys(results).length === 0) {
+                    alert('Podaj ilości pigmentów!');
+                    return;
+                }
+
+                this.displayResults(results, `Ilości dla ${targetAmount}kg farby (skala: ${ratio.toFixed(2)}x)`);
+                this.drawChart(results);
+                this.showActionButtons();
+            },
+
+            showActionButtons() {
+                document.getElementById('printBtnFarby').style.display = 'inline-block';
+                document.getElementById('shareBtnFarby').style.display = 'inline-block';
+            },
+
+            displayResults(results, title = 'Dolewka do Beczki') {
                 const resultsCard = document.getElementById('resultsCardFarby');
                 const resultsList = document.getElementById('resultsListFarby');
+
+                // Zaktualizuj tytuł
+                const headerEl = resultsCard.querySelector('.calculator-header');
+                if (headerEl) {
+                    headerEl.textContent = title;
+                }
 
                 resultsCard.style.display = 'block';
                 resultsList.innerHTML = '';
@@ -4667,10 +5108,10 @@
                 document.getElementById('bucketAmountFarby').value = '';
                 document.getElementById('barrelAmountFarby').value = '';
 
-                this.selectedPigments.forEach(pigment => {
-                    const input = document.getElementById(`pigment_${pigment.name}_farby`);
-                    if (input) input.value = '';
-                });
+                // NOWE: Odznacz wszystkie pigmenty
+                this.selectedPigments = [];
+                this.renderPigmentList();
+                this.renderPigmentInputs();
 
                 document.getElementById('resultsCardFarby').style.display = 'none';
                 document.getElementById('chartCardFarby').style.display = 'none';
@@ -4702,6 +5143,7 @@
 
                 const bucket = parseFloat(document.getElementById('bucketAmountFarby').value);
                 const barrel = parseFloat(document.getElementById('barrelAmountFarby').value);
+                const targetAmount = parseFloat(document.getElementById('targetAmountFarby')?.value);
 
                 const pigments = {};
                 this.selectedPigments.forEach(pigment => {
@@ -4715,8 +5157,10 @@
                 const mixture = {
                     id: Date.now(),
                     name,
+                    mode: this.currentMode, // NOWE: Zapisz tryb kalkulacji
                     bucketAmount: bucket,
                     barrelAmount: barrel,
+                    targetAmount: targetAmount,
                     pigments,
                     selectedPigments: this.selectedPigments.map(p => ({ name: p.name, color: p.color })),
                     date: new Date().toISOString()
@@ -4773,6 +5217,13 @@
                 const mixture = saved.find(m => m.id === id);
 
                 if (mixture) {
+                    // NOWE: Przełącz tryb kalkulacji
+                    if (mixture.mode) {
+                        this.currentMode = mixture.mode;
+                        document.querySelector(`input[name="modeFarby"][value="${mixture.mode}"]`).checked = true;
+                        this.handleModeChange();
+                    }
+
                     const allPigments = this.getAllPigments();
 
                     this.selectedPigments = mixture.selectedPigments.map(sp =>
@@ -4781,8 +5232,13 @@
 
                     this.renderPigmentList();
 
-                    document.getElementById('bucketAmountFarby').value = mixture.bucketAmount;
-                    document.getElementById('barrelAmountFarby').value = mixture.barrelAmount;
+                    // Wczytaj wartości w zależności od trybu
+                    if (mixture.mode === 'skalowanie' && mixture.targetAmount) {
+                        document.getElementById('targetAmountFarby').value = mixture.targetAmount;
+                    } else {
+                        document.getElementById('bucketAmountFarby').value = mixture.bucketAmount;
+                        document.getElementById('barrelAmountFarby').value = mixture.barrelAmount;
+                    }
 
                     Object.keys(mixture.pigments).forEach(name => {
                         const input = document.getElementById(`pigment_${name}_farby`);
