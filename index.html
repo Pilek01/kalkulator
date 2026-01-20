@@ -1622,6 +1622,460 @@
                 display: block !important;
             }
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-database, .modal-pobrane {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .modal-pobrane {
+            max-width: 600px;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px);
+        }
+
+        .manual-add-section, .pobrane-add-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .manual-add-section h3, .pobrane-add-section h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .pobrane-add-section label {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .manual-form-fields, .pobrane-form-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group small {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        .manual-add-section label {
+            color: #333;
+        }
+
+        /* Database Stats */
+        .database-stats-section {
+            margin: 1.5rem 0;
+        }
+
+        .database-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .database-list-section, .pobrane-list-section {
+            margin-top: 1.5rem;
+        }
+
+        .database-list-section h3, .pobrane-list-header h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .database-rolls-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .database-roll-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .database-roll-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .database-roll-item.editing {
+            background: #f0f7ff;
+            border-color: #667eea;
+        }
+
+        .database-roll-info {
+            flex: 1;
+        }
+
+        .database-roll-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .database-roll-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-weight {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-images {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .badge-time {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .badge-previous-shift {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .database-roll-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit, .btn-delete-db {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-edit {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #1976d2;
+        }
+
+        .btn-delete-db {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-delete-db:hover {
+            background: #d32f2f;
+        }
+
+        .edit-form-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #ccc;
+        }
+
+        .edit-form-inline input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .edit-form-inline button {
+            padding: 0.5rem 1rem;
+        }
+
+        /* Pobrane Rolki Styles */
+        .pobrane-icon-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            display: none; /* Ukryj domyślnie */
+        }
+
+        /* Pokaż tylko w zakładce Licznik Rolek */
+        #rolkiTab.active .pobrane-icon-container {
+            display: block;
+        }
+
+        .pobrane-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+
+        .pobrane-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .pobrane-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff5252;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .pobrane-list {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.5rem;
+            background: #fafafa;
+        }
+
+        .pobrane-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .pobrane-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .pobrane-item-info {
+            flex: 1;
+        }
+
+        .pobrane-item-weight {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pobrane-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .pobrane-summary {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .pobrane-summary span {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        /* Progress bar clickable */
+        .progress-bar-container {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .progress-bar-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Znacznik rolek z poprzedniej zmiany */
+        .previous-shift-badge {
+            background: #fff3e0;
+            color: #f57c00;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .from-previous-shift {
+            border-left: 4px solid #f57c00 !important;
+        }
     </style>
 </head>
 <body>
@@ -1848,6 +2302,133 @@
                         Pozostało: <strong>0</strong> <span id="progressRemainingUnit">obrazków</span>
                     </div>
                 </section>
+
+                <!-- Modal Zarządzania Bazą Rolek -->
+                <div id="databaseModalRolki" class="modal-overlay">
+                    <div class="modal-database">
+                        <div class="modal-header">
+                            <h2>🗄️ Baza Rolek</h2>
+                            <button class="modal-close" onclick="rollTracker.closeDatabaseModal()">✕</button>
+                        </div>
+
+                        <div class="modal-body">
+                            <!-- Formularz dodawania ręcznego -->
+                            <div class="manual-add-section">
+                                <h3>Dodaj rolkę ręcznie</h3>
+                                <form id="manualAddFormRolki" onsubmit="rollTracker.handleManualAdd(event)">
+                                    <div class="manual-form-fields">
+                                        <div class="form-group">
+                                            <label for="manualWeightRolki">Waga (kg) *</label>
+                                            <input type="number" id="manualWeightRolki" step="0.01" required placeholder="np. 520">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="manualImagesRolki">Obrazki</label>
+                                            <input type="number" id="manualImagesRolki" step="1" placeholder="np. 4800">
+                                        </div>
+                                        <div class="form-group checkbox-group">
+                                            <label>
+                                                <input type="checkbox" id="manualFromPreviousRolki">
+                                                Z poprzedniej zmiany
+                                            </label>
+                                            <small>Rolka będzie uwzględniana w sugestii wagi, ale nie w statystykach produkcji</small>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Dodaj do bazy</button>
+                                </form>
+                            </div>
+
+                            <hr>
+
+                            <!-- Statystyki bazy -->
+                            <div class="database-stats-section">
+                                <div class="database-stats-grid">
+                                    <div class="stat-card">
+                                        <div class="stat-icon">⚖️</div>
+                                        <div class="stat-content">
+                                            <div class="stat-label">Średnia waga</div>
+                                            <div class="stat-value" id="avgWeightStat">0 kg</div>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">🖼️</div>
+                                        <div class="stat-content">
+                                            <div class="stat-label">Średnia obrazków</div>
+                                            <div class="stat-value" id="avgImagesStat">0</div>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon">📊</div>
+                                        <div class="stat-content">
+                                            <div class="stat-label">Stosunek kg/obr</div>
+                                            <div class="stat-value" id="ratioStat">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <!-- Lista rolek -->
+                            <div class="database-list-section">
+                                <h3>Lista Rolek (<span id="databaseRollCount">0</span> rolek)</h3>
+                                <div id="databaseRollsList" class="database-rolls-list">
+                                    <!-- Tutaj będą rolki -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ikona Kalkulatora Pobranych Rolek -->
+                <div class="pobrane-icon-container" onclick="pobraneTracker.openModal()" title="Rolki pobrane na zmianie">
+                    <div class="pobrane-icon">📥</div>
+                    <div class="pobrane-badge" id="pobraneBadge" style="display: none;">0</div>
+                </div>
+
+                <!-- Modal Kalkulatora Pobranych Rolek -->
+                <div id="pobraneModalRolki" class="modal-overlay">
+                    <div class="modal-pobrane">
+                        <div class="modal-header">
+                            <h2>📥 Rolki Pobrane na Zmianie</h2>
+                            <button class="modal-close" onclick="pobraneTracker.closeModal()">✕</button>
+                        </div>
+
+                        <div class="modal-body">
+                            <!-- Formularz dodawania -->
+                            <div class="pobrane-add-section">
+                                <form id="pobraneAddForm" onsubmit="pobraneTracker.handleAdd(event)">
+                                    <div class="pobrane-form-fields">
+                                        <div class="form-group">
+                                            <label for="pobraneWeight">Waga rolki (kg) *</label>
+                                            <input type="number" id="pobraneWeight" step="0.01" required placeholder="np. 600" autofocus>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <button type="submit" class="btn btn-primary" style="flex: 1;">➕ Dodaj</button>
+                                        <button type="button" class="btn btn-danger" onclick="pobraneTracker.clearAll()">🗑️ Wyczyść</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <hr>
+
+                            <!-- Lista pobranych rolek -->
+                            <div class="pobrane-list-section">
+                                <div class="pobrane-list-header">
+                                    <h3>Pobrane rolki (<span id="pobraneCount">0</span>)</h3>
+                                </div>
+                                <div id="pobraneList" class="pobrane-list">
+                                    <!-- Tutaj będą pobrane rolki -->
+                                </div>
+                            </div>
+
+                            <!-- Suma -->
+                            <div class="pobrane-summary">
+                                <strong>SUMA:</strong> <span id="pobraneTotalWeight">0</span> kg
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Formularz dodawania rolek -->
                 <section class="add-section">
@@ -2424,7 +3005,7 @@
     </div>
 
     <footer>
-        Made by Kamil Matysek | v1.3.3
+        Made by Kamil Matysek | v1.4.4
     </footer>
 
     <!-- Modal edycji palety -->
@@ -3321,6 +3902,14 @@
                     this.saveOrderSettings();
                     this.updateProgressBar();
                 });
+
+                // Kliknięcie progress bar otwiera modal zarządzania bazą
+                const progressBarContainer = document.querySelector('.progress-bar-container');
+                if (progressBarContainer) {
+                    progressBarContainer.addEventListener('click', () => {
+                        this.openDatabaseModal();
+                    });
+                }
             }
 
             handleContinuationToggle(e) {
@@ -3520,12 +4109,13 @@
                 }
             }
 
-            addRoll(weight, images, fromSuggestion = false) {
+            addRoll(weight, images, fromSuggestion = false, fromPreviousShift = false) {
                 const roll = {
                     id: Date.now() + Math.random(),
                     weight: weight,
                     images: images,
                     fromSuggestion: fromSuggestion,
+                    fromPreviousShift: fromPreviousShift,
                     timestamp: new Date().toISOString()
                 };
                 this.rolls.push(roll);
@@ -3642,9 +4232,12 @@
             }
 
             calculateSummary() {
-                const totalRolls = this.rolls.length;
-                const totalWeight = this.rolls.reduce((sum, roll) => sum + roll.weight, 0);
-                const totalImages = this.rolls.reduce((sum, roll) => sum + roll.images, 0);
+                // Filtruj tylko rolki z bieżącej zmiany (bez poprzedniej zmiany)
+                const currentShiftRolls = this.rolls.filter(roll => !roll.fromPreviousShift);
+
+                const totalRolls = currentShiftRolls.length;
+                const totalWeight = currentShiftRolls.reduce((sum, roll) => sum + roll.weight, 0);
+                const totalImages = currentShiftRolls.reduce((sum, roll) => sum + roll.images, 0);
 
                 const rollsPerPallet = this.getRollsPerPallet();
 
@@ -3663,7 +4256,10 @@
             groupIntoPallets() {
                 if (this.rolls.length === 0) return [];
 
-                const sortedRolls = [...this.rolls].sort((a, b) =>
+                // Filtruj tylko rolki z bieżącej zmiany
+                const currentShiftRolls = this.rolls.filter(roll => !roll.fromPreviousShift);
+
+                const sortedRolls = [...currentShiftRolls].sort((a, b) =>
                     new Date(a.timestamp) - new Date(b.timestamp)
                 );
 
@@ -3829,10 +4425,13 @@
 
                 let currentProgress = orderCompleted;
 
+                // Filtruj tylko rolki z bieżącej zmiany
+                const currentShiftRolls = this.rolls.filter(roll => !roll.fromPreviousShift);
+
                 if (orderUnit === 'images') {
-                    currentProgress += this.rolls.reduce((sum, roll) => sum + (roll.images || 0), 0);
+                    currentProgress += currentShiftRolls.reduce((sum, roll) => sum + (roll.images || 0), 0);
                 } else {
-                    currentProgress += this.rolls.reduce((sum, roll) => sum + roll.weight, 0);
+                    currentProgress += currentShiftRolls.reduce((sum, roll) => sum + roll.weight, 0);
                 }
 
                 const percentage = Math.min((currentProgress / orderLength) * 100, 100);
@@ -3925,13 +4524,16 @@
                     return null;
                 }
 
+                // Użyj WSZYSTKICH rolek (włącznie z poprzedniej zmiany) do kalkulacji średniej
+                // ale filtruj rolki z sugestii
                 const validRolls = this.rolls.filter(roll =>
                     roll.fromSuggestion !== true &&
                     roll.weight > 0 &&
                     (orderUnit === 'kg' || roll.images > 0)
                 );
 
-                const minRollsForPrediction = rollsPerCut; // Wystarczy 1 wyrzut (minimum rolek)
+                // Wystarczy 1 rolka do prognozy (ale będzie oznaczona jako wstępna)
+                const minRollsForPrediction = 1;
 
                 if (validRolls.length < minRollsForPrediction) {
                     return null;
@@ -3953,11 +4555,14 @@
                     return null;
                 }
 
+                // Filtruj tylko rolki z bieżącej zmiany dla currentProgress
+                const currentShiftRolls = this.rolls.filter(roll => !roll.fromPreviousShift);
+
                 let currentProgress = orderCompleted;
                 if (orderUnit === 'images') {
-                    currentProgress += this.rolls.reduce((sum, roll) => sum + (roll.images || 0), 0);
+                    currentProgress += currentShiftRolls.reduce((sum, roll) => sum + (roll.images || 0), 0);
                 } else {
-                    currentProgress += this.rolls.reduce((sum, roll) => sum + roll.weight, 0);
+                    currentProgress += currentShiftRolls.reduce((sum, roll) => sum + roll.weight, 0);
                 }
 
                 const remaining = orderLength - currentProgress;
@@ -3968,15 +4573,14 @@
 
                 const exactCuts = remaining / valuePerCut;
 
-                // Określ czy to wstępne oszacowanie (mniej niż 3 wyrzuty danych)
+                // Określ czy to wstępne oszacowanie (mniej niż 2 pełne wyrzuty danych)
                 const numberOfCuts = validRolls.length / rollsPerCut;
-                const isPreliminary = numberOfCuts < 3;
+                const isPreliminary = numberOfCuts < 2;
 
-                // Oblicz shortage tylko jeśli:
-                // 1. Pozostało <= 3 wyrzuty DO KOŃCA
-                // 2. Mamy przynajmniej 3 wyrzuty danych (żeby kalkulacja była wiarygodna)
+                // Oblicz shortage jeśli mamy przynajmniej 1 pełny wyrzut danych
+                // Pokazuj od razu, nawet jeśli to wstępne oszacowanie
                 let shortage = null;
-                const shouldCalculateShortage = exactCuts <= 3 && numberOfCuts >= 3;
+                const shouldCalculateShortage = numberOfCuts >= 1;
 
                 let displayCount;
 
@@ -3995,8 +4599,8 @@
                 } else {
                     displayCount = Math.round(exactCuts);
 
-                    // Jeśli dokładnie <= 3 wyrzuty pozostało I mamy >= 3 wyrzuty danych
-                    if (shouldCalculateShortage && displayCount <= 3) {
+                    // Oblicz shortage dla wszystkich przypadków (jeśli mamy wystarczająco danych)
+                    if (shouldCalculateShortage) {
                         const willProduce = valuePerCut * displayCount;
                         shortage = Math.round(willProduce - remaining);
 
@@ -4135,12 +4739,21 @@
                     ? `<strong>Waga:</strong> ${roll.weight.toFixed(2)} kg <span class="suggestion-indicator" title="Waga z sugestii">~</span>`
                     : `<strong>Waga:</strong> ${roll.weight.toFixed(2)} kg`;
 
-                const itemClass = roll.fromSuggestion ? 'roll-item from-suggestion' : 'roll-item';
+                // Dodaj klasę dla rolek z poprzedniej zmiany
+                let itemClass = 'roll-item';
+                if (roll.fromSuggestion) itemClass += ' from-suggestion';
+                if (roll.fromPreviousShift) itemClass += ' from-previous-shift';
+
+                // Znacznik dla rolek z poprzedniej zmiany
+                const previousShiftBadge = roll.fromPreviousShift
+                    ? `<div class="previous-shift-badge">📋 Z poprzedniej zmiany</div>`
+                    : '';
 
                 return `
                     <div class="${itemClass}">
                         <div class="roll-info">
                             ${rollNumberText}
+                            ${previousShiftBadge}
                             <div class="roll-details">
                                 <div class="roll-detail roll-weight-badge">
                                     ${weightDisplay}
@@ -4176,15 +4789,381 @@
                     const data = localStorage.getItem('rolki_rollTrackerData');
                     let rolls = data ? JSON.parse(data) : [];
 
+                    // Migracja danych - dodaj fromPreviousShift jeśli nie istnieje
                     rolls = rolls.map(roll => ({
                         ...roll,
-                        fromSuggestion: roll.fromSuggestion ?? false
+                        fromSuggestion: roll.fromSuggestion ?? false,
+                        fromPreviousShift: roll.fromPreviousShift ?? false
                     }));
 
                     return rolls;
                 } catch (e) {
                     console.error('Błąd odczytu z localStorage:', e);
                     return [];
+                }
+            }
+
+            // Otwórz modal zarządzania bazą rolek
+            openDatabaseModal() {
+                const modal = document.getElementById('databaseModalRolki');
+                modal.classList.add('show');
+                this.renderDatabaseList();
+            }
+
+            // Zamknij modal zarządzania bazą rolek
+            closeDatabaseModal() {
+                const modal = document.getElementById('databaseModalRolki');
+                modal.classList.remove('show');
+            }
+
+            // Renderuj listę rolek w modallu bazy
+            renderDatabaseList() {
+                const listContainer = document.getElementById('databaseRollsList');
+                const countSpan = document.getElementById('databaseRollCount');
+
+                // Filtruj tylko rolki ręcznie wprowadzone (bez sugestii)
+                const validRolls = this.rolls.filter(roll => roll.fromSuggestion !== true);
+
+                countSpan.textContent = validRolls.length;
+
+                // Oblicz i wyświetl statystyki
+                this.updateDatabaseStats();
+
+                if (validRolls.length === 0) {
+                    listContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Brak ręcznie wprowadzonych rolek w bazie</p>';
+                    return;
+                }
+
+                // Sortuj rolki od najnowszych
+                const sortedRolls = [...validRolls].sort((a, b) =>
+                    new Date(b.timestamp) - new Date(a.timestamp)
+                );
+
+                listContainer.innerHTML = sortedRolls.map(roll => this.createDatabaseRollItem(roll)).join('');
+            }
+
+            // Aktualizuj statystyki bazy
+            updateDatabaseStats() {
+                const avgWeightSpan = document.getElementById('avgWeightStat');
+                const avgImagesSpan = document.getElementById('avgImagesStat');
+                const ratioSpan = document.getElementById('ratioStat');
+
+                // Filtruj tylko rolki które NIE są z sugestii (ręcznie wprowadzone)
+                const validRolls = this.rolls.filter(roll => roll.fromSuggestion !== true);
+
+                if (validRolls.length === 0) {
+                    avgWeightSpan.textContent = 'Brak danych';
+                    avgImagesSpan.textContent = 'Brak danych';
+                    ratioSpan.textContent = 'Brak danych';
+                    return;
+                }
+
+                // Oblicz średnią wagę (tylko ręcznie wprowadzone rolki)
+                const totalWeight = validRolls.reduce((sum, roll) => sum + roll.weight, 0);
+                const avgWeight = totalWeight / validRolls.length;
+
+                // Oblicz średnią obrazków (tylko rolki z obrazkami, bez sugestii)
+                const rollsWithImages = validRolls.filter(roll => roll.images > 0);
+                let avgImages = 0;
+                if (rollsWithImages.length > 0) {
+                    const totalImages = rollsWithImages.reduce((sum, roll) => sum + roll.images, 0);
+                    avgImages = totalImages / rollsWithImages.length;
+                }
+
+                // Oblicz stosunek kg/obr (tylko rolki z obrazkami, bez sugestii)
+                let ratio = 0;
+                if (rollsWithImages.length > 0) {
+                    const ratios = rollsWithImages.map(roll => roll.weight / roll.images);
+                    ratio = ratios.reduce((sum, r) => sum + r, 0) / ratios.length;
+                }
+
+                // Wyświetl statystyki
+                avgWeightSpan.textContent = `${avgWeight.toFixed(2)} kg`;
+                avgImagesSpan.textContent = avgImages > 0 ? Math.round(avgImages).toLocaleString('pl-PL') : 'Brak danych';
+                ratioSpan.textContent = ratio > 0 ? ratio.toFixed(4) : 'Brak danych';
+            }
+
+            // Utwórz element rolki w bazie danych
+            createDatabaseRollItem(roll) {
+                const date = new Date(roll.timestamp);
+                const timeString = date.toLocaleTimeString('pl-PL', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const previousShiftBadge = roll.fromPreviousShift
+                    ? '<span class="database-roll-badge badge-previous-shift">📋 Z poprzedniej zmiany</span>'
+                    : '';
+
+                return `
+                    <div class="database-roll-item" data-roll-id="${roll.id}">
+                        <div class="database-roll-info">
+                            <div class="database-roll-header">
+                                <span class="database-roll-badge badge-weight">⚖️ ${roll.weight.toFixed(2)} kg</span>
+                                ${roll.images > 0 ? `<span class="database-roll-badge badge-images">🖼️ ${roll.images} obr</span>` : ''}
+                                <span class="database-roll-badge badge-time">🕐 ${timeString}</span>
+                                ${previousShiftBadge}
+                            </div>
+                        </div>
+                        <div class="database-roll-actions">
+                            <button class="btn-edit" onclick="rollTracker.startEditRoll(${roll.id})">Edytuj</button>
+                            <button class="btn-delete-db" onclick="rollTracker.deleteRollFromDatabase(${roll.id})">Usuń</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Dodaj rolkę ręcznie
+            handleManualAdd(event) {
+                event.preventDefault();
+
+                const weight = parseFloat(document.getElementById('manualWeightRolki').value);
+                const images = parseInt(document.getElementById('manualImagesRolki').value) || 0;
+                const fromPrevious = document.getElementById('manualFromPreviousRolki').checked;
+
+                if (!weight || weight <= 0) {
+                    alert('Wpisz prawidłową wagę');
+                    return;
+                }
+
+                this.addRoll(weight, images, false, fromPrevious);
+                this.saveToStorage();
+                this.render();
+                this.renderDatabaseList();
+
+                // Wyczyść formularz
+                document.getElementById('manualWeightRolki').value = '';
+                document.getElementById('manualImagesRolki').value = '';
+                document.getElementById('manualFromPreviousRolki').checked = false;
+            }
+
+            // Rozpocznij edycję rolki
+            startEditRoll(rollId) {
+                const roll = this.rolls.find(r => r.id === rollId);
+                if (!roll) return;
+
+                const item = document.querySelector(`.database-roll-item[data-roll-id="${rollId}"]`);
+                item.classList.add('editing');
+
+                const actionsDiv = item.querySelector('.database-roll-actions');
+                actionsDiv.innerHTML = `
+                    <div class="edit-form-inline">
+                        <input type="number" id="edit-weight-${rollId}" value="${roll.weight}" step="0.01" placeholder="Waga">
+                        <input type="number" id="edit-images-${rollId}" value="${roll.images || ''}" step="1" placeholder="Obrazy">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn-edit" onclick="rollTracker.saveEditRoll(${rollId})">Zapisz</button>
+                            <button class="btn-delete-db" onclick="rollTracker.cancelEditRoll(${rollId})">Anuluj</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Zapisz edytowaną rolkę
+            saveEditRoll(rollId) {
+                const newWeight = parseFloat(document.getElementById(`edit-weight-${rollId}`).value);
+                const newImages = parseInt(document.getElementById(`edit-images-${rollId}`).value) || 0;
+
+                if (!newWeight || newWeight <= 0) {
+                    alert('Wpisz prawidłową wagę');
+                    return;
+                }
+
+                const roll = this.rolls.find(r => r.id === rollId);
+                if (roll) {
+                    roll.weight = newWeight;
+                    roll.images = newImages;
+                    this.saveToStorage();
+                    this.render();
+                    this.renderDatabaseList();
+                }
+            }
+
+            // Anuluj edycję rolki
+            cancelEditRoll(rollId) {
+                this.renderDatabaseList();
+            }
+
+            // Usuń rolkę z bazy danych
+            deleteRollFromDatabase(rollId) {
+                if (confirm('Czy na pewno chcesz usunąć tę rolkę z bazy?')) {
+                    this.rolls = this.rolls.filter(r => r.id !== rollId);
+                    this.saveToStorage();
+                    this.render();
+                    this.renderDatabaseList();
+                }
+            }
+        }
+
+        // =================================================================
+        // POBRANE ROLKI TRACKER
+        // =================================================================
+
+        class PobraneRollsTracker {
+            constructor() {
+                this.rolls = [];
+                this.loadFromStorage();
+                this.updateBadge();
+            }
+
+            openModal() {
+                const modal = document.getElementById('pobraneModalRolki');
+                modal.classList.add('show');
+                this.render();
+            }
+
+            closeModal() {
+                const modal = document.getElementById('pobraneModalRolki');
+                modal.classList.remove('show');
+            }
+
+            handleAdd(event) {
+                event.preventDefault();
+
+                const weight = parseFloat(document.getElementById('pobraneWeight').value);
+
+                if (!weight || weight <= 0) {
+                    alert('Wpisz prawidłową wagę');
+                    return;
+                }
+
+                const roll = {
+                    id: Date.now() + Math.random(),
+                    weight: weight,
+                    timestamp: new Date().toISOString()
+                };
+
+                this.rolls.push(roll);
+                this.saveToStorage();
+                this.render();
+                this.updateBadge();
+
+                // Wyczyść formularz
+                document.getElementById('pobraneWeight').value = '';
+                document.getElementById('pobraneWeight').focus();
+            }
+
+            clearAll() {
+                if (confirm('Czy na pewno chcesz usunąć wszystkie pobrane rolki?')) {
+                    this.rolls = [];
+                    this.saveToStorage();
+                    this.render();
+                    this.updateBadge();
+                }
+            }
+
+            deleteRoll(id) {
+                if (confirm('Czy na pewno chcesz usunąć tę rolkę?')) {
+                    this.rolls = this.rolls.filter(r => r.id !== id);
+                    this.saveToStorage();
+                    this.render();
+                    this.updateBadge();
+                }
+            }
+
+            startEdit(id) {
+                const roll = this.rolls.find(r => r.id === id);
+                if (!roll) return;
+
+                const item = document.querySelector(`.pobrane-item[data-roll-id="${id}"]`);
+                const infoDiv = item.querySelector('.pobrane-item-info');
+
+                infoDiv.innerHTML = `
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="number" id="edit-pobrane-weight-${id}" value="${roll.weight}" step="0.01"
+                               style="width: 150px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" placeholder="Waga (kg)">
+                    </div>
+                `;
+
+                const actionsDiv = item.querySelector('.pobrane-item-actions');
+                actionsDiv.innerHTML = `
+                    <button class="btn-edit" onclick="pobraneTracker.saveEdit(${id})">Zapisz</button>
+                    <button class="btn-delete-db" onclick="pobraneTracker.cancelEdit(${id})">Anuluj</button>
+                `;
+            }
+
+            saveEdit(id) {
+                const newWeight = parseFloat(document.getElementById(`edit-pobrane-weight-${id}`).value);
+
+                if (!newWeight || newWeight <= 0) {
+                    alert('Wpisz prawidłową wagę');
+                    return;
+                }
+
+                const roll = this.rolls.find(r => r.id === id);
+                if (roll) {
+                    roll.weight = newWeight;
+                    this.saveToStorage();
+                    this.render();
+                }
+            }
+
+            cancelEdit(id) {
+                this.render();
+            }
+
+            render() {
+                const listContainer = document.getElementById('pobraneList');
+                const totalWeightSpan = document.getElementById('pobraneTotalWeight');
+                const countSpan = document.getElementById('pobraneCount');
+
+                // Aktualizuj licznik
+                countSpan.textContent = this.rolls.length;
+
+                if (this.rolls.length === 0) {
+                    listContainer.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Brak pobranych rolek</p>';
+                    totalWeightSpan.textContent = '0';
+                    return;
+                }
+
+                // Sortuj od najnowszych
+                const sortedRolls = [...this.rolls].sort((a, b) =>
+                    new Date(b.timestamp) - new Date(a.timestamp)
+                );
+
+                listContainer.innerHTML = sortedRolls.map((roll, index) => `
+                    <div class="pobrane-item" data-roll-id="${roll.id}">
+                        <div class="pobrane-item-info">
+                            <div class="pobrane-item-weight">${sortedRolls.length - index}. ${roll.weight.toFixed(2)} kg</div>
+                        </div>
+                        <div class="pobrane-item-actions">
+                            <button class="btn-edit" onclick="pobraneTracker.startEdit(${roll.id})">✏️</button>
+                            <button class="btn-delete-db" onclick="pobraneTracker.deleteRoll(${roll.id})">✕</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Oblicz sumę
+                const total = this.rolls.reduce((sum, roll) => sum + roll.weight, 0);
+                totalWeightSpan.textContent = total.toFixed(2);
+            }
+
+            updateBadge() {
+                const badge = document.getElementById('pobraneBadge');
+                const count = this.rolls.length;
+
+                if (count > 0) {
+                    badge.textContent = count;
+                    badge.style.display = 'block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            saveToStorage() {
+                try {
+                    localStorage.setItem('rolki_pobrane', JSON.stringify(this.rolls));
+                } catch (e) {
+                    console.error('Błąd zapisu pobranych rolek:', e);
+                }
+            }
+
+            loadFromStorage() {
+                try {
+                    const data = localStorage.getItem('rolki_pobrane');
+                    this.rolls = data ? JSON.parse(data) : [];
+                } catch (e) {
+                    console.error('Błąd odczytu pobranych rolek:', e);
+                    this.rolls = [];
                 }
             }
         }
@@ -5289,13 +6268,32 @@
         // =================================================================
         // INITIALIZATION
         // =================================================================
+
+        // Globalne zmienne
+        let rollTracker;
+        let pobraneTracker;
+
         document.addEventListener('DOMContentLoaded', () => {
             loadCurrentTab();
             ObrazkiApp.loadHistory();
             ObrazkiApp.loadLanguage();
             ObrazkiApp.loadConfig();
             ObrazkiApp.updateStats();
-            new RollTracker();
+            rollTracker = new RollTracker();
+            pobraneTracker = new PobraneRollsTracker();
+
+            // Event listener dla zamykania modali przez kliknięcie poza nimi
+            document.getElementById('databaseModalRolki').addEventListener('click', (e) => {
+                if (e.target.id === 'databaseModalRolki') {
+                    rollTracker.closeDatabaseModal();
+                }
+            });
+
+            document.getElementById('pobraneModalRolki').addEventListener('click', (e) => {
+                if (e.target.id === 'pobraneModalRolki') {
+                    pobraneTracker.closeModal();
+                }
+            });
 
             // Inicjalizacja MetryApp
             MetryApp.init();
