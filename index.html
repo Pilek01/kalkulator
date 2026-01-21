@@ -1927,6 +1927,52 @@
             background: #d32f2f;
         }
 
+        /* Toggle button dla wykluczenia */
+        .btn-toggle-exclude {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-toggle-exclude:hover {
+            background: #f57c00;
+            transform: translateY(-1px);
+        }
+
+        .btn-toggle-exclude.excluded {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-toggle-exclude.excluded:hover {
+            background: #388e3c;
+        }
+
+        /* Wykluczona rolka - wizualne oznaczenie */
+        .database-roll-item.excluded-roll {
+            opacity: 0.6;
+            background: #f5f5f5;
+            border-style: dashed;
+        }
+
+        .database-roll-item.excluded-roll:hover {
+            opacity: 0.8;
+        }
+
+        /* Badge dla wykluczonych rolek */
+        .badge-excluded {
+            background: #ffebee;
+            color: #c62828;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
         .edit-form-inline {
             display: grid;
             grid-template-columns: 1fr 1fr auto;
@@ -3005,7 +3051,7 @@
     </div>
 
     <footer>
-        Made by Kamil Matysek | v1.4.4
+        Made by Kamil Matysek | v1.4.6 <span style="opacity: 0.5; font-size: 0.85em;">(2025-01-21)</span>
     </footer>
 
     <!-- Modal edycji palety -->
@@ -3851,6 +3897,7 @@
                     this.saveQuantitySettings();
                     updateConfigSummary();
                     this.updateWeightSuggestion();
+                    this.updateProgressBar();
                 });
                 this.rollsPerPalletInput.addEventListener('change', () => {
                     this.savePalletSettings();
@@ -4109,13 +4156,14 @@
                 }
             }
 
-            addRoll(weight, images, fromSuggestion = false, fromPreviousShift = false) {
+            addRoll(weight, images, fromSuggestion = false, fromPreviousShift = false, excludeFromCalculations = false) {
                 const roll = {
                     id: Date.now() + Math.random(),
                     weight: weight,
                     images: images,
                     fromSuggestion: fromSuggestion,
                     fromPreviousShift: fromPreviousShift,
+                    excludeFromCalculations: excludeFromCalculations,
                     timestamp: new Date().toISOString()
                 };
                 this.rolls.push(roll);
@@ -4132,7 +4180,8 @@
                 const validRolls = this.rolls.filter(roll =>
                     roll.weight > 0 &&
                     roll.images > 0 &&
-                    roll.fromSuggestion !== true
+                    roll.fromSuggestion !== true &&
+                    roll.excludeFromCalculations !== true
                 );
 
                 if (validRolls.length < minRolls) {
@@ -4525,9 +4574,10 @@
                 }
 
                 // Użyj WSZYSTKICH rolek (włącznie z poprzedniej zmiany) do kalkulacji średniej
-                // ale filtruj rolki z sugestii
+                // ale filtruj rolki z sugestii i wykluczone rolki
                 const validRolls = this.rolls.filter(roll =>
                     roll.fromSuggestion !== true &&
+                    roll.excludeFromCalculations !== true &&
                     roll.weight > 0 &&
                     (orderUnit === 'kg' || roll.images > 0)
                 );
@@ -4556,7 +4606,10 @@
                 }
 
                 // Filtruj tylko rolki z bieżącej zmiany dla currentProgress
-                const currentShiftRolls = this.rolls.filter(roll => !roll.fromPreviousShift);
+                const currentShiftRolls = this.rolls.filter(roll =>
+                    !roll.fromPreviousShift &&
+                    roll.excludeFromCalculations !== true
+                );
 
                 let currentProgress = orderCompleted;
                 if (orderUnit === 'images') {
@@ -4793,7 +4846,8 @@
                     rolls = rolls.map(roll => ({
                         ...roll,
                         fromSuggestion: roll.fromSuggestion ?? false,
-                        fromPreviousShift: roll.fromPreviousShift ?? false
+                        fromPreviousShift: roll.fromPreviousShift ?? false,
+                        excludeFromCalculations: roll.excludeFromCalculations ?? false
                     }));
 
                     return rolls;
@@ -4848,8 +4902,11 @@
                 const avgImagesSpan = document.getElementById('avgImagesStat');
                 const ratioSpan = document.getElementById('ratioStat');
 
-                // Filtruj tylko rolki które NIE są z sugestii (ręcznie wprowadzone)
-                const validRolls = this.rolls.filter(roll => roll.fromSuggestion !== true);
+                // Filtruj tylko rolki które NIE są z sugestii (ręcznie wprowadzone) i nie są wykluczone
+                const validRolls = this.rolls.filter(roll =>
+                    roll.fromSuggestion !== true &&
+                    roll.excludeFromCalculations !== true
+                );
 
                 if (validRolls.length === 0) {
                     avgWeightSpan.textContent = 'Brak danych';
@@ -4895,17 +4952,27 @@
                     ? '<span class="database-roll-badge badge-previous-shift">📋 Z poprzedniej zmiany</span>'
                     : '';
 
+                const excludedBadge = roll.excludeFromCalculations
+                    ? '<span class="database-roll-badge badge-excluded">⊘ Wykluczona</span>'
+                    : '';
+
                 return `
-                    <div class="database-roll-item" data-roll-id="${roll.id}">
+                    <div class="database-roll-item ${roll.excludeFromCalculations ? 'excluded-roll' : ''}" data-roll-id="${roll.id}">
                         <div class="database-roll-info">
                             <div class="database-roll-header">
                                 <span class="database-roll-badge badge-weight">⚖️ ${roll.weight.toFixed(2)} kg</span>
                                 ${roll.images > 0 ? `<span class="database-roll-badge badge-images">🖼️ ${roll.images} obr</span>` : ''}
                                 <span class="database-roll-badge badge-time">🕐 ${timeString}</span>
                                 ${previousShiftBadge}
+                                ${excludedBadge}
                             </div>
                         </div>
                         <div class="database-roll-actions">
+                            <button class="btn-toggle-exclude ${roll.excludeFromCalculations ? 'excluded' : ''}"
+                                    onclick="rollTracker.toggleExcludeFromCalculations(${roll.id})"
+                                    title="${roll.excludeFromCalculations ? 'Włącz tę rolkę do obliczeń średniej' : 'Wyklucz tę rolkę z obliczeń średniej'}">
+                                ${roll.excludeFromCalculations ? '✓ Włącz do obliczeń' : '✕ Wyklucz z obliczeń'}
+                            </button>
                             <button class="btn-edit" onclick="rollTracker.startEditRoll(${roll.id})">Edytuj</button>
                             <button class="btn-delete-db" onclick="rollTracker.deleteRollFromDatabase(${roll.id})">Usuń</button>
                         </div>
@@ -4991,6 +5058,23 @@
                     this.render();
                     this.renderDatabaseList();
                 }
+            }
+
+            // Przełącz status wykluczenia rolki z obliczeń
+            toggleExcludeFromCalculations(rollId) {
+                const roll = this.rolls.find(r => r.id === rollId);
+                if (!roll) return;
+
+                // Przełącz status
+                roll.excludeFromCalculations = !roll.excludeFromCalculations;
+
+                // Zapisz do localStorage
+                this.saveToStorage();
+
+                // Odśwież wszystkie widoki
+                this.render();                  // Główny widok rolek + progress bar
+                this.renderDatabaseList();      // Lista w modallu bazy
+                this.updateWeightSuggestion();  // Sugestia wagi
             }
         }
 
