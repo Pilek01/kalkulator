@@ -3051,7 +3051,7 @@
     </div>
 
     <footer>
-        Made by Kamil Matysek | v1.4.6 <span style="opacity: 0.5; font-size: 0.85em;">(2025-01-21)</span>
+        Made by Kamil Matysek | v1.4.7 <span style="opacity: 0.5; font-size: 0.85em;">(2025-01-23)</span>
     </footer>
 
     <!-- Modal edycji palety -->
@@ -4474,8 +4474,11 @@
 
                 let currentProgress = orderCompleted;
 
-                // Filtruj tylko rolki z bieżącej zmiany
-                const currentShiftRolls = this.rolls.filter(roll => !roll.fromPreviousShift);
+                // Filtruj tylko rolki z bieżącej zmiany i wyklucz rolki oznaczone jako wykluczone z obliczeń
+                const currentShiftRolls = this.rolls.filter(roll =>
+                    !roll.fromPreviousShift &&
+                    roll.excludeFromCalculations !== true
+                );
 
                 if (orderUnit === 'images') {
                     currentProgress += currentShiftRolls.reduce((sum, roll) => sum + (roll.images || 0), 0);
