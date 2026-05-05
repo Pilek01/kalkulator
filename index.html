@@ -55,6 +55,7 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            position: relative;
         }
 
         /* Pierwszy rząd - logo i przełącznik zakładek */
@@ -73,6 +74,12 @@
             gap: 1rem;
             padding-top: 0.5rem;
             border-top: 1px solid var(--border);
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding-top: 0;
+            border-top: 0;
+            z-index: 2;
         }
 
         .title {
@@ -654,6 +661,408 @@
             color: var(--accent);
         }
 
+        .rolki-workbench {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
+            gap: 1.35rem;
+            align-items: stretch;
+            margin-bottom: 1.5rem;
+        }
+
+        .rolki-entry-column,
+        .rolki-side-column {
+            min-width: 0;
+            display: flex;
+        }
+
+        .rolki-section-kicker {
+            color: #7dd7ff;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.35rem;
+        }
+
+        #rolkiTab .add-section,
+        #rolkiTab .summary-section,
+        #rolkiTab .rolls-section,
+        #rolkiTab .order-progress-section {
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+                rgba(18, 34, 50, 0.86);
+            border: 1px solid rgba(101, 143, 173, 0.38);
+            box-shadow: 0 16px 42px rgba(0, 0, 0, 0.26);
+        }
+
+        #rolkiTab .add-section,
+        #rolkiTab .summary-section {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        #rolkiTab .add-section h2,
+        #rolkiTab .summary-section h2,
+        #rolkiTab .rolls-section h2 {
+            color: var(--text-primary);
+            font-size: 1.35rem;
+            margin-bottom: 1.15rem;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+        }
+
+        #rolkiTab #addRollFormRolki > div:first-child {
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) !important;
+        }
+
+        #rolkiTab #weightRolki {
+            min-height: 76px;
+            border-color: rgba(0, 191, 255, 0.58);
+            background: rgba(3, 14, 24, 0.82);
+            box-shadow: inset 0 0 0 1px rgba(0, 191, 255, 0.13), 0 0 0 4px rgba(0, 191, 255, 0.05);
+        }
+
+        #rolkiTab #imagesRolki {
+            min-height: 76px;
+            background: rgba(3, 14, 24, 0.66);
+        }
+
+        #rolkiTab #addRollFormRolki > .btn-primary {
+            min-height: 58px;
+            font-size: 1.05rem;
+        }
+
+        .rolki-action-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .rolki-action-row .btn {
+            width: 100%;
+            min-height: 58px;
+            white-space: nowrap;
+        }
+
+        .rolki-action-row .btn-secondary {
+            border-color: rgba(101, 143, 173, 0.42);
+            background: rgba(7, 20, 32, 0.72);
+        }
+
+        .rolki-action-row .btn-secondary:hover {
+            border-color: rgba(255, 122, 61, 0.74);
+            background: rgba(18, 36, 52, 0.96);
+        }
+
+        .pobrane-inline-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 24px;
+            margin-left: 0.35rem;
+            padding: 0 0.45rem;
+            border-radius: 999px;
+            background: rgba(255, 122, 61, 0.22);
+            border: 1px solid rgba(255, 122, 61, 0.5);
+            color: #ffd8c6;
+            font-size: 0.78rem;
+            font-weight: 900;
+        }
+
+        .rolki-summary-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .rolki-stat-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 104px;
+            padding: 1rem;
+            text-align: left;
+            border-width: 1px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+        }
+
+        .rolki-stat-card::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 3px;
+            background: var(--accent);
+            opacity: 0.95;
+        }
+
+        .rolki-stat-card .summary-label {
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .rolki-stat-card .summary-value {
+            color: var(--text-primary);
+            font-size: 2rem;
+            line-height: 1;
+            margin-top: 0.85rem;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+            word-break: break-word;
+        }
+
+        .rolki-stat-card.stat-pallets::after { background: #ff7a3d; }
+        .rolki-stat-card.stat-rolls::after { background: #4ecdc4; }
+        .rolki-stat-card.stat-weight::after { background: #ffe66d; }
+        .rolki-stat-card.stat-images::after { background: #2ecc71; }
+        .rolki-stat-card.stat-average::after { background: #a78bfa; }
+
+        .rolki-stat-card.stat-average {
+            grid-column: 1 / -1;
+            min-height: 82px;
+        }
+
+        .rolki-stat-card.stat-average .summary-value {
+            font-size: 1.7rem;
+        }
+
+        .rolki-side-actions {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .rolki-tool-card {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid rgba(101, 143, 173, 0.42);
+            background: rgba(7, 20, 32, 0.72);
+            color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .rolki-tool-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 122, 61, 0.8);
+            background: rgba(18, 36, 52, 0.95);
+        }
+
+        .rolki-tool-card .tool-icon {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255, 122, 61, 0.15);
+            border: 1px solid rgba(255, 122, 61, 0.36);
+            font-size: 1.25rem;
+            flex: 0 0 auto;
+        }
+
+        .rolki-tool-card strong,
+        .rolki-tool-card small {
+            display: block;
+        }
+
+        .rolki-tool-card strong {
+            font-size: 0.98rem;
+        }
+
+        .rolki-tool-card small {
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
+            line-height: 1.35;
+        }
+
+        #rolkiTab.active .pobrane-icon-container {
+            display: none;
+        }
+
+        .rolki-modal-shell {
+            width: min(1040px, calc(100vw - 2rem));
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid rgba(101, 143, 173, 0.42);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(53, 198, 255, 0.12), transparent 34%),
+                linear-gradient(145deg, rgba(17, 34, 51, 0.98), rgba(7, 16, 27, 0.98));
+            color: var(--text-primary);
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+        }
+
+        .rolki-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.1rem 1.25rem;
+            border-bottom: 1px solid rgba(101, 143, 173, 0.28);
+            background: rgba(0, 0, 0, 0.16);
+        }
+
+        .rolki-modal-header h2 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1.35rem;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+        }
+
+        .rolki-modal-header small {
+            display: block;
+            margin-top: 0.25rem;
+            color: var(--text-secondary);
+            font-weight: 700;
+        }
+
+        .rolki-modal-body {
+            max-height: calc(88vh - 86px);
+            overflow: auto;
+            padding: 1.1rem 1.25rem 1.25rem;
+        }
+
+        .rolki-modal-grid {
+            display: grid;
+            grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.4fr);
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .rolki-modal-panel {
+            border: 1px solid rgba(101, 143, 173, 0.32);
+            border-radius: 11px;
+            background: rgba(5, 15, 25, 0.58);
+            padding: 1rem;
+        }
+
+        .rolki-modal-panel h3 {
+            margin: 0 0 0.9rem;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+        }
+
+        .rolki-modal-close {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .rolki-modal-close:hover {
+            border-color: rgba(255, 122, 61, 0.64);
+            background: rgba(255, 122, 61, 0.14);
+        }
+
+        #rolkiTab .modal-overlay .modal-database.rolki-modal-shell,
+        #rolkiTab .modal-overlay .modal-pobrane.rolki-modal-shell {
+            background:
+                radial-gradient(circle at 0% 0%, rgba(53, 198, 255, 0.12), transparent 34%),
+                linear-gradient(145deg, rgba(17, 34, 51, 0.98), rgba(7, 16, 27, 0.98));
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+        }
+
+        #rolkiTab .manual-add-section,
+        #rolkiTab .pobrane-add-section,
+        #rolkiTab .database-list-section,
+        #rolkiTab .pobrane-list-section {
+            background: transparent;
+            border: 0;
+            padding: 0;
+        }
+
+        #rolkiTab .manual-add-section h3,
+        #rolkiTab .pobrane-add-section h3,
+        #rolkiTab .database-list-section h3,
+        #rolkiTab .pobrane-list-header h3 {
+            color: var(--text-primary);
+        }
+
+        #rolkiTab .pobrane-add-section label,
+        #rolkiTab .manual-add-section label,
+        #rolkiTab .checkbox-group label {
+            color: var(--text-primary);
+        }
+
+        .rolki-modal-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+        }
+
+        #rolkiTab .database-stats-grid {
+            grid-template-columns: 1fr;
+            gap: 0.65rem;
+        }
+
+        #rolkiTab .stat-card,
+        .pobrane-summary-card {
+            border: 1px solid rgba(101, 143, 173, 0.32);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .pobrane-summary-card {
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .pobrane-summary-label {
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .pobrane-summary-value {
+            display: block;
+            margin-top: 0.35rem;
+            color: #ffe66d;
+            font-size: 2.35rem;
+            font-weight: 950;
+            line-height: 1;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.6);
+        }
+
+        #rolkiTab .database-rolls-list,
+        #rolkiTab .pobrane-list {
+            max-height: 54vh;
+            border: 1px solid rgba(101, 143, 173, 0.32);
+            background: rgba(0, 0, 0, 0.14);
+            padding: 0.65rem;
+        }
+
+        #rolkiTab .database-roll-item,
+        #rolkiTab .pobrane-item {
+            background: rgba(6, 18, 30, 0.82);
+            border: 1px solid rgba(101, 143, 173, 0.28);
+            color: var(--text-primary);
+            box-shadow: none;
+        }
+
+        #rolkiTab .database-roll-item:hover,
+        #rolkiTab .pobrane-item:hover {
+            border-color: rgba(255, 122, 61, 0.58);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+        }
+
+        #rolkiTab .pobrane-item-weight {
+            color: var(--text-primary);
+        }
+
         /* Order Progress Bar */
         .order-progress-section {
             background: var(--bg-secondary);
@@ -1056,6 +1465,158 @@
             user-select: none;
         }
 
+        #rolkiTab .rolls-section {
+            margin-top: 0.5rem;
+        }
+
+        #rolkiTab .rolls-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #rolkiTab .rolls-list {
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        #rolkiTab .pallet-container {
+            margin-bottom: 0;
+            padding: 0;
+            overflow: hidden;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+                rgba(12, 27, 41, 0.88);
+            border: 1px solid rgba(101, 143, 173, 0.42);
+            border-left: 4px solid #ff7a3d;
+            border-radius: 10px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+        }
+
+        #rolkiTab .pallet-container:nth-child(even),
+        #rolkiTab .pallet-container:nth-child(3n) {
+            border-color: rgba(101, 143, 173, 0.42);
+            border-left-color: #4ecdc4;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+        }
+
+        #rolkiTab .pallet-container:nth-child(3n) {
+            border-left-color: #ffe66d;
+        }
+
+        #rolkiTab .pallet-container.bag-mode {
+            border-left-color: #a78bfa;
+        }
+
+        #rolkiTab .pallet-header {
+            margin: 0;
+            padding: 1rem 1.1rem;
+            border-bottom: 1px solid rgba(101, 143, 173, 0.24);
+        }
+
+        #rolkiTab .pallet-title {
+            color: var(--text-primary) !important;
+            font-size: 1.05rem;
+            letter-spacing: 0;
+        }
+
+        #rolkiTab .pallet-icon {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: rgba(255, 122, 61, 0.13);
+            border: 1px solid rgba(255, 122, 61, 0.28);
+            font-size: 1rem;
+        }
+
+        #rolkiTab .pallet-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.65rem;
+        }
+
+        #rolkiTab .pallet-stat {
+            padding: 0.38rem 0.62rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+        }
+
+        #rolkiTab .pallet-stat strong {
+            color: var(--text-primary);
+        }
+
+        #rolkiTab .pallet-actions {
+            align-items: center;
+        }
+
+        #rolkiTab .btn-edit-pallet {
+            background: rgba(78, 205, 196, 0.12);
+            color: #9ff4ee;
+            border: 1px solid rgba(78, 205, 196, 0.45);
+            border-radius: 8px;
+            box-shadow: none;
+        }
+
+        #rolkiTab .btn-edit-pallet:hover {
+            background: rgba(78, 205, 196, 0.22);
+            transform: translateY(-1px);
+        }
+
+        #rolkiTab .pallet-rolls {
+            padding: 0.9rem 1rem 1rem;
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        #rolkiTab .pallet-rolls.collapsed {
+            padding: 0;
+        }
+
+        #rolkiTab .pallet-container .roll-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.8rem;
+            align-items: center;
+            background: rgba(5, 15, 25, 0.58);
+            border: 1px solid rgba(101, 143, 173, 0.28);
+            border-left: 3px solid rgba(255, 122, 61, 0.7);
+            border-radius: 8px;
+            padding: 0.75rem 0.9rem;
+        }
+
+        #rolkiTab .roll-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.45rem;
+        }
+
+        #rolkiTab .roll-detail {
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        #rolkiTab .btn-delete {
+            border-radius: 8px;
+            background: rgba(239, 68, 68, 0.16);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fecaca;
+        }
+
+        #rolkiTab .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.28);
+            transform: translateY(-1px);
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -1210,6 +1771,42 @@
 
             #rolkiTab section > div[style*="grid-template-columns: 1fr 1fr"] {
                 grid-template-columns: 1fr !important;
+            }
+
+            .rolki-workbench {
+                grid-template-columns: 1fr;
+            }
+
+            #rolkiTab #addRollFormRolki > div:first-child {
+                grid-template-columns: 1fr !important;
+            }
+
+            .rolki-summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .rolki-action-row {
+                grid-template-columns: 1fr;
+            }
+
+            .rolki-modal-grid,
+            .rolki-modal-stats {
+                grid-template-columns: 1fr;
+            }
+
+            #rolkiTab .pallet-header,
+            #rolkiTab .rolls-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            #rolkiTab .pallet-container .roll-item {
+                grid-template-columns: 1fr;
+            }
+
+            #rolkiTab .roll-actions,
+            #rolkiTab .btn-delete {
+                width: 100%;
             }
         }
 
@@ -1553,73 +2150,184 @@
 
         /* Print Styles */
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
+
             body {
                 background: white !important;
-            }
-
-            .header,
-            .tab-switcher,
-            .tab-button,
-            .language-selector,
-            .help-button,
-            .header-row-secondary,
-            .btn,
-            .history-section,
-            footer {
-                display: none !important;
-            }
-
-            #farbyTab .calculator-card:not(#resultsCardFarby) {
-                display: none !important;
-            }
-
-            #chartCardFarby {
-                display: none !important;
-            }
-
-            .calculator-card {
-                background: white !important;
-                border: 2px solid #000 !important;
-                box-shadow: none !important;
-                page-break-inside: avoid;
-                margin-bottom: 20px;
-            }
-
-            .calculator-header {
                 color: #000 !important;
-                border-bottom: 2px solid #000;
+            }
+
+            body * {
+                display: none !important;
+            }
+
+            .content-wrapper,
+            #farbyTab,
+            #farbyTab .container,
+            #farbyTab .farby-print-sheet,
+            #farbyTab .farby-print-sheet * {
+                display: revert !important;
+            }
+
+            #farbyTab .farby-workspace {
+                display: none !important;
+            }
+
+            #farbyTab .container {
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .farby-print-sheet {
+                font-family: Arial, Helvetica, sans-serif;
+                background: white !important;
+                color: #000 !important;
+                padding: 0 !important;
+            }
+
+            .farby-print-header {
+                display: flex !important;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 16px;
+                border-bottom: 3px solid #000;
                 padding-bottom: 10px;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
             }
 
-            .result-item-farby {
-                background: white !important;
-                border: 1px solid #ddd !important;
-                color: #000 !important;
-                padding: 15px !important;
-                font-size: 16px !important;
+            .farby-print-brand {
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0;
+                color: #555 !important;
             }
 
-            .result-label-farby {
-                color: #333 !important;
-                font-weight: bold !important;
-            }
-
-            .result-value-farby {
-                color: #000 !important;
-                font-weight: bold !important;
-            }
-
-            .chart-container-farby canvas {
-                max-width: 100% !important;
-            }
-
-            .tab-content {
-                display: none !important;
-            }
-
-            #farbyTab.active {
+            .farby-print-sheet h1 {
                 display: block !important;
+                margin: 4px 0 0;
+                font-size: 28px;
+                line-height: 1.15;
+                color: #000 !important;
+            }
+
+            .farby-print-total {
+                display: block !important;
+                border: 2px solid #000;
+                border-radius: 8px;
+                padding: 8px 12px;
+                font-size: 22px;
+                color: #000 !important;
+                font-weight: 900;
+                white-space: nowrap;
+            }
+
+            .farby-print-meta {
+                display: flex !important;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin: 12px 0 16px;
+                color: #000 !important;
+            }
+
+            .farby-print-meta span {
+                display: inline-block !important;
+                border: 1px solid #999;
+                border-radius: 999px;
+                padding: 5px 10px;
+                font-size: 13px;
+            }
+
+            .farby-print-table {
+                display: table !important;
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 6px;
+                color: #000 !important;
+            }
+
+            .farby-print-table thead,
+            .farby-print-table tbody {
+                display: table-row-group !important;
+            }
+
+            .farby-print-table tr {
+                display: table-row !important;
+            }
+
+            .farby-print-table th,
+            .farby-print-table td {
+                display: table-cell !important;
+                border: 1px solid #000;
+                padding: 10px 12px;
+                font-size: 17px;
+                color: #000 !important;
+            }
+
+            .farby-print-table th {
+                background: #eee !important;
+                font-size: 13px;
+                text-align: left;
+                text-transform: uppercase;
+            }
+
+            .farby-print-table td:last-child {
+                width: 32%;
+                text-align: right;
+                font-size: 20px;
+                font-weight: 900;
+            }
+
+            .farby-print-dot {
+                display: inline-block !important;
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                border: 1px solid #000;
+                margin-right: 8px;
+                vertical-align: middle;
+            }
+
+            .farby-print-sheet h2 {
+                display: block !important;
+                margin: 18px 0 10px;
+                font-size: 18px;
+                color: #000 !important;
+            }
+
+            .farby-print-ratios {
+                display: grid !important;
+                gap: 8px;
+            }
+
+            .farby-print-ratio,
+            .farby-print-ratio-label,
+            .farby-print-ratio-track,
+            .farby-print-ratio-track div {
+                display: block !important;
+            }
+
+            .farby-print-ratio-label {
+                display: flex !important;
+                justify-content: space-between;
+                margin-bottom: 3px;
+                font-size: 12px;
+                color: #000 !important;
+            }
+
+            .farby-print-ratio-track {
+                height: 10px;
+                border: 1px solid #000;
+                border-radius: 999px;
+                overflow: hidden;
+            }
+
+            .farby-print-ratio-track div {
+                height: 100%;
             }
         }
 
@@ -2004,7 +2712,7 @@
 
         /* Pokaż tylko w zakładce Licznik Rolek */
         #rolkiTab.active .pobrane-icon-container {
-            display: block;
+            display: none;
         }
 
         .pobrane-icon {
@@ -2122,6 +2830,1155 @@
         .from-previous-shift {
             border-left: 4px solid #f57c00 !important;
         }
+
+        /* Rolki modals + inline editing polish */
+        #rolkiTab .modal-overlay {
+            padding: 1rem;
+        }
+
+        #rolkiTab .modal-database.rolki-modal-shell,
+        #rolkiTab .modal-pobrane.rolki-modal-shell {
+            width: min(1120px, calc(100vw - 2rem));
+            max-width: 1120px;
+            max-height: 90vh;
+            border-radius: 14px;
+            border: 1px solid rgba(91, 179, 217, 0.34);
+            background:
+                radial-gradient(circle at 8% 4%, rgba(53, 198, 255, 0.14), transparent 28%),
+                linear-gradient(145deg, rgba(15, 31, 48, 0.98), rgba(5, 14, 24, 0.98)) !important;
+            color: var(--text-primary);
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
+        }
+
+        #rolkiTab .modal-pobrane.rolki-modal-shell {
+            max-width: 980px;
+        }
+
+        #rolkiTab .rolki-modal-header {
+            padding: 1.05rem 1.25rem;
+            border-bottom: 1px solid rgba(91, 179, 217, 0.28);
+            background: rgba(2, 10, 18, 0.72) !important;
+            color: var(--text-primary);
+        }
+
+        #rolkiTab .rolki-modal-header h2 {
+            color: var(--text-primary);
+            font-size: 1.35rem;
+            line-height: 1.1;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.62);
+        }
+
+        #rolkiTab .rolki-modal-header small {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        #rolkiTab .rolki-modal-close {
+            flex: 0 0 auto;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        #rolkiTab .rolki-modal-body {
+            max-height: calc(90vh - 78px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 1rem;
+        }
+
+        #rolkiTab .rolki-modal-grid {
+            grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.25fr);
+            gap: 1rem;
+        }
+
+        #rolkiTab .modal-pobrane .rolki-modal-grid {
+            grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+        }
+
+        #rolkiTab .rolki-modal-panel {
+            min-width: 0;
+            border: 1px solid rgba(91, 179, 217, 0.28);
+            border-radius: 12px;
+            background: rgba(8, 22, 35, 0.78);
+            padding: 1rem;
+        }
+
+        #rolkiTab .pobrane-summary-card {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            background:
+                radial-gradient(circle at 0 0, rgba(255, 230, 109, 0.16), transparent 42%),
+                rgba(4, 14, 24, 0.8);
+        }
+
+        #rolkiTab .pobrane-summary-value {
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            overflow-wrap: anywhere;
+        }
+
+        #rolkiTab .pobrane-list,
+        #rolkiTab .database-rolls-list {
+            max-height: 58vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        #rolkiTab .pobrane-item,
+        #rolkiTab .database-roll-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.75rem;
+            align-items: center;
+            margin-bottom: 0;
+            padding: 0.75rem;
+            border-radius: 10px;
+        }
+
+        #rolkiTab .pobrane-item-weight {
+            font-size: 1.25rem;
+            line-height: 1.15;
+            overflow-wrap: anywhere;
+        }
+
+        #rolkiTab .pobrane-item-actions,
+        #rolkiTab .database-roll-actions,
+        #rolkiTab .roll-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.45rem;
+            align-self: stretch;
+            min-width: 92px;
+        }
+
+        #rolkiTab .pobrane-item-actions .btn-edit,
+        #rolkiTab .pobrane-item-actions .btn-delete-db,
+        #rolkiTab .database-roll-actions .btn-edit,
+        #rolkiTab .database-roll-actions .btn-delete-db,
+        #rolkiTab .database-roll-actions .btn-toggle-exclude,
+        #rolkiTab .roll-actions .btn-edit-roll,
+        #rolkiTab .roll-actions .btn-delete {
+            width: 100%;
+            min-height: 36px;
+            border-radius: 8px;
+            padding: 0.45rem 0.65rem;
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+
+        #rolkiTab .btn-edit-roll {
+            background: rgba(53, 198, 255, 0.13);
+            border: 1px solid rgba(53, 198, 255, 0.46);
+            color: #b9ecff;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        #rolkiTab .btn-edit-roll:hover {
+            background: rgba(53, 198, 255, 0.22);
+        }
+
+        #rolkiTab .database-roll-header {
+            gap: 0.45rem;
+        }
+
+        #rolkiTab .database-roll-badge {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+        }
+
+        #rolkiTab .badge-weight {
+            color: #ffe66d;
+        }
+
+        #rolkiTab .badge-images {
+            color: #8ddcff;
+        }
+
+        #rolkiTab .badge-time {
+            color: #aebed1;
+        }
+
+        #rolkiTab .manual-form-fields,
+        #rolkiTab .pobrane-form-fields {
+            grid-template-columns: 1fr;
+        }
+
+        #rolkiTab .main-roll-edit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.65rem;
+        }
+
+        #rolkiTab .main-roll-edit-grid label span {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        #rolkiTab .main-roll-edit-grid input {
+            width: 100%;
+            padding: 0.75rem 0.85rem;
+            font-weight: 900;
+        }
+
+        @media (max-width: 860px) {
+            #rolkiTab .rolki-modal-grid,
+            #rolkiTab .modal-pobrane .rolki-modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #rolkiTab .pobrane-item,
+            #rolkiTab .database-roll-item {
+                grid-template-columns: 1fr;
+            }
+
+            #rolkiTab .pobrane-item-actions,
+            #rolkiTab .database-roll-actions,
+            #rolkiTab .roll-actions {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                min-width: 0;
+            }
+
+            #rolkiTab .main-roll-edit-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* SENTREX PRO visual refresh */
+        :root {
+            --bg-primary: #07101b;
+            --bg-secondary: #101d2b;
+            --bg-tertiary: #172638;
+            --text-primary: #e8f1fb;
+            --text-secondary: #aebed1;
+            --accent: #ff7a3d;
+            --accent-hover: #ff9860;
+            --border: rgba(91, 179, 217, 0.24);
+            --success: #42d789;
+            --danger: #ef4f66;
+            --surface: #101d2b;
+            --cyan: #35c6ff;
+            --magenta: #ff4fb0;
+            --yellow: #ffd84d;
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 8% 10%, rgba(53, 198, 255, 0.16), transparent 30%),
+                radial-gradient(circle at 92% 12%, rgba(255, 79, 176, 0.12), transparent 28%),
+                linear-gradient(135deg, #06111d 0%, #0c1724 52%, #080b12 100%);
+            color: var(--text-primary);
+            letter-spacing: 0;
+        }
+
+        .header {
+            border-bottom: 1px solid rgba(255, 122, 61, 0.32);
+            background: rgba(9, 18, 29, 0.88);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 14px 44px rgba(0, 0, 0, 0.34);
+            padding: 0.95rem 1.25rem;
+        }
+
+        .header-content,
+        .container {
+            max-width: 1480px;
+        }
+
+        .header-row-main {
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            color: #ffd2b6;
+            font-size: 1.45rem;
+            font-weight: 950;
+            text-shadow: 0 2px 12px rgba(255, 122, 61, 0.22);
+        }
+
+        .title::before {
+            content: "";
+            width: 52px;
+            height: 52px;
+            flex: 0 0 52px;
+            border-radius: 8px;
+            background: #fff url("https://pilek01.github.io/soma3-wzory/logo.png") center / contain no-repeat;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.16), 0 10px 26px rgba(0,0,0,0.32);
+        }
+
+        .header-row-secondary {
+            justify-content: center;
+            border-top: 0;
+        }
+
+        .tab-switcher,
+        .language-selector {
+            border: 1px solid rgba(219, 231, 244, 0.16);
+            border-radius: 8px;
+            background:
+                linear-gradient(180deg, rgba(31, 46, 65, 0.76), rgba(14, 24, 37, 0.76));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .language-selector {
+            padding: 0.25rem 0.35rem;
+            opacity: 0.58;
+            transform: scale(0.92);
+            transform-origin: top right;
+        }
+
+        .language-selector:hover {
+            opacity: 1;
+        }
+
+        .tab-switcher {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.45rem;
+        }
+
+        .tab-button,
+        .help-button,
+        .btn,
+        .btn-primary,
+        .btn-secondary,
+        .btn-danger,
+        .btn-preset,
+        .btn-load-farby,
+        .btn-delete-farby,
+        .btn-edit,
+        .btn-delete-db,
+        .btn-toggle-exclude,
+        .btn-edit-pallet,
+        .btn-delete {
+            border-radius: 8px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+        }
+
+        .tab-button {
+            color: #c9d7e8;
+            font-weight: 850;
+        }
+
+        .tab-button:hover {
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+        }
+
+        .tab-button.active,
+        .btn,
+        .btn-primary,
+        .btn-load-farby {
+            border: 1px solid rgba(255, 178, 130, 0.42);
+            background:
+                linear-gradient(180deg, rgba(255, 142, 85, 0.96), rgba(214, 88, 34, 0.96));
+            color: #fff;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 10px 22px rgba(214, 88, 34, 0.18);
+            font-weight: 900;
+        }
+
+        .btn-secondary,
+        .help-button,
+        .btn-preset,
+        .btn-edit,
+        .btn-toggle-exclude,
+        .btn-edit-pallet {
+            border: 1px solid rgba(219, 231, 244, 0.18);
+            background:
+                linear-gradient(180deg, rgba(31, 46, 65, 0.76), rgba(14, 24, 37, 0.76));
+            color: #dbe7f4;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .btn-danger,
+        .btn-delete,
+        .btn-delete-farby,
+        .btn-delete-db {
+            border: 1px solid rgba(255, 143, 157, 0.46);
+            background: linear-gradient(180deg, #ff6b7c, #d9344c);
+            color: #fff;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 10px 22px rgba(217, 52, 76, 0.20);
+        }
+
+        .btn:hover,
+        .btn-primary:hover,
+        .btn-secondary:hover,
+        .help-button:hover,
+        .btn-preset:hover,
+        .tab-button:hover,
+        .btn-load-farby:hover,
+        .btn-delete-farby:hover,
+        .btn-edit:hover,
+        .btn-delete-db:hover,
+        .btn-toggle-exclude:hover,
+        .btn-edit-pallet:hover,
+        .btn-delete:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 34px rgba(0,0,0,0.28);
+        }
+
+        .container {
+            margin: 1.25rem auto;
+        }
+
+        .calculator-card,
+        .history-section,
+        .config-panel,
+        .info-box,
+        .modal-content,
+        .modal-database,
+        .modal-pobrane,
+        .mixture-card-farby,
+        .pigment-selector-card-farby,
+        .pigment-input-group-farby,
+        .saved-mixtures-list-farby,
+        .result-item-farby,
+        .history-item,
+        .roll-item,
+        .pallet-container,
+        .database-roll-item,
+        .pobrane-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background:
+                linear-gradient(145deg, rgba(27, 42, 60, 0.94), rgba(13, 24, 37, 0.94)),
+                var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-card {
+            padding: clamp(1.15rem, 2vw, 1.65rem);
+            margin-bottom: 1.15rem;
+        }
+
+        .calculator-header,
+        .history-title,
+        .modal-title-farby,
+        .config-title {
+            color: #ffd2b6;
+            text-shadow: 0 2px 12px rgba(255, 122, 61, 0.20);
+        }
+
+        .config-header {
+            border-radius: 8px;
+            background: rgba(7, 16, 27, 0.30);
+        }
+
+        input,
+        select,
+        textarea {
+            border: 1px solid rgba(91, 179, 217, 0.28);
+            border-radius: 8px;
+            background: rgba(5, 12, 21, 0.72);
+            color: var(--text-primary);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: rgba(255, 122, 61, 0.66);
+            box-shadow: 0 0 0 3px rgba(255, 122, 61, 0.14);
+        }
+
+        label,
+        .form-group label {
+            color: #c9d7e8;
+            font-weight: 850;
+        }
+
+        .result-box,
+        #resultBoxObrazki,
+        #resultBoxMetry,
+        #resultsCardFarby {
+            border: 1px solid rgba(66, 215, 137, 0.28);
+            background:
+                radial-gradient(circle at 0% 0%, rgba(66, 215, 137, 0.20), transparent 38%),
+                linear-gradient(145deg, rgba(17, 49, 42, 0.94), rgba(13, 24, 37, 0.94)) !important;
+            color: #eafff4;
+            box-shadow: 0 18px 54px rgba(0,0,0,0.36);
+        }
+
+        .history-item:hover,
+        .calculator-card:hover,
+        .pallet-container:hover {
+            border-color: rgba(255, 122, 61, 0.38);
+        }
+
+        .progress-bar-container,
+        .progress-bar {
+            border-radius: 999px;
+        }
+
+        .progress-bar,
+        .progress-fill,
+        .pobrane-summary {
+            background: linear-gradient(90deg, #35c6ff, #ff7a3d) !important;
+        }
+
+        .rounding-choice-group {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.45rem;
+            margin-top: 0.45rem;
+        }
+
+        .rounding-choice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            min-height: 42px;
+            padding: 0.55rem 0.65rem;
+            border: 1px solid rgba(219, 231, 244, 0.14);
+            border-radius: 8px;
+            background: rgba(7, 16, 27, 0.28);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .rounding-choice:has(input:checked) {
+            border-color: rgba(255, 122, 61, 0.54);
+            background: rgba(255, 122, 61, 0.13);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .rounding-choice input {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 16px;
+            accent-color: var(--accent);
+        }
+
+        .rounding-choice span {
+            color: #dbe7f4;
+            font-weight: 850;
+            font-size: 0.86rem;
+            line-height: 1.15;
+        }
+
+        #resultBoxObrazki {
+            max-width: 760px;
+            margin: 1.4rem auto 1.1rem;
+            text-align: center;
+            transform-origin: center;
+        }
+
+        #resultBoxObrazki .result-value {
+            font-size: clamp(3.5rem, 8vw, 6.8rem);
+            line-height: 1;
+            text-shadow: 0 16px 44px rgba(0,0,0,0.34);
+        }
+
+        #paletaTab .container {
+            margin-top: 0.75rem;
+        }
+
+        /* Farby 11/10 workspace */
+        #farbyTab .container {
+            max-width: 1760px;
+        }
+
+        .farby-workspace {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.85fr) minmax(420px, 1.45fr) minmax(320px, 0.95fr);
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .farby-print-sheet {
+            display: none;
+        }
+
+        .farby-panel,
+        .farby-results-card,
+        .farby-proportions-card,
+        .farby-saved-panel {
+            border: 1px solid rgba(91, 179, 217, 0.24);
+            border-radius: 8px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(91, 179, 217, 0.12), transparent 34%),
+                linear-gradient(145deg, rgba(27, 42, 60, 0.96), rgba(10, 19, 31, 0.96));
+            box-shadow: 0 18px 54px rgba(0,0,0,0.34);
+        }
+
+        .farby-panel {
+            padding: clamp(1rem, 1.5vw, 1.35rem);
+        }
+
+        .farby-output-panel {
+            display: grid;
+            gap: 1rem;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .farby-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .farby-panel-header.compact {
+            margin-bottom: 0.85rem;
+        }
+
+        .farby-eyebrow {
+            color: #82d8ff;
+            font-size: 0.72rem;
+            font-weight: 950;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            margin-bottom: 0.1rem;
+        }
+
+        #farbyTab .calculator-header {
+            margin: 0;
+            font-size: clamp(1.05rem, 1.55vw, 1.35rem);
+            line-height: 1.15;
+        }
+
+        .farby-add-pigment-btn {
+            width: auto;
+            min-height: 38px;
+            padding: 0.55rem 0.8rem;
+            white-space: nowrap;
+        }
+
+        #printBtnFarby:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+            filter: grayscale(0.35);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .farby-palette-panel .farby-saved-panel {
+            margin-top: 1rem;
+        }
+
+        .farby-presets-trigger {
+            width: 100%;
+            margin-top: 1rem;
+            min-height: 46px;
+        }
+
+        #farbyTab .readonly-calculated {
+            color: #8fa1b5;
+            background:
+                repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 8px, rgba(255,255,255,0.015) 8px 16px),
+                rgba(5, 12, 21, 0.48) !important;
+            border-color: rgba(219, 231, 244, 0.12);
+            cursor: not-allowed;
+            pointer-events: none;
+            box-shadow: none;
+        }
+
+        .farby-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .farby-modal-close {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            font-size: 1.35rem;
+            line-height: 1;
+        }
+
+        .farby-presets-modal-content {
+            max-width: 920px;
+            max-height: 82vh;
+            overflow-y: auto;
+        }
+
+        #farbyTab .pigment-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.55rem;
+        }
+
+        #farbyTab .pigment-item {
+            min-height: 48px;
+            padding: 0.6rem 0.7rem;
+            border: 1px solid rgba(219, 231, 244, 0.14);
+            border-radius: 8px;
+            border-left: 0;
+            background: rgba(7, 16, 27, 0.42);
+            color: #e9f2ff;
+            cursor: pointer;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+            transform: none;
+            width: 100%;
+            font: inherit;
+            text-align: left;
+        }
+
+        #farbyTab .pigment-item:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(91, 179, 217, 0.35);
+            transform: translateY(-1px);
+        }
+
+        #farbyTab .pigment-item.selected {
+            border-color: rgba(255, 122, 61, 0.58);
+            background:
+                linear-gradient(135deg, rgba(255, 122, 61, 0.22), rgba(91, 179, 217, 0.10)),
+                rgba(7, 16, 27, 0.62);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 24px rgba(255, 122, 61, 0.13);
+        }
+
+        #farbyTab .pigment-info {
+            gap: 0.5rem;
+            min-width: 0;
+        }
+
+        #farbyTab .pigment-color {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 18px;
+            border: 1px solid rgba(255,255,255,0.42);
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.45);
+        }
+
+        #farbyTab .pigment-name {
+            font-size: 0.88rem;
+            line-height: 1.1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #farbyTab .icon-btn-farby {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            flex: 0 0 22px;
+            border-radius: 999px;
+            background: rgba(255, 107, 124, 0.18);
+            color: #ffb5be;
+            font-weight: 950;
+        }
+
+        .farby-mode-toggle {
+            display: inline-flex;
+            padding: 0.24rem;
+            border: 1px solid rgba(219, 231, 244, 0.16);
+            border-radius: 8px;
+            background: rgba(7, 16, 27, 0.45);
+        }
+
+        .farby-mode-option {
+            cursor: pointer;
+        }
+
+        .farby-mode-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .farby-mode-option span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 34px;
+            padding: 0.45rem 0.75rem;
+            border-radius: 7px;
+            color: #c9d7e8;
+            font-weight: 900;
+            font-size: 0.9rem;
+        }
+
+        .farby-mode-option input:checked + span {
+            color: #fff;
+            background: linear-gradient(180deg, rgba(255, 142, 85, 0.96), rgba(214, 88, 34, 0.96));
+            box-shadow: 0 8px 18px rgba(214, 88, 34, 0.18);
+        }
+
+        .farby-config-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        #farbyTab .form-group {
+            margin-bottom: 0;
+        }
+
+        #farbyTab input[type="number"],
+        #farbyTab input[type="text"] {
+            min-height: 46px;
+            font-size: 1.02rem;
+            font-weight: 850;
+        }
+
+        .farby-recipe-table {
+            border: 1px solid rgba(219, 231, 244, 0.12);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(7, 16, 27, 0.26);
+        }
+
+        .farby-table-head,
+        .pigment-input-group-farby {
+            display: grid;
+            grid-template-columns: minmax(150px, 1.15fr) minmax(140px, 0.78fr) minmax(130px, 0.72fr);
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .farby-table-head {
+            padding: 0.7rem 0.85rem;
+            color: #82d8ff;
+            font-size: 0.76rem;
+            font-weight: 950;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(219, 231, 244, 0.10);
+        }
+
+        .farby-table-head span:last-child {
+            text-align: right;
+        }
+
+        #farbyTab .pigment-inputs-farby {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        #farbyTab .pigment-input-group-farby {
+            padding: 0.55rem 0.85rem;
+            border-radius: 0;
+            border: 0;
+            border-bottom: 1px solid rgba(219, 231, 244, 0.08);
+            background: transparent;
+            box-shadow: none;
+            min-height: 58px;
+        }
+
+        #farbyTab .pigment-input-group-farby:last-child {
+            border-bottom: 0;
+        }
+
+        .recipe-pigment-name,
+        .result-label-farby {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+            color: #e9f2ff;
+            font-weight: 900;
+        }
+
+        .recipe-pigment-name span:last-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .recipe-result-preview {
+            color: #ffd2b6;
+            font-weight: 950;
+            text-align: right;
+        }
+
+        #farbyTab .pigment-input-group-farby input {
+            min-height: 40px;
+            max-width: 220px;
+            width: 100%;
+            padding: 0.45rem 0.75rem 0.45rem 1.05rem;
+            font-size: 1rem;
+            justify-self: start;
+        }
+
+        .farby-empty-recipe,
+        #farbyTab .empty-state-farby {
+            padding: 1.5rem;
+            color: #9fb0c4;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .farby-results-card,
+        .farby-proportions-card,
+        .farby-saved-panel {
+            padding: 1rem;
+        }
+
+        .farby-total-badge {
+            padding: 0.4rem 0.65rem;
+            border-radius: 999px;
+            background: rgba(66, 215, 137, 0.12);
+            border: 1px solid rgba(66, 215, 137, 0.28);
+            color: #c8ffdf;
+            font-weight: 950;
+            white-space: nowrap;
+        }
+
+        #farbyTab .result-item-farby {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 0;
+            margin: 0;
+            border: 0;
+            border-bottom: 1px solid rgba(219, 231, 244, 0.09);
+            background: transparent;
+        }
+
+        #farbyTab .result-item-farby:last-child {
+            border-bottom: 0;
+        }
+
+        #farbyTab .result-value-farby {
+            color: #ffd2b6;
+            font-size: 1.04rem;
+            white-space: nowrap;
+        }
+
+        .chart-container-farby {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .farby-ratio-row {
+            padding: 0.7rem;
+            border: 1px solid rgba(219, 231, 244, 0.10);
+            border-radius: 8px;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015));
+        }
+
+        .farby-ratio-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.7rem;
+            color: #dbe7f4;
+            font-size: 0.88rem;
+            font-weight: 850;
+            margin-bottom: 0.45rem;
+        }
+
+        .farby-ratio-name {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            min-width: 0;
+        }
+
+        .farby-ratio-name span:last-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .farby-ratio-track {
+            height: 13px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.075);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.35);
+        }
+
+        .farby-ratio-fill {
+            height: 100%;
+            min-width: 4px;
+            border-radius: inherit;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 0 18px rgba(255,255,255,0.10);
+        }
+
+        .farby-ratio-values {
+            display: flex;
+            align-items: baseline;
+            gap: 0.45rem;
+            white-space: nowrap;
+        }
+
+        .farby-ratio-values strong {
+            color: #ffd2b6;
+        }
+
+        .farby-ratio-values small {
+            color: #9fb0c4;
+            font-weight: 850;
+        }
+
+        .farby-action-bar {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.6rem;
+            margin: 0 0 1rem;
+            padding: 0.75rem;
+            border: 1px solid rgba(219, 231, 244, 0.12);
+            border-radius: 8px;
+            background: rgba(7, 16, 27, 0.30);
+        }
+
+        .farby-action-bar .btn {
+            width: 100%;
+            min-height: 42px;
+            padding: 0.6rem 0.7rem;
+        }
+
+        #farbyTab .saved-mixtures-list-farby {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.65rem;
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+        }
+
+        #farbyTab .mixture-card-farby {
+            padding: 0.8rem;
+            border-left: 3px solid rgba(255, 122, 61, 0.72);
+            cursor: default;
+        }
+
+        #farbyTab .mixture-card-farby:hover {
+            transform: translateY(-1px);
+        }
+
+        #farbyTab .mixture-card-title-farby {
+            font-size: 0.98rem;
+            line-height: 1.2;
+            margin-bottom: 0.45rem;
+        }
+
+        #farbyTab .mixture-card-info-farby {
+            font-size: 0.82rem;
+            margin-bottom: 0.25rem;
+        }
+
+        #farbyTab .mixture-card-actions-farby {
+            margin-top: 0.65rem;
+        }
+
+        #farbyTab .btn-load-farby,
+        #farbyTab .btn-delete-farby {
+            min-height: 34px;
+            padding: 0.45rem 0.7rem;
+        }
+
+        @media (max-width: 1280px) {
+            .farby-workspace {
+                grid-template-columns: minmax(260px, 0.9fr) minmax(420px, 1.4fr);
+            }
+
+            .farby-output-panel {
+                grid-column: 1 / -1;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .farby-action-bar,
+            .farby-saved-panel {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .farby-workspace,
+            .farby-output-panel,
+            .farby-config-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #farbyTab .pigment-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .farby-panel-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .farby-table-head {
+                display: none;
+            }
+
+            .farby-action-bar {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .pigment-input-group-farby {
+                grid-template-columns: 1fr;
+            }
+
+            .recipe-result-preview {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .rounding-choice-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal-overlay,
+        .modal {
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+            background: rgba(3, 8, 14, 0.72);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem;
+            }
+
+            .title {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .title::before {
+                width: 44px;
+                height: 44px;
+                flex-basis: 44px;
+            }
+
+            .tab-switcher {
+                width: 100%;
+            }
+
+            .tab-button {
+                flex: 1 1 160px;
+                padding: 0.65rem 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2146,36 +4003,25 @@
                         <button class="tab-button" onclick="switchTab('farby')">
                             🎨 Kalkulator Farb
                         </button>
+                        <button class="tab-button" onclick="switchTab('paleta')">
+                            🧱 Kalkulator Palety
+                        </button>
                     </div>
                 </div>
 
-                <!-- Drugi rząd: Język i pomoc -->
+                <!-- Drugi rząd: Język -->
                 <div class="header-row-secondary">
                     <div class="language-selector" id="languageSelectorObrazki">
                         <span onclick="ObrazkiApp.setLanguage('pl')" class="lang-flag" data-lang="pl" title="Polski">🇵🇱</span>
                         <span onclick="ObrazkiApp.setLanguage('ua')" class="lang-flag" data-lang="ua" title="Українська">🇺🇦</span>
                         <span onclick="ObrazkiApp.setLanguage('ru')" class="lang-flag" data-lang="ru" title="Русский">🇷🇺</span>
                     </div>
-                    <button class="help-button" onclick="toggleHelpObrazki()" data-translate-title-key="help_button_title" id="helpButtonObrazki">
-                        <span data-translate-key="help_button">❓ Jak to działa?</span>
-                    </button>
                 </div>
             </div>
         </div>
 
         <!-- OBRAZKI TAB CONTENT -->
         <div id="obrazkiTab" class="tab-content active">
-            <!-- ROZSUWANE INFO -->
-            <div id="helpBoxObrazki" class="info-box" style="max-width: 1200px; margin: 1rem auto; padding: 0 1rem; display: none;">
-                <div style="background: var(--bg-tertiary); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent);">
-                    <h3 style="color: var(--accent); margin-bottom: 0.8rem;" data-translate-key="help_box_title">ℹ️ Jak to działa?</h3>
-                    <p style="color: var(--text-secondary); margin: 0.5rem 0;" data-translate-key="help_meters"><strong>Metry:</strong> Długość zadrukowanej rolki papieru (np. 6289m)</p>
-                    <p style="color: var(--text-secondary); margin: 0.5rem 0;" data-translate-key="help_sleeve"><strong>Wałek (Sleeve):</strong> średnica sleeve'a w centymetrach (np. 59cm)</p>
-                    <p style="color: var(--text-secondary); margin: 0.5rem 0;" data-translate-key="help_motifs"><strong>Ilość motywów:</strong> Ile obrazków mieści się na jednym sleeve (np. 2)</p>
-                    <p style="color: var(--text-secondary); margin: 0.5rem 0;" data-translate-key="help_formula"><strong>Wzór:</strong> ((Metry / Wałek) × 100) × Ilość motywów = Liczba obrazków</p>
-                </div>
-            </div>
-
             <div class="container">
                 <div class="calculator-card">
                     <div class="calculator-header" data-translate-key="card_header">Oblicz liczbę obrazków</div>
@@ -2222,19 +4068,22 @@
                                             min="1"
                                             style="font-size: 1rem; padding: 0.7rem;">
                                     </div>
-
-                                    <div class="form-group" style="margin-bottom: 0;">
-                                        <label for="rolkiObrazki" style="font-size: 0.9rem;" data-translate-key="rolls_label">🔪 Rolek</label>
-                                        <input
-                                            type="number"
-                                            id="rolkiObrazki"
-                                            name="rolki"
-                                            step="1"
-                                            min="1"
-                                            value="1"
-                                            data-translate-placeholder-key="rolls_placeholder"
-                                            placeholder="1"
-                                            style="font-size: 1rem; padding: 0.7rem;">
+                                </div>
+                                <div class="form-group" style="margin: 1rem 0 0;">
+                                    <label>Zaokrąglanie wyniku</label>
+                                    <div class="rounding-choice-group">
+                                        <label class="rounding-choice">
+                                            <input type="radio" name="roundingModeObrazki" value="up100" checked>
+                                            <span>Do setki max +100</span>
+                                        </label>
+                                        <label class="rounding-choice">
+                                            <input type="radio" name="roundingModeObrazki" value="up200">
+                                            <span>Do setki min +100</span>
+                                        </label>
+                                        <label class="rounding-choice">
+                                            <input type="radio" name="roundingModeObrazki" value="none">
+                                            <span>Nie zaokrąglaj</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -2255,60 +4104,20 @@
                                 style="font-size: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0, 191, 255, 0.15), rgba(0, 191, 255, 0.05)); border: 3px solid rgba(0, 191, 255, 0.3); font-weight: 700;">
                         </div>
 
-                        <div class="form-group" style="margin-top: 1rem;">
-                            <label style="display: flex; align-items: center; gap: 0.8rem; cursor: pointer; user-select: none;">
-                                <input
-                                    type="checkbox"
-                                    id="zaokraglajObrazki"
-                                    name="zaokraglaj"
-                                    style="width: 24px; height: 24px; cursor: pointer; accent-color: var(--accent);">
-                                <span style="font-size: 1rem;" data-translate-key="rounding_label">📈 Zaokrąglaj w górę (min. +100, max. +200)</span>
-                            </label>
-                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem; margin-left: 2rem;" data-translate-key="rounding_desc">
-                                Zaokrągla do pełnej setki dodając minimum 100, maksimum 200 obrazków
-                            </p>
-                        </div>
-
                         <div id="resultBoxObrazki" class="result-box" style="display: none; background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);">
-                            <div class="result-label" data-translate-key="result_label_single">Wynik - 1 rolka</div>
                             <div class="result-value" id="resultValueObrazki">0</div>
                             <div class="result-unit" data-translate-key="result_unit">Obrazków</div>
                             <div id="resultDetailsObrazki" style="font-size: 1rem; opacity: 0.9; margin-top: 0.8rem;"></div>
 
-                            <!-- MAŁA INFO O ROLKACH -->
-                            <div id="resultTotalObrazki" style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.85; display: none;">
-                                <span id="resultTotalTextObrazki"></span>
-                            </div>
-
                             <!-- PRZYCISK KOPIUJ -->
                             <button type="button" class="btn" onclick="ObrazkiApp.copyResult(event)" style="margin-top: 1.5rem; background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4);">
-                                <span data-translate-key="copy_button">📋 Skopiuj wynik (format systemu)</span>
+                                <span data-translate-key="copy_button">📋 Skopiuj wynik</span>
                             </button>
                         </div>
-
-                        <button type="submit" class="btn"><span data-translate-key="calculate_button">🔢 Oblicz</span></button>
                     </form>
                 </div>
 
                 <div class="history-section">
-                    <!-- STATYSTYKI -->
-                    <div class="calculator-card" style="margin-bottom: 2rem; padding: 1.5rem;">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                            <div style="text-align: center;">
-                                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.3rem;" data-translate-key="stats_today">📊 Ilość obliczeń</div>
-                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent);" id="statTodayObrazki">0</div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.3rem;" data-translate-key="stats_total_images">🎯 Łącznie obrazków</div>
-                                <div style="font-size: 2rem; font-weight: 700; color: var(--success);" id="statTotalObrazki">0</div>
-                            </div>
-                            <div style="text-align: center;">
-                                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.3rem;" data-translate-key="stats_avg_roll">📏 Średnia rolka</div>
-                                <div style="font-size: 2rem; font-weight: 700; color: #00bfff;" id="statAvgObrazki">0 m</div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="history-header">
                         <div class="history-title" data-translate-key="history_title">📜 Historia obliczeń</div>
                         <button class="btn btn-danger" onclick="ObrazkiApp.clearHistory()" style="width: auto; padding: 0.6rem 1.2rem;">
@@ -2351,16 +4160,21 @@
 
                 <!-- Modal Zarządzania Bazą Rolek -->
                 <div id="databaseModalRolki" class="modal-overlay">
-                    <div class="modal-database">
-                        <div class="modal-header">
-                            <h2>🗄️ Baza Rolek</h2>
-                            <button class="modal-close" onclick="rollTracker.closeDatabaseModal()">✕</button>
+                    <div class="modal-database rolki-modal-shell">
+                        <div class="modal-header rolki-modal-header">
+                            <div>
+                                <h2>🗄️ Baza rolek</h2>
+                                <small>Ręczne wpisy, średnie i sugestie do kolejnych rolek</small>
+                            </div>
+                            <button class="modal-close rolki-modal-close" onclick="rollTracker.closeDatabaseModal()">✕</button>
                         </div>
 
-                        <div class="modal-body">
+                        <div class="modal-body rolki-modal-body">
+                            <div class="rolki-modal-grid">
+                                <div class="rolki-modal-panel">
                             <!-- Formularz dodawania ręcznego -->
                             <div class="manual-add-section">
-                                <h3>Dodaj rolkę ręcznie</h3>
+                                <h3>Dodaj ręcznie</h3>
                                 <form id="manualAddFormRolki" onsubmit="rollTracker.handleManualAdd(event)">
                                     <div class="manual-form-fields">
                                         <div class="form-group">
@@ -2383,10 +4197,9 @@
                                 </form>
                             </div>
 
-                            <hr>
-
                             <!-- Statystyki bazy -->
                             <div class="database-stats-section">
+                                <h3>Statystyki bazy</h3>
                                 <div class="database-stats-grid">
                                     <div class="stat-card">
                                         <div class="stat-icon">⚖️</div>
@@ -2411,14 +4224,16 @@
                                     </div>
                                 </div>
                             </div>
+                                </div>
 
-                            <hr>
-
+                                <div class="rolki-modal-panel">
                             <!-- Lista rolek -->
                             <div class="database-list-section">
                                 <h3>Lista Rolek (<span id="databaseRollCount">0</span> rolek)</h3>
                                 <div id="databaseRollsList" class="database-rolls-list">
                                     <!-- Tutaj będą rolki -->
+                                </div>
+                            </div>
                                 </div>
                             </div>
                         </div>
@@ -2433,15 +4248,25 @@
 
                 <!-- Modal Kalkulatora Pobranych Rolek -->
                 <div id="pobraneModalRolki" class="modal-overlay">
-                    <div class="modal-pobrane">
-                        <div class="modal-header">
-                            <h2>📥 Rolki Pobrane na Zmianie</h2>
-                            <button class="modal-close" onclick="pobraneTracker.closeModal()">✕</button>
+                    <div class="modal-pobrane rolki-modal-shell">
+                        <div class="modal-header rolki-modal-header">
+                            <div>
+                                <h2>📥 Rolki pobrane na zmianie</h2>
+                                <small>Szybka suma rolek pobranych z magazynu</small>
+                            </div>
+                            <button class="modal-close rolki-modal-close" onclick="pobraneTracker.closeModal()">✕</button>
                         </div>
 
-                        <div class="modal-body">
+                        <div class="modal-body rolki-modal-body">
+                            <div class="rolki-modal-grid">
+                                <div class="rolki-modal-panel">
+                                    <div class="pobrane-summary-card">
+                                        <span class="pobrane-summary-label">Suma pobranych</span>
+                                        <span class="pobrane-summary-value"><span id="pobraneTotalWeight">0</span> kg</span>
+                                    </div>
                             <!-- Formularz dodawania -->
                             <div class="pobrane-add-section">
+                                <h3>Dodaj pobraną rolkę</h3>
                                 <form id="pobraneAddForm" onsubmit="pobraneTracker.handleAdd(event)">
                                     <div class="pobrane-form-fields">
                                         <div class="form-group">
@@ -2455,9 +4280,9 @@
                                     </div>
                                 </form>
                             </div>
+                                </div>
 
-                            <hr>
-
+                                <div class="rolki-modal-panel">
                             <!-- Lista pobranych rolek -->
                             <div class="pobrane-list-section">
                                 <div class="pobrane-list-header">
@@ -2467,18 +4292,17 @@
                                     <!-- Tutaj będą pobrane rolki -->
                                 </div>
                             </div>
-
-                            <!-- Suma -->
-                            <div class="pobrane-summary">
-                                <strong>SUMA:</strong> <span id="pobraneTotalWeight">0</span> kg
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <div class="rolki-workbench">
+                    <div class="rolki-entry-column">
                 <!-- Formularz dodawania rolek -->
                 <section class="add-section">
-                    <h2>Dodaj rolki</h2>
+                    <div class="rolki-section-kicker">Szybkie dodawanie</div>
                     <form id="addRollFormRolki">
                         <!-- Główne pola w 2 kolumnach -->
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
@@ -2648,32 +4472,49 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                        <div class="rolki-action-row">
+                            <button type="submit" class="btn btn-primary">Dodaj</button>
+                            <button type="button" class="btn btn-secondary" onclick="pobraneTracker.openModal()">
+                                Pobrane <span class="pobrane-inline-count" id="pobraneInlineCount">0</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="rollTracker.openDatabaseModal()">Baza</button>
+                        </div>
                     </form>
                 </section>
+                    </div>
+
+                    <aside class="rolki-side-column">
 
                 <!-- Podsumowanie -->
                 <section class="summary-section">
-                    <h2>📊 Podsumowanie zmiany</h2>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
-                        <div class="summary-card" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(255, 107, 53, 0.05)); border: 3px solid var(--accent);">
-                            <div class="summary-label">📦 Liczba palet</div>
-                            <div class="summary-value" id="totalPalletsRolki" style="font-size: 2.5rem;">0</div>
+                    <div class="rolki-section-kicker">Status zmiany</div>
+                    <h2>Podsumowanie</h2>
+                    <div class="summary-cards rolki-summary-grid">
+                        <div class="summary-card rolki-stat-card stat-pallets">
+                            <div class="summary-label">Palety</div>
+                            <div class="summary-value" id="totalPalletsRolki">0</div>
                         </div>
-                        <div class="summary-card" style="background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(78, 205, 196, 0.05)); border: 3px solid #4ecdc4;">
-                            <div class="summary-label">🎯 Liczba rolek</div>
-                            <div class="summary-value" id="totalRollsRolki" style="font-size: 2.5rem; color: #4ecdc4;">0</div>
+                        <div class="summary-card rolki-stat-card stat-rolls">
+                            <div class="summary-label">Rolki</div>
+                            <div class="summary-value" id="totalRollsRolki">0</div>
                         </div>
-                        <div class="summary-card" style="background: linear-gradient(135deg, rgba(255, 230, 109, 0.15), rgba(255, 230, 109, 0.05)); border: 3px solid #ffe66d;">
-                            <div class="summary-label">⚖️ Suma wag (kg)</div>
-                            <div class="summary-value" id="totalWeightRolki" style="font-size: 2.5rem; color: #ffe66d;">0</div>
+                        <div class="summary-card rolki-stat-card stat-weight">
+                            <div class="summary-label">Suma kg</div>
+                            <div class="summary-value" id="totalWeightRolki">0</div>
                         </div>
-                        <div class="summary-card" style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05)); border: 3px solid var(--success);">
-                            <div class="summary-label">🖼️ Suma obrazków</div>
-                            <div class="summary-value" id="totalImagesRolki" style="font-size: 2.5rem; color: var(--success);">0</div>
+                        <div class="summary-card rolki-stat-card stat-images">
+                            <div class="summary-label">Obrazki</div>
+                            <div class="summary-value" id="totalImagesRolki">0</div>
+                        </div>
+                        <div class="summary-card rolki-stat-card stat-average">
+                            <div class="summary-label">Śr. kg/rolkę</div>
+                            <div class="summary-value" id="avgWeightPerRollRolki">0</div>
                         </div>
                     </div>
                 </section>
+
+                    </aside>
+                </div>
 
                 <!-- Lista rolek -->
                 <section class="rolls-section">
@@ -2689,7 +4530,6 @@
                 </section>
             </div>
         </div>
-    </div>
 
     <!-- METRY TAB CONTENT -->
     <div id="metryTab" class="tab-content">
@@ -2927,131 +4767,159 @@
     <!-- FARBY TAB CONTENT -->
     <div id="farbyTab" class="tab-content">
         <div class="container">
-            <!-- Sekcja 1: Wybór pigmentów -->
-            <div class="calculator-card">
-                <div class="calculator-header">Wybierz Pigmenty</div>
-                <div class="pigment-list" id="pigmentListFarby"></div>
-                <button class="btn" onclick="FarbyApp.showAddPigmentModal()" style="margin-top: 1rem;">
-                    ➕ Dodaj własny pigment
-                </button>
-            </div>
-
-            <!-- Sekcja 1.5: Tryb Kalkulacji -->
-            <div class="calculator-card">
-                <div class="calculator-header">Tryb Kalkulacji</div>
-                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                    <!-- Przerabianie na beczkę -->
-                    <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.8rem; background: var(--bg-tertiary); border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,107,53,0.1)'" onmouseout="this.style.background='var(--bg-tertiary)'">
-                        <input type="radio" name="modeFarby" value="beczka" checked onclick="FarbyApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: var(--accent);">
+            <div class="farby-workspace">
+                <aside class="farby-panel farby-palette-panel">
+                    <div class="farby-panel-header">
                         <div>
-                            <div style="font-size: 1rem; font-weight: 600;">🪣 Przerabianie na beczkę</div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Przelicz recepturę z wiaderka na większą beczkę</div>
+                            <div class="farby-eyebrow">Paleta</div>
+                            <div class="calculator-header">Pigmenty</div>
                         </div>
-                        <div class="mode-tooltip">
-                            <div class="tooltip-title">🪣 Przerabianie na beczkę</div>
-                            <div>Masz recepturę w wiaderku (np. 20kg) i chcesz przeliczyć ile pigmentów potrzeba do większej beczki (np. 160kg).</div>
-                            <div class="tooltip-example">💡 Przykład: Recepta na 20kg → ile pigmentów trzeba dodać do 160kg beczki?</div>
-                        </div>
-                    </label>
+                        <button class="btn btn-secondary farby-add-pigment-btn" onclick="FarbyApp.showAddPigmentModal()">+ Pigment</button>
+                    </div>
+                    <div class="pigment-list" id="pigmentListFarby"></div>
+                    <button class="btn btn-secondary farby-presets-trigger" onclick="FarbyApp.showPresetsModal()">Zapisane receptury</button>
+                </aside>
 
-                    <!-- Skalowanie recepty -->
-                    <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.8rem; background: var(--bg-tertiary); border-radius: 8px; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,107,53,0.1)'" onmouseout="this.style.background='var(--bg-tertiary)'">
-                        <input type="radio" name="modeFarby" value="skalowanie" onclick="FarbyApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: var(--accent);">
+                <main class="farby-panel farby-recipe-panel">
+                    <div class="farby-panel-header">
                         <div>
-                            <div style="font-size: 1rem; font-weight: 600;">⚖️ Skalowanie recepty</div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Zrób określoną ilość farby zachowując proporcje</div>
+                            <div class="farby-eyebrow">Receptura</div>
+                            <div class="calculator-header">Przerabianie na beczkę</div>
                         </div>
-                        <div class="mode-tooltip">
-                            <div class="tooltip-title">⚖️ Skalowanie recepty</div>
-                            <div>Masz gotową recepturę i chcesz przeskalować ją do dowolnej ilości (np. 15kg) zachowując dokładne proporcje pigmentów.</div>
-                            <div class="tooltip-example">💡 Przykład: Recepta na 15kg → potrzebuję dokładnie 20kg z tymi samymi proporcjami.</div>
+                        <div class="farby-mode-toggle">
+                            <label class="farby-mode-option">
+                                <input type="radio" name="modeFarby" value="beczka" checked onclick="FarbyApp.handleModeChange()">
+                                <span>Beczka</span>
+                            </label>
+                            <label class="farby-mode-option">
+                                <input type="radio" name="modeFarby" value="skalowanie" onclick="FarbyApp.handleModeChange()">
+                                <span>Skalowanie</span>
+                            </label>
                         </div>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Sekcja 2: Konfiguracja -->
-            <div class="calculator-card">
-                <div class="calculator-header">Ilość Farby</div>
-
-                <!-- Tryb: Przerabianie na beczkę -->
-                <div id="beczkaModeFarby">
-                    <div class="form-group">
-                        <label>Ilość w wiaderku (kg):</label>
-                        <input type="number" id="bucketAmountFarby" placeholder="np. 1" step="0.001">
                     </div>
-                    <div class="form-group">
-                        <label>Ilość w beczce (kg):</label>
-                        <input type="number" id="barrelAmountFarby" placeholder="np. 25" step="0.001">
+
+                    <div class="farby-action-bar">
+                        <button class="btn btn-primary" onclick="FarbyApp.calculate()">Oblicz</button>
+                        <button class="btn btn-secondary" onclick="FarbyApp.resetForm()">Wyczyść</button>
+                        <button class="btn btn-secondary" onclick="FarbyApp.showSaveModal()">Zapisz</button>
+                        <button class="btn btn-secondary" onclick="FarbyApp.printMixture()" id="printBtnFarby" disabled>Drukuj</button>
                     </div>
-                </div>
 
-                <!-- Tryb: Skalowanie recepty -->
-                <div id="skalowanieModeFarby" style="display: none;">
-                    <div class="form-group">
-                        <label>Suma pigmentów w oryginalnej recepcie (kg):</label>
-                        <input type="number" id="originalTotalFarby" placeholder="np. 5" step="0.001" readonly style="background: rgba(255,255,255,0.05);">
-                        <small class="help-text">To pole wypełni się automatycznie po wpisaniu ilości pigmentów</small>
+                    <div class="farby-config-grid" id="beczkaModeFarby">
+                        <div class="form-group">
+                            <label>Ilość w wiaderku (kg)</label>
+                            <input type="number" id="bucketAmountFarby" placeholder="np. 1" step="0.001">
+                        </div>
+                        <div class="form-group">
+                            <label>Ilość w beczce (kg)</label>
+                            <input type="number" id="barrelAmountFarby" placeholder="np. 25" step="0.001">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Docelowa ilość farby (kg):</label>
-                        <input type="number" id="targetAmountFarby" placeholder="np. 15" step="0.001">
-                        <small class="help-text">Ile kilogramów farby chcesz uzyskać</small>
+
+                    <div class="farby-config-grid" id="skalowanieModeFarby" style="display: none;">
+                        <div class="form-group">
+                            <label>Suma recepty (kg)</label>
+                            <input type="number" id="originalTotalFarby" class="readonly-calculated" placeholder="auto" step="0.001" readonly tabindex="-1" title="To pole liczy się automatycznie">
+                        </div>
+                        <div class="form-group">
+                            <label>Docelowa ilość farby (kg)</label>
+                            <input type="number" id="targetAmountFarby" placeholder="np. 15" step="0.001">
+                        </div>
                     </div>
+
+                    <div class="farby-recipe-table">
+                        <div class="farby-table-head">
+                            <span>Pigment</span>
+                            <span>Ilość w recepcie</span>
+                            <span>Wynik</span>
+                        </div>
+                        <div class="pigment-inputs-farby" id="pigmentInputsFarby"></div>
+                    </div>
+                </main>
+
+                <aside class="farby-panel farby-output-panel">
+                    <div id="resultsCardFarby" class="farby-results-card" style="display: none;">
+                        <div class="farby-panel-header compact">
+                            <div>
+                                <div class="farby-eyebrow">Wynik</div>
+                                <div class="calculator-header">Dolewka do beczki</div>
+                            </div>
+                            <div class="farby-total-badge" id="farbyTotalBadge">0 kg</div>
+                        </div>
+                        <div id="resultsListFarby"></div>
+                    </div>
+
+                    <div id="chartCardFarby" class="farby-proportions-card" style="display: none;">
+                        <div class="farby-panel-header compact">
+                            <div>
+                                <div class="farby-eyebrow">Proporcje</div>
+                                <div class="calculator-header">Udział pigmentów</div>
+                            </div>
+                        </div>
+                        <div class="chart-container-farby" id="pigmentBarsFarby"></div>
+                    </div>
+                </aside>
+            </div>
+            <div id="farbyPrintSheet" class="farby-print-sheet" aria-hidden="true"></div>
+        </div>
+    </div>
+
+        <!-- PALETA TAB CONTENT -->
+        <div id="paletaTab" class="tab-content">
+            <div class="container">
+                <div class="calculator-card">
+                    <div class="calculator-header">Kalkulator palety</div>
+                    <form id="paletaForm" onsubmit="PaletaApp.calculate(event)">
+                        <div class="config-panel" id="configPanelPaleta">
+                            <div class="config-header" onclick="toggleConfigPanelPaleta()">
+                                <div class="config-header-left">
+                                    <span class="config-icon">⚙️</span>
+                                    <span class="config-title">KONFIGURACJA</span>
+                                </div>
+                                <div class="config-header-right">
+                                    <span class="config-summary" id="configSummaryPaleta"></span>
+                                    <span class="toggle-arrow" id="configArrowPaleta">▼</span>
+                                </div>
+                            </div>
+
+                            <div class="config-body" id="configBodyPaleta">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="emptyPalletWeight">Waga pustej palety (kg)</label>
+                                        <input type="number" id="emptyPalletWeight" step="0.01" min="0" value="20" placeholder="np. 20">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="rollsOnPallet">Ilość rolek na palecie</label>
+                                        <input type="number" id="rollsOnPallet" step="1" min="1" value="3" placeholder="np. 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="grossPalletWeight">Waga palety z rolkami (kg)</label>
+                            <input
+                                type="number"
+                                id="grossPalletWeight"
+                                step="0.01"
+                                min="0"
+                                placeholder="np. 620"
+                                style="font-size: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0, 191, 255, 0.15), rgba(0, 191, 255, 0.05)); border: 3px solid rgba(0, 191, 255, 0.3); font-weight: 700;">
+                        </div>
+
+                        <div id="resultBoxPaleta" class="result-box" style="display: none;">
+                            <div class="result-value" id="singleRollWeightPaleta">0</div>
+                            <div class="result-unit">kg / rolka</div>
+                            <div id="resultDetailsPaleta" style="font-size: 1rem; opacity: 0.9; margin-top: 0.8rem;"></div>
+                        </div>
+                    </form>
                 </div>
-            </div>
-
-            <!-- Sekcja 3: Ilości pigmentów -->
-            <div class="calculator-card">
-                <div class="calculator-header">Ilości Pigmentów (kg)</div>
-                <div class="pigment-inputs-farby" id="pigmentInputsFarby"></div>
-            </div>
-
-            <!-- Sekcja 4: Wyniki (ukryta) -->
-            <div id="resultsCardFarby" class="calculator-card" style="display: none;">
-                <div class="calculator-header">Dolewka do Beczki</div>
-                <div id="resultsListFarby"></div>
-            </div>
-
-            <!-- Sekcja 5: Wykres (ukryty) -->
-            <div id="chartCardFarby" class="calculator-card" style="display: none;">
-                <div class="calculator-header">Rozkład Pigmentów</div>
-                <div class="chart-container-farby">
-                    <canvas id="pigmentChartFarby" width="600" height="500"></canvas>
-                </div>
-            </div>
-
-            <!-- Przyciski akcji -->
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
-                <button class="btn btn-primary" onclick="FarbyApp.calculate()">
-                    🔢 Oblicz
-                </button>
-                <button class="btn btn-secondary" onclick="FarbyApp.resetForm()">
-                    Wyczyść
-                </button>
-                <button class="btn btn-secondary" onclick="FarbyApp.showSaveModal()">
-                    💾 Zapisz mieszankę
-                </button>
-                <button class="btn btn-secondary" onclick="FarbyApp.printMixture()" id="printBtnFarby" style="display: none;">
-                    🖨️ Drukuj
-                </button>
-                <button class="btn btn-secondary" onclick="FarbyApp.shareMixture()" id="shareBtnFarby" style="display: none;">
-                    📤 Udostępnij
-                </button>
-            </div>
-
-            <!-- Sekcja 6: Zapisane mieszanki -->
-            <div class="history-section">
-                <div class="history-header">
-                    <div class="history-title">💾 Zapisane Mieszanki</div>
-                </div>
-                <div id="savedMixturesListFarby"></div>
             </div>
         </div>
     </div>
 
     <footer>
-        Made by Kamil Matysek | v1.4.8 <span style="opacity: 0.5; font-size: 0.85em;">(2025-02-01)</span>
+        Made by Kamil Matysek | v2.0.0 <span style="opacity: 0.5; font-size: 0.85em;">(2026-05-05)</span>
     </footer>
 
     <!-- Modal edycji palety -->
@@ -3104,12 +4972,26 @@
             <h2 class="modal-title-farby">Zapisz Mieszankę</h2>
             <div class="form-group">
                 <label>Nazwa mieszanki:</label>
-                <input type="text" id="mixtureNameFarby" placeholder="np. Czerwony lakier">
+                <input type="text" id="mixtureNameFarby" placeholder="np. Czerwona CK">
             </div>
             <div style="display: flex; gap: 1rem; margin-top: 1rem;">
                 <button class="btn btn-primary" onclick="FarbyApp.saveMixture()">Zapisz</button>
                 <button class="btn btn-secondary" onclick="FarbyApp.closeSaveModal()">Anuluj</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Saved Mixtures Modal (Farby) -->
+    <div id="presetsModalFarby" class="modal">
+        <div class="modal-content farby-presets-modal-content">
+            <div class="farby-modal-header">
+                <div>
+                    <div class="farby-eyebrow">Presety</div>
+                    <h2 class="modal-title-farby">Zapisane receptury</h2>
+                </div>
+                <button class="btn btn-secondary farby-modal-close" onclick="FarbyApp.closePresetsModal()">×</button>
+            </div>
+            <div id="savedMixturesListFarby"></div>
         </div>
     </div>
 
@@ -3211,10 +5093,9 @@
         function updateConfigSummaryObrazki() {
             const walek = document.getElementById('walekObrazki').value || '-';
             const motywy = document.getElementById('motywyObrazki').value || '-';
-            const rolki = document.getElementById('rolkiObrazki').value || '1';
 
             document.getElementById('configSummaryObrazki').textContent =
-                `Wałek: ${walek}cm | Motywy: ${motywy} | Rolek: ${rolki}`;
+                `Wałek: ${walek}cm | Motywy: ${motywy}`;
         }
 
         function toggleConfigPanelMetry() {
@@ -3241,17 +5122,229 @@
                 `Gramatura: ${gramatura} g/m² | Szerokość: ${szerokosc} cm`;
         }
 
+        function toggleConfigPanelPaleta() {
+            const configBody = document.getElementById('configBodyPaleta');
+            const configArrow = document.getElementById('configArrowPaleta');
+            const isCollapsed = configBody.classList.contains('collapsed');
+
+            if (isCollapsed) {
+                configBody.classList.remove('collapsed');
+                configArrow.classList.remove('rotated');
+                localStorage.setItem('paleta_configCollapsed', 'false');
+            } else {
+                configBody.classList.add('collapsed');
+                configArrow.classList.add('rotated');
+                localStorage.setItem('paleta_configCollapsed', 'true');
+            }
+        }
+
+        function updateConfigSummaryPaleta() {
+            const emptyWeight = document.getElementById('emptyPalletWeight').value || '-';
+            const rolls = document.getElementById('rollsOnPallet').value || '-';
+            document.getElementById('configSummaryPaleta').textContent =
+                `Paleta: ${emptyWeight} kg | Rolek: ${rolls}`;
+        }
+
         // =================================================================
         // TAB SWITCHING
         // =================================================================
+        const AppI18n = {
+            lang: 'pl',
+            skipSelector: '#pigmentListFarby, .recipe-pigment-name, #resultsListFarby, #pigmentBarsFarby, #farbyPrintSheet',
+            text: {
+                ua: {
+                    'SENTREX - Kalkulatory Produkcji': 'SENTREX - Виробничі калькулятори',
+                    '📊 Kalkulator Obrazków': '📊 Калькулятор зображень',
+                    '📦 Licznik Rolek': '📦 Лічильник рулонів',
+                    '📐 Kalkulator Metrów': '📐 Калькулятор метрів',
+                    '🎨 Kalkulator Farb': '🎨 Калькулятор фарб',
+                    '🧱 Kalkulator Palety': '🧱 Калькулятор палети',
+                    'Zaokrąglanie wyniku': 'Округлення результату',
+                    'Do setki max +100': 'До сотні, макс. +100',
+                    'Do setki min +100': 'До сотні, мін. +100',
+                    'Nie zaokrąglaj': 'Не округляти',
+                    'Postęp zlecenia': 'Прогрес замовлення',
+                    'Pozostało:': 'Залишилось:',
+                    'Baza Rolek': 'База рулонів',
+                    'Dodaj rolkę ręcznie': 'Додати рулон вручну',
+                    'Waga (kg) *': 'Вага (кг) *',
+                    'Obrazki': 'Зображення',
+                    'Z poprzedniej zmiany': 'З попередньої зміни',
+                    'Dodaj do bazy': 'Додати до бази',
+                    'Średnia waga': 'Середня вага',
+                    'Średnia obrazków': 'Середня кількість зображень',
+                    'Stosunek kg/obr': 'Співвідношення кг/зобр.',
+                    'Lista Rolek': 'Список рулонів',
+                    'Rolki Pobrane na Zmianie': 'Рулони, взяті на зміну',
+                    'Waga rolki (kg) *': 'Вага рулону (кг) *',
+                    'Dodaj': 'Додати',
+                    'Wyczyść': 'Очистити',
+                    'Pobrane rolki': 'Взяті рулони',
+                    'SUMA:': 'СУМА:',
+                    'Dodaj rolki': 'Додати рулони',
+                    'Waga rolki (kg)': 'Вага рулону (кг)',
+                    'Liczba obrazków (opcjonalnie)': 'Кількість зображень (необов’язково)',
+                    'KONFIGURACJA': 'КОНФІГУРАЦІЯ',
+                    'Paleta': 'Палітра',
+                    'Pigmenty': 'Пігменти',
+                    '+ Pigment': '+ Пігмент',
+                    'Zapisane receptury': 'Збережені рецептури',
+                    'Brak zapisanych mieszanek': 'Немає збережених сумішей',
+                    'Stwórz nową mieszankę i zapisz ją, aby pojawiła się tutaj': 'Створіть нову суміш і збережіть її, щоб вона з’явилася тут',
+                    'Wybierz pigmenty z palety po lewej': 'Виберіть пігменти з палітри ліворуч',
+                    'Receptura': 'Рецептура',
+                    'Przerabianie na beczkę': 'Перерахунок на бочку',
+                    'Beczka': 'Бочка',
+                    'Skalowanie': 'Масштабування',
+                    'Oblicz': 'Обчислити',
+                    'Zapisz': 'Зберегти',
+                    'Drukuj': 'Друк',
+                    'Ilość w wiaderku (kg)': 'Кількість у відрі (кг)',
+                    'Ilość w beczce (kg)': 'Кількість у бочці (кг)',
+                    'Suma recepty (kg)': 'Сума рецепту (кг)',
+                    'Docelowa ilość farby (kg)': 'Цільова кількість фарби (кг)',
+                    'Pigment': 'Пігмент',
+                    'Ilość w recepcie': 'Кількість у рецепті',
+                    'Wynik': 'Результат',
+                    'Proporcje': 'Пропорції',
+                    'Udział pigmentów': 'Частка пігментів',
+                    'Zapisz Mieszankę': 'Зберегти суміш',
+                    'Nazwa mieszanki:': 'Назва суміші:',
+                    'Anuluj': 'Скасувати',
+                    'Dodaj Własny Pigment': 'Додати власний пігмент',
+                    'Nazwa pigmentu:': 'Назва пігменту:',
+                    'Kolor:': 'Колір:',
+                    'Kalkulator palety': 'Калькулятор палети',
+                    'Waga pustej palety (kg)': 'Вага порожньої палети (кг)',
+                    'Ilość rolek na palecie': 'Кількість рулонів на палеті',
+                    'Waga palety z rolkami (kg)': 'Вага палети з рулонами (кг)',
+                    'kg / rolka': 'кг / рулон',
+                    'Made by Kamil Matysek | v2.0.0': 'Made by Kamil Matysek | v2.0.0'
+                },
+                ru: {
+                    'SENTREX - Kalkulatory Produkcji': 'SENTREX - Производственные калькуляторы',
+                    '📊 Kalkulator Obrazków': '📊 Калькулятор изображений',
+                    '📦 Licznik Rolek': '📦 Счетчик рулонов',
+                    '📐 Kalkulator Metrów': '📐 Калькулятор метров',
+                    '🎨 Kalkulator Farb': '🎨 Калькулятор красок',
+                    '🧱 Kalkulator Palety': '🧱 Калькулятор палеты',
+                    'Zaokrąglanie wyniku': 'Округление результата',
+                    'Do setki max +100': 'До сотни, макс. +100',
+                    'Do setki min +100': 'До сотни, мин. +100',
+                    'Nie zaokrąglaj': 'Не округлять',
+                    'Postęp zlecenia': 'Прогресс заказа',
+                    'Pozostało:': 'Осталось:',
+                    'Baza Rolek': 'База рулонов',
+                    'Dodaj rolkę ręcznie': 'Добавить рулон вручную',
+                    'Waga (kg) *': 'Вес (кг) *',
+                    'Obrazki': 'Изображения',
+                    'Z poprzedniej zmiany': 'С предыдущей смены',
+                    'Dodaj do bazy': 'Добавить в базу',
+                    'Średnia waga': 'Средний вес',
+                    'Średnia obrazków': 'Среднее число изображений',
+                    'Stosunek kg/obr': 'Соотношение кг/изобр.',
+                    'Lista Rolek': 'Список рулонов',
+                    'Rolki Pobrane na Zmianie': 'Рулоны, взятые на смену',
+                    'Waga rolki (kg) *': 'Вес рулона (кг) *',
+                    'Dodaj': 'Добавить',
+                    'Wyczyść': 'Очистить',
+                    'Pobrane rolki': 'Взятые рулоны',
+                    'SUMA:': 'СУММА:',
+                    'Dodaj rolki': 'Добавить рулоны',
+                    'Waga rolki (kg)': 'Вес рулона (кг)',
+                    'Liczba obrazków (opcjonalnie)': 'Количество изображений (необязательно)',
+                    'KONFIGURACJA': 'КОНФИГУРАЦИЯ',
+                    'Paleta': 'Палитра',
+                    'Pigmenty': 'Пигменты',
+                    '+ Pigment': '+ Пигмент',
+                    'Zapisane receptury': 'Сохраненные рецепты',
+                    'Brak zapisanych mieszanek': 'Нет сохраненных смесей',
+                    'Stwórz nową mieszankę i zapisz ją, aby pojawiła się tutaj': 'Создайте новую смесь и сохраните ее, чтобы она появилась здесь',
+                    'Wybierz pigmenty z palety po lewej': 'Выберите пигменты из палитры слева',
+                    'Receptura': 'Рецепт',
+                    'Przerabianie na beczkę': 'Перерасчет на бочку',
+                    'Beczka': 'Бочка',
+                    'Skalowanie': 'Масштабирование',
+                    'Oblicz': 'Рассчитать',
+                    'Zapisz': 'Сохранить',
+                    'Drukuj': 'Печать',
+                    'Ilość w wiaderku (kg)': 'Количество в ведре (кг)',
+                    'Ilość w beczce (kg)': 'Количество в бочке (кг)',
+                    'Suma recepty (kg)': 'Сумма рецепта (кг)',
+                    'Docelowa ilość farby (kg)': 'Целевое количество краски (кг)',
+                    'Pigment': 'Пигмент',
+                    'Ilość w recepcie': 'Количество в рецепте',
+                    'Wynik': 'Результат',
+                    'Proporcje': 'Пропорции',
+                    'Udział pigmentów': 'Доля пигментов',
+                    'Zapisz Mieszankę': 'Сохранить смесь',
+                    'Nazwa mieszanki:': 'Название смеси:',
+                    'Anuluj': 'Отмена',
+                    'Dodaj Własny Pigment': 'Добавить свой пигмент',
+                    'Nazwa pigmentu:': 'Название пигмента:',
+                    'Kolor:': 'Цвет:',
+                    'Kalkulator palety': 'Калькулятор палеты',
+                    'Waga pustej palety (kg)': 'Вес пустой палеты (кг)',
+                    'Ilość rolek na palecie': 'Количество рулонов на палете',
+                    'Waga palety z rolkami (kg)': 'Вес палеты с рулонами (кг)',
+                    'kg / rolka': 'кг / рулон',
+                    'Made by Kamil Matysek | v2.0.0': 'Made by Kamil Matysek | v2.0.0'
+                }
+            },
+            shouldSkip(node) {
+                return node.parentElement?.closest(this.skipSelector);
+            },
+            translateText(text, lang) {
+                const trimmed = text.trim();
+                if (!trimmed) return text;
+                const pl = this.plByCurrent?.[trimmed] || trimmed;
+                const translated = lang === 'pl' ? pl : (this.text[lang]?.[pl] || pl);
+                return text.replace(trimmed, translated);
+            },
+            applyLanguage(lang) {
+                this.lang = lang;
+                this.plByCurrent = {};
+                Object.entries(this.text.ua).forEach(([pl, value]) => this.plByCurrent[value] = pl);
+                Object.entries(this.text.ru).forEach(([pl, value]) => this.plByCurrent[value] = pl);
+
+                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+                const nodes = [];
+                while (walker.nextNode()) nodes.push(walker.currentNode);
+                nodes.forEach(node => {
+                    if (!this.shouldSkip(node)) node.nodeValue = this.translateText(node.nodeValue, lang);
+                });
+
+                document.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => {
+                    if (!el.closest(this.skipSelector)) el.placeholder = this.translateText(el.placeholder, lang);
+                });
+            }
+        };
+
         let currentTab = 'obrazki';
 
+        function keepActiveTabAtTop(tabName = currentTab) {
+            const align = () => window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            align();
+            requestAnimationFrame(align);
+            setTimeout(align, 80);
+
+            if (tabName === 'paleta') {
+                setTimeout(() => {
+                    document.getElementById('grossPalletWeight')?.focus({ preventScroll: true });
+                }, 90);
+            }
+        }
+
         function switchTab(tabName) {
+            const validTabs = ['obrazki', 'rolki', 'metry', 'farby', 'paleta'];
+            if (!validTabs.includes(tabName)) tabName = 'obrazki';
+
             // Hide all tabs
             document.getElementById('obrazkiTab').classList.remove('active');
             document.getElementById('rolkiTab').classList.remove('active');
             document.getElementById('metryTab').classList.remove('active');
             document.getElementById('farbyTab').classList.remove('active');
+            document.getElementById('paletaTab').classList.remove('active');
 
             // Remove active from all buttons
             document.querySelectorAll('.tab-button').forEach(btn => {
@@ -3262,42 +5355,47 @@
             document.getElementById(tabName + 'Tab').classList.add('active');
 
             // Add active to clicked button
-            event.target.classList.add('active');
+            const activeButton = window.event?.currentTarget ||
+                Array.from(document.querySelectorAll('.tab-button')).find(btn =>
+                    btn.getAttribute('onclick')?.includes(`'${tabName}'`)
+                );
+            if (activeButton) activeButton.classList.add('active');
 
             currentTab = tabName;
 
-            // Show/hide language selector based on tab
-            if (tabName === 'obrazki') {
-                document.getElementById('languageSelectorObrazki').style.display = 'flex';
-                document.getElementById('helpButtonObrazki').style.display = 'block';
-            } else {
-                document.getElementById('languageSelectorObrazki').style.display = 'none';
-                document.getElementById('helpButtonObrazki').style.display = 'none';
-            }
+            document.getElementById('languageSelectorObrazki').style.display = 'flex';
 
             // Save current tab
             localStorage.setItem('currentTab', tabName);
+
+            keepActiveTabAtTop(tabName);
         }
 
         // Load last tab on page load
         function loadCurrentTab() {
-            const savedTab = localStorage.getItem('currentTab') || 'obrazki';
+            let savedTab = localStorage.getItem('currentTab') || 'obrazki';
             const tabIndex = {
                 'obrazki': 0,
                 'rolki': 1,
                 'metry': 2,
-                'farby': 3
+                'farby': 3,
+                'paleta': 4
             };
+            if (!(savedTab in tabIndex)) {
+                savedTab = 'obrazki';
+                localStorage.setItem('currentTab', savedTab);
+            }
 
             if (savedTab !== 'obrazki') {
-                document.querySelector('.tab-button.active').classList.remove('active');
-                document.querySelectorAll('.tab-button')[tabIndex[savedTab]].classList.add('active');
+                document.querySelector('.tab-button.active')?.classList.remove('active');
+                document.querySelectorAll('.tab-button')[tabIndex[savedTab]]?.classList.add('active');
                 document.getElementById('obrazkiTab').classList.remove('active');
                 document.getElementById(savedTab + 'Tab').classList.add('active');
                 currentTab = savedTab;
-                document.getElementById('languageSelectorObrazki').style.display = 'none';
-                document.getElementById('helpButtonObrazki').style.display = 'none';
+                document.getElementById('languageSelectorObrazki').style.display = 'flex';
             }
+
+            keepActiveTabAtTop(savedTab);
         }
 
         // =================================================================
@@ -3330,7 +5428,7 @@
                     rounding_desc: "Zaokrągla do pełnej setki dodając minimum 100, maksimum 200 obrazków",
                     result_label_single: "Wynik - 1 rolka",
                     result_unit: "Obrazków",
-                    copy_button: "📋 Skopiuj wynik (format systemu)",
+                    copy_button: "📋 Skopiuj wynik",
                     calculate_button: "🔢 Oblicz",
                     stats_today: "📊 Ilość obliczeń",
                     stats_total_images: "🎯 Łącznie obrazków",
@@ -3382,7 +5480,7 @@
                     rounding_desc: "Округлює до повної сотні, додаючи мінімум 100, максимум 200 зображень",
                     result_label_single: "Результат - 1 рулон",
                     result_unit: "Зображень",
-                    copy_button: "📋 Скопіювати результат (формат системи)",
+                    copy_button: "📋 Скопіювати результат",
                     calculate_button: "🔢 Обчислити",
                     stats_today: "📊 Кількість обчислень",
                     stats_total_images: "🎯 Всього зображень",
@@ -3434,7 +5532,7 @@
                     rounding_desc: "Округляет до полной сотни, добавляя минимум 100, максимум 200 изображений",
                     result_label_single: "Результат - 1 рулон",
                     result_unit: "Изображений",
-                    copy_button: "📋 Скопировать результат (формат системы)",
+                    copy_button: "📋 Скопировать результат",
                     calculate_button: "🔢 Рассчитать",
                     stats_today: "📊 Количество расчётов",
                     stats_total_images: "🎯 Всего изображений",
@@ -3497,14 +5595,13 @@
                     flag.classList.toggle('active', flag.dataset.lang === lang);
                 });
 
+                AppI18n.applyLanguage(lang);
                 this.renderHistory();
 
                 const resultBox = document.getElementById('resultBoxObrazki');
                 if (resultBox.style.display === 'block' && this.history.length > 0) {
                     const lastCalc = this.history[0];
                     const resultDetails = document.getElementById('resultDetailsObrazki');
-                    const resultTotal = document.getElementById('resultTotalObrazki');
-                    const resultTotalText = document.getElementById('resultTotalTextObrazki');
 
                     if (lastCalc.zaokraglono) {
                         const roznica = lastCalc.wynikKońcowy - lastCalc.wynikDokładny;
@@ -3513,16 +5610,6 @@
                             .replace('{diff}', roznica);
                     } else {
                         resultDetails.innerHTML = '';
-                    }
-
-                    if (lastCalc.rolki > 1) {
-                        resultTotal.style.display = 'block';
-                        resultTotalText.textContent = this.translations[this.currentLang].total_result_text
-                            .replace(/{rolls}/g, lastCalc.rolki)
-                            .replace('{total}', lastCalc.wynikLacznie.toLocaleString('pl-PL'))
-                            .replace('{single}', lastCalc.wynikKońcowy.toLocaleString('pl-PL'));
-                    } else {
-                        resultTotal.style.display = 'none';
                     }
                 }
             },
@@ -3554,11 +5641,11 @@
             },
 
             saveConfig() {
+                const roundingMode = document.querySelector('input[name="roundingModeObrazki"]:checked')?.value || 'up100';
                 const config = {
                     walek: document.getElementById('walekObrazki').value,
                     motywy: document.getElementById('motywyObrazki').value,
-                    rolki: document.getElementById('rolkiObrazki').value,
-                    zaokraglaj: document.getElementById('zaokraglajObrazki').checked
+                    roundingMode
                 };
                 localStorage.setItem('obrazki_config', JSON.stringify(config));
             },
@@ -3569,8 +5656,9 @@
                     if (config) {
                         if (config.walek) document.getElementById('walekObrazki').value = config.walek;
                         if (config.motywy) document.getElementById('motywyObrazki').value = config.motywy;
-                        if (config.rolki) document.getElementById('rolkiObrazki').value = config.rolki;
-                        if (config.zaokraglaj !== undefined) document.getElementById('zaokraglajObrazki').checked = config.zaokraglaj;
+                        const savedMode = config.roundingMode || (config.zaokraglaj ? 'up200' : 'up100');
+                        const roundingInput = document.querySelector(`input[name="roundingModeObrazki"][value="${savedMode}"]`);
+                        if (roundingInput) roundingInput.checked = true;
                     }
                 } catch (e) {
                     console.error('Błąd wczytywania konfiguracji:', e);
@@ -3583,8 +5671,7 @@
                 const metry = parseFloat(document.getElementById('metryObrazki').value);
                 const walek = parseFloat(document.getElementById('walekObrazki').value);
                 const motywy = parseInt(document.getElementById('motywyObrazki').value);
-                const zaokraglaj = document.getElementById('zaokraglajObrazki').checked;
-                const rolki = parseInt(document.getElementById('rolkiObrazki').value) || 1;
+                const roundingMode = document.querySelector('input[name="roundingModeObrazki"]:checked')?.value || 'up100';
 
                 // Zapisz konfigurację po obliczeniu
                 this.saveConfig();
@@ -3598,19 +5685,21 @@
                 let wynikKońcowy = wynikDokładny;
                 let zaokraglono = false;
 
-                if (zaokraglaj) {
+                if (roundingMode === 'up100') {
+                    const doDodania = (100 - (wynikDokładny % 100)) % 100;
+                    wynikKońcowy = wynikDokładny + doDodania;
+                    zaokraglono = doDodania > 0;
+                } else if (roundingMode === 'up200') {
                     const doDodania = 100 + (100 - (wynikDokładny % 100)) % 100;
                     wynikKońcowy = wynikDokładny + doDodania;
                     zaokraglono = true;
                 }
 
                 this.lastResult = wynikKońcowy;
-                const wynikLacznie = wynikKońcowy * rolki;
 
                 const resultBox = document.getElementById('resultBoxObrazki');
                 const resultValue = document.getElementById('resultValueObrazki');
                 const resultDetails = document.getElementById('resultDetailsObrazki');
-                const resultTotal = document.getElementById('resultTotalObrazki');
 
                 resultBox.style.display = 'block';
                 resultValue.textContent = wynikKońcowy.toLocaleString('pl-PL');
@@ -3624,16 +5713,6 @@
                     resultDetails.innerHTML = '';
                 }
 
-                if (rolki > 1) {
-                    resultTotal.style.display = 'block';
-                    document.getElementById('resultTotalTextObrazki').textContent = this.translations[this.currentLang].total_result_text
-                        .replace(/{rolls}/g, rolki)
-                        .replace('{total}', wynikLacznie.toLocaleString('pl-PL'))
-                        .replace('{single}', wynikKońcowy.toLocaleString('pl-PL'));
-                } else {
-                    resultTotal.style.display = 'none';
-                }
-
                 resultValue.style.transform = 'scale(0)';
                 setTimeout(() => {
                     resultValue.style.transition = 'transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
@@ -3642,7 +5721,7 @@
 
                 const historyItem = {
                     id: Date.now(),
-                    metry, walek, motywy, rolki, wynikDokładny, wynikKońcowy, wynikLacznie, zaokraglono,
+                    metry, walek, motywy, wynikDokładny, wynikKońcowy, zaokraglono, roundingMode,
                     timestamp: new Date().toLocaleString('pl-PL', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })
                 };
 
@@ -3668,27 +5747,6 @@
                         btn.style.background = 'rgba(255,255,255,0.2)';
                     }, 2000);
 
-                    // AUTO-INSERT INTO ROLKI APP AND SWITCH TAB
-                    // Convert format: if result is 25.5, insert 25500 (multiply by 1000)
-                    const valueForRolki = this.lastResult;
-                    const imagesField = document.getElementById('imagesRolki');
-                    imagesField.value = valueForRolki;
-
-                    imagesField.dispatchEvent(new Event('input', { bubbles: true }));
-
-                    // Switch to Rolki tab
-                    setTimeout(() => {
-                        document.querySelector('.tab-button.active').classList.remove('active');
-                        document.querySelectorAll('.tab-button')[1].classList.add('active');
-                        document.getElementById('obrazkiTab').classList.remove('active');
-                        document.getElementById('rolkiTab').classList.add('active');
-                        currentTab = 'rolki';
-                        document.getElementById('languageSelectorObrazki').style.display = 'none';
-                        document.getElementById('helpButtonObrazki').style.display = 'none';
-
-                        // Focus on the WEIGHT field (not images) so user can immediately enter weight
-                        document.getElementById('weightRolki').focus();
-                    }, 500);
                 }).catch(err => console.error('Błąd kopiowania:', err));
             },
 
@@ -3718,16 +5776,6 @@
                         wynikHTML = `<div class="history-result">${langDict.history_result_label} ${wynikDoWyswietlenia.toLocaleString('pl-PL')} ${langDict.history_images_unit_single}</div>`;
                     }
 
-                    if (item.rolki > 1) {
-                        wynikHTML += `
-                            <div style="margin-top: 0.8rem; padding: 0.8rem; background: rgba(76, 175, 80, 0.1); border-radius: 5px; border-left: 3px solid #4caf50;">
-                                <strong style="color: #4caf50;">${langDict.history_total_label} ${item.wynikLacznie.toLocaleString('pl-PL')} ${langDict.history_total_images_unit}</strong>
-                                <span style="font-size: 0.9rem; color: var(--text-secondary); display: block; margin-top: 0.2rem;">
-                                    (${wynikDoWyswietlenia.toLocaleString('pl-PL')} × ${item.rolki} ${langDict.history_total_from_rolls})
-                                </span>
-                            </div>`;
-                    }
-
                     return `
                         <div class="history-item">
                             <div class="history-item-header">
@@ -3737,8 +5785,6 @@
                             <div class="history-item-data">
                                 <div class="history-data-item">${langDict.history_meters} ${item.metry.toLocaleString('pl-PL')} m</div>
                                 <div class="history-data-item">${langDict.history_sleeve} ${item.walek} cm</div>
-                                <div class="history-data-item">${langDict.history_motifs} ${item.motywy}</div>
-                                ${item.rolki > 1 ? `<div class="history-data-item">${langDict.history_rolls} ${item.rolki}</div>` : ''}
                             </div>
                             ${wynikHTML}
                         </div>`;
@@ -3746,13 +5792,7 @@
             },
 
             updateStats() {
-                const statToday = this.history.length;
-                const statTotal = this.history.reduce((sum, item) => sum + (item.wynikLacznie || item.wynikKońcowy || item.wynik || 0), 0);
-                const statAvg = this.history.length > 0 ? Math.round(this.history.reduce((sum, item) => sum + item.metry, 0) / this.history.length) : 0;
-
-                document.getElementById('statTodayObrazki').textContent = statToday;
-                document.getElementById('statTotalObrazki').textContent = statTotal.toLocaleString('pl-PL');
-                document.getElementById('statAvgObrazki').textContent = statAvg.toLocaleString('pl-PL') + ' m';
+                // Statystyki rolek przejął dedykowany tab "Licznik Rolek".
             },
 
             deleteHistoryItem(id) {
@@ -3778,15 +5818,10 @@
                     this.updateStats();
                     document.getElementById('resultBoxObrazki').style.display = 'none';
                     document.getElementById('calculatorFormObrazki').reset();
-                    document.getElementById('rolkiObrazki').value = 1;
+                    document.querySelector('input[name="roundingModeObrazki"][value="up100"]').checked = true;
                 }
             }
         };
-
-        function toggleHelpObrazki() {
-            const helpBox = document.getElementById('helpBoxObrazki');
-            helpBox.style.display = (helpBox.style.display === 'none' || helpBox.style.display === '') ? 'block' : 'none';
-        }
 
         // =================================================================
         // ROLKI APP
@@ -3822,6 +5857,7 @@
                 this.totalRolls = document.getElementById('totalRollsRolki');
                 this.totalWeight = document.getElementById('totalWeightRolki');
                 this.totalImages = document.getElementById('totalImagesRolki');
+                this.avgWeightPerRoll = document.getElementById('avgWeightPerRollRolki');
                 this.clearAllBtn = document.getElementById('clearAllBtnRolki');
 
                 this.editPalletModal = document.getElementById('editPalletModalRolki');
@@ -3922,6 +5958,23 @@
                     }
                 });
 
+                [
+                    this.weightInput,
+                    this.imagesInput,
+                    this.quantityInput,
+                    this.rollsPerPalletInput,
+                    this.lastRollNumber,
+                    this.startingPalletNumberInput,
+                    this.inheritedRollsCountInput,
+                    this.inheritedRollsWeightInput
+                ].forEach(input => {
+                    input.addEventListener('wheel', (event) => {
+                        if (document.activeElement === input) {
+                            event.preventDefault();
+                        }
+                    }, { passive: false });
+                });
+
                 this.cancelEditBtn.addEventListener('click', () => this.closeEditModal());
                 this.saveEditBtn.addEventListener('click', () => this.saveEditPallet());
                 this.editPalletModal.addEventListener('click', (e) => {
@@ -3948,6 +6001,17 @@
                 this.orderCompletedInput.addEventListener('change', () => {
                     this.saveOrderSettings();
                     this.updateProgressBar();
+                });
+
+                [
+                    this.orderLengthInput,
+                    this.orderCompletedInput
+                ].forEach(input => {
+                    input.addEventListener('wheel', (event) => {
+                        if (document.activeElement === input) {
+                            event.preventDefault();
+                        }
+                    }, { passive: false });
                 });
 
                 // Kliknięcie progress bar otwiera modal zarządzania bazą
@@ -4404,6 +6468,9 @@
                 this.totalRolls.textContent = totalRolls;
                 this.totalWeight.textContent = totalWeight.toFixed(2);
                 this.totalImages.textContent = totalImages;
+                if (this.avgWeightPerRoll) {
+                    this.avgWeightPerRoll.textContent = totalRolls > 0 ? `${(totalWeight / totalRolls).toFixed(1)} kg` : '0';
+                }
 
                 if (totalRolls > 0) {
                     this.clearAllBtn.style.display = 'block';
@@ -4445,6 +6512,13 @@
                     btn.addEventListener('click', (e) => {
                         const id = parseFloat(e.target.dataset.id);
                         this.deleteRoll(id);
+                    });
+                });
+
+                this.rollsList.querySelectorAll('.btn-edit-roll').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = parseFloat(e.target.dataset.id);
+                        this.startEditMainRoll(id);
                     });
                 });
 
@@ -4681,6 +6755,10 @@
                 // Uwzględnij odziedziczone rolki w wadze i ilości (tylko dla normalnego trybu)
                 const totalPalletWeight = palletWeight + (pallet.inheritedWeight || 0);
                 const totalRollCount = pallet.rolls.length + (pallet.inheritedCount || 0);
+                const palletCapacity = pallet.size || this.getRollsPerPallet();
+                const palletStatus = palletCapacity > 0
+                    ? `${Math.min(totalRollCount, palletCapacity)}/${palletCapacity}`
+                    : `${totalRollCount}`;
 
                 // Odwróć kolejność rolek - najnowsze na górze
                 const reversedRolls = [...pallet.rolls].reverse();
@@ -4720,6 +6798,9 @@
                                                 <span>Obrazki: <strong>${palletImages}</strong></span>
                                             </div>
                                         ` : ''}
+                                        <div class="pallet-stat">
+                                            <span>Status: <strong>${palletStatus}</strong></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Brak przycisku Edytuj w trybie pod torby -->
@@ -4753,6 +6834,9 @@
                                             <span>Obrazki: <strong>${palletImages}</strong></span>
                                         </div>
                                     ` : ''}
+                                    <div class="pallet-stat">
+                                        <span>Status: <strong>${palletStatus}</strong></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="pallet-actions" onclick="event.stopPropagation()">
@@ -4806,7 +6890,7 @@
                     : '';
 
                 return `
-                    <div class="${itemClass}">
+                    <div class="${itemClass}" data-roll-id="${roll.id}">
                         <div class="roll-info">
                             ${rollNumberText}
                             ${previousShiftBadge}
@@ -4823,12 +6907,66 @@
                             <div class="roll-time">Dodano: ${timeString}</div>
                         </div>
                         <div class="roll-actions">
+                            <button class="btn-edit-roll" data-id="${roll.id}">
+                                Edytuj
+                            </button>
                             <button class="btn-delete" data-id="${roll.id}">
                                 Usuń
                             </button>
                         </div>
                     </div>
                 `;
+            }
+
+            startEditMainRoll(rollId) {
+                const roll = this.rolls.find(r => r.id === rollId);
+                if (!roll) return;
+
+                const item = document.querySelector(`.roll-item[data-roll-id="${rollId}"]`);
+                if (!item) return;
+
+                item.classList.add('editing-roll-main');
+                const infoDiv = item.querySelector('.roll-info');
+                const actionsDiv = item.querySelector('.roll-actions');
+
+                infoDiv.innerHTML = `
+                    <div class="roll-number">Edycja rolki</div>
+                    <div class="main-roll-edit-grid">
+                        <label>
+                            <span>Waga (kg)</span>
+                            <input type="number" id="edit-main-weight-${rollId}" value="${roll.weight}" step="0.01">
+                        </label>
+                        <label>
+                            <span>Obrazki</span>
+                            <input type="number" id="edit-main-images-${rollId}" value="${roll.images || ''}" step="1">
+                        </label>
+                    </div>
+                `;
+
+                actionsDiv.innerHTML = `
+                    <button class="btn-edit-roll" onclick="rollTracker.saveEditMainRoll(${rollId})">Zapisz</button>
+                    <button class="btn-delete" onclick="rollTracker.render()">Anuluj</button>
+                `;
+            }
+
+            saveEditMainRoll(rollId) {
+                const weightInput = document.getElementById(`edit-main-weight-${rollId}`);
+                const imagesInput = document.getElementById(`edit-main-images-${rollId}`);
+                const newWeight = parseFloat(weightInput?.value);
+                const newImages = parseInt(imagesInput?.value) || 0;
+
+                if (!newWeight || newWeight <= 0) {
+                    alert('Wpisz prawidłową wagę');
+                    return;
+                }
+
+                const roll = this.rolls.find(r => r.id === rollId);
+                if (!roll) return;
+
+                roll.weight = newWeight;
+                roll.images = newImages;
+                this.saveToStorage();
+                this.render();
             }
 
             saveToStorage() {
@@ -5226,7 +7364,13 @@
 
             updateBadge() {
                 const badge = document.getElementById('pobraneBadge');
+                const inlineCount = document.getElementById('pobraneInlineCount');
                 const count = this.rolls.length;
+
+                if (inlineCount) {
+                    inlineCount.textContent = count;
+                    inlineCount.style.display = 'inline-flex';
+                }
 
                 if (count > 0) {
                     badge.textContent = count;
@@ -5872,11 +8016,16 @@
                     skalowanieMode.style.display = 'block';
                 }
 
+                const headerEl = document.querySelector('.farby-recipe-panel .calculator-header');
+                if (headerEl) {
+                    headerEl.textContent = selectedMode === 'beczka' ? 'Przerabianie na beczkę' : 'Skalowanie recepty';
+                }
+                this.updateOriginalTotal();
+
                 // Wyczyść wyniki
                 document.getElementById('resultsCardFarby').style.display = 'none';
                 document.getElementById('chartCardFarby').style.display = 'none';
-                document.getElementById('printBtnFarby').style.display = 'none';
-                document.getElementById('shareBtnFarby').style.display = 'none';
+                document.getElementById('printBtnFarby').disabled = true;
             },
 
             attachInputListeners() {
@@ -5897,6 +8046,7 @@
                 farbyInputs.forEach(inputId => {
                     const element = document.getElementById(inputId);
                     if (element) {
+                        element.addEventListener('input', () => this.updateRecipePreview());
                         element.addEventListener('keypress', (e) => {
                             if (e.key === 'Enter') {
                                 e.preventDefault();
@@ -5918,8 +8068,6 @@
             },
 
             updateOriginalTotal() {
-                if (this.currentMode !== 'skalowanie') return;
-
                 let total = 0;
                 this.selectedPigments.forEach(pigment => {
                     const input = document.getElementById(`pigment_${pigment.name}_farby`);
@@ -5927,7 +8075,33 @@
                     total += value;
                 });
 
-                document.getElementById('originalTotalFarby').value = total.toFixed(3);
+                const originalTotal = document.getElementById('originalTotalFarby');
+                if (originalTotal) originalTotal.value = total > 0 ? total.toFixed(3) : '';
+                this.updateRecipePreview();
+            },
+
+            getCurrentRatio() {
+                if (this.currentMode === 'beczka') {
+                    const bucket = parseFloat(document.getElementById('bucketAmountFarby').value) || 0;
+                    const barrel = parseFloat(document.getElementById('barrelAmountFarby').value) || 0;
+                    return bucket > 0 && barrel > 0 ? barrel / bucket : null;
+                }
+
+                const originalTotal = parseFloat(document.getElementById('originalTotalFarby').value) || 0;
+                const targetAmount = parseFloat(document.getElementById('targetAmountFarby').value) || 0;
+                return originalTotal > 0 && targetAmount > 0 ? targetAmount / originalTotal : null;
+            },
+
+            updateRecipePreview() {
+                const ratio = this.getCurrentRatio();
+                this.selectedPigments.forEach(pigment => {
+                    const input = document.getElementById(`pigment_${pigment.name}_farby`);
+                    const preview = document.getElementById(`pigment_result_${pigment.name}_farby`);
+                    if (!preview) return;
+
+                    const value = parseFloat(input?.value) || 0;
+                    preview.textContent = ratio && value > 0 ? `${(value * ratio).toFixed(3)} kg` : '-';
+                });
             },
 
             getCustomPigments() {
@@ -5948,18 +8122,23 @@
                     const isSelected = this.selectedPigments.some(p => p.name === pigment.name);
                     const isCustom = !this.defaultPigments.find(p => p.name === pigment.name);
 
-                    const item = document.createElement('div');
-                    item.className = 'pigment-item';
+                    const item = document.createElement('button');
+                    item.type = 'button';
+                    item.className = `pigment-item ${isSelected ? 'selected' : ''}`;
+                    item.onclick = () => this.togglePigment(pigment.name);
                     item.innerHTML = `
                         <div class="pigment-info">
                             <div class="pigment-color" style="background: ${pigment.color}"></div>
                             <span class="pigment-name">${pigment.name}</span>
-                            ${isCustom ? `<button class="icon-btn-farby" onclick="FarbyApp.deleteCustomPigment('${pigment.name}')">🗑️</button>` : ''}
                         </div>
-                        <div class="switch ${isSelected ? 'active' : ''}" onclick="FarbyApp.togglePigment('${pigment.name}')">
-                            <div class="switch-thumb"></div>
-                        </div>
+                        ${isCustom ? `<span class="icon-btn-farby" title="Usuń pigment">×</span>` : ''}
                     `;
+                    if (isCustom) {
+                        item.querySelector('.icon-btn-farby')?.addEventListener('click', event => {
+                            event.stopPropagation();
+                            this.deleteCustomPigment(pigment.name);
+                        });
+                    }
                     list.appendChild(item);
                 });
 
@@ -5967,6 +8146,7 @@
             },
 
             togglePigment(name) {
+                const previousAmounts = this.getCurrentPigmentAmounts();
                 const allPigments = this.getAllPigments();
                 const pigment = allPigments.find(p => p.name === name);
 
@@ -5977,6 +8157,26 @@
                 }
 
                 this.renderPigmentList();
+                this.restorePigmentAmounts(previousAmounts);
+            },
+
+            getCurrentPigmentAmounts() {
+                const amounts = {};
+                this.selectedPigments.forEach(pigment => {
+                    const input = document.getElementById(`pigment_${pigment.name}_farby`);
+                    if (input && input.value !== '') {
+                        amounts[pigment.name] = input.value;
+                    }
+                });
+                return amounts;
+            },
+
+            restorePigmentAmounts(amounts) {
+                Object.entries(amounts).forEach(([name, value]) => {
+                    const input = document.getElementById(`pigment_${name}_farby`);
+                    if (input) input.value = value;
+                });
+                this.updateOriginalTotal();
             },
 
             renderPigmentInputs() {
@@ -5984,22 +8184,25 @@
                 inputsDiv.innerHTML = '';
 
                 if (this.selectedPigments.length === 0) {
-                    inputsDiv.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">Wybierz pigmenty powyżej</p>';
+                    inputsDiv.innerHTML = '<div class="farby-empty-recipe">Wybierz pigmenty z palety po lewej</div>';
+                    AppI18n.applyLanguage(AppI18n.lang);
                     return;
                 }
 
                 this.selectedPigments.forEach(pigment => {
                     const group = document.createElement('div');
-                    group.className = 'form-group';
+                    group.className = 'pigment-input-group-farby';
                     group.innerHTML = `
-                        <label>
-                            <span class="pigment-color" style="background: ${pigment.color}; display: inline-block; width: 15px; height: 15px; margin-right: 8px; vertical-align: middle; border-radius: 50%; border: 2px solid var(--border);"></span>
-                            ${pigment.name}:
-                        </label>
-                        <input type="number" id="pigment_${pigment.name}_farby" placeholder="0" step="0.001">
+                        <div class="recipe-pigment-name">
+                            <span class="pigment-color" style="background: ${pigment.color};"></span>
+                            <span>${pigment.name}</span>
+                        </div>
+                        <input type="number" id="pigment_${pigment.name}_farby" placeholder="0.000" step="0.001">
+                        <div class="recipe-result-preview" id="pigment_result_${pigment.name}_farby">-</div>
                     `;
                     inputsDiv.appendChild(group);
                 });
+                AppI18n.applyLanguage(AppI18n.lang);
             },
 
             showAddPigmentModal() {
@@ -6118,8 +8321,7 @@
             },
 
             showActionButtons() {
-                document.getElementById('printBtnFarby').style.display = 'inline-block';
-                document.getElementById('shareBtnFarby').style.display = 'inline-block';
+                document.getElementById('printBtnFarby').disabled = false;
             },
 
             displayResults(results, title = 'Dolewka do Beczki') {
@@ -6134,45 +8336,66 @@
 
                 resultsCard.style.display = 'block';
                 resultsList.innerHTML = '';
+                const total = Object.values(results).reduce((sum, amount) => sum + parseFloat(amount || 0), 0);
+                const totalBadge = document.getElementById('farbyTotalBadge');
+                if (totalBadge) totalBadge.textContent = `${total.toFixed(3)} kg`;
 
                 Object.entries(results).forEach(([name, amount]) => {
+                    const pigment = this.selectedPigments.find(p => p.name === name);
                     const item = document.createElement('div');
                     item.className = 'result-item-farby';
                     item.innerHTML = `
-                        <span class="result-label-farby">${name}:</span>
-                        <span class="result-value-farby">${amount}kg</span>
+                        <span class="result-label-farby">
+                            <span class="pigment-color" style="background: ${pigment?.color || '#999'};"></span>
+                            ${name}
+                        </span>
+                        <span class="result-value-farby">${amount} kg</span>
                     `;
                     resultsList.appendChild(item);
                 });
 
                 // Pokaż przyciski drukowania i udostępniania
-                document.getElementById('printBtnFarby').style.display = 'block';
-                document.getElementById('shareBtnFarby').style.display = 'block';
+                document.getElementById('printBtnFarby').disabled = false;
             },
 
             drawChart(results) {
                 const chartCard = document.getElementById('chartCardFarby');
                 chartCard.style.display = 'block';
-
-                const canvas = document.getElementById('pigmentChartFarby');
                 const labels = Object.keys(results);
                 const data = Object.values(results).map(v => parseFloat(v));
-                const colors = labels.map(label => {
+                const total = data.reduce((sum, value) => sum + value, 0);
+                const bars = document.getElementById('pigmentBarsFarby');
+                if (!bars) return;
+
+                bars.innerHTML = labels.map((label, index) => {
                     const pigment = this.selectedPigments.find(p => p.name === label);
-                    return pigment?.color || '#999';
-                });
-
-                if (this.chart) {
-                    this.chart.destroy();
-                }
-
-                this.chart = new SimpleChart(canvas);
-                this.chart.drawPieChart(data, colors, labels);
+                    const color = pigment?.color || '#999';
+                    const percent = total > 0 ? (data[index] / total) * 100 : 0;
+                    return `
+                        <div class="farby-ratio-row">
+                            <div class="farby-ratio-meta">
+                                <span class="farby-ratio-name">
+                                    <span class="pigment-color" style="background: ${color};"></span>
+                                    <span>${label}</span>
+                                </span>
+                                <span class="farby-ratio-values">
+                                    <small>${data[index].toFixed(3)} kg</small>
+                                    <strong>${percent.toFixed(1)}%</strong>
+                                </span>
+                            </div>
+                            <div class="farby-ratio-track">
+                                <div class="farby-ratio-fill" style="width: ${percent}%; background: ${color};"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
             },
 
             resetForm() {
                 document.getElementById('bucketAmountFarby').value = '';
                 document.getElementById('barrelAmountFarby').value = '';
+                document.getElementById('targetAmountFarby').value = '';
+                document.getElementById('originalTotalFarby').value = '';
 
                 // NOWE: Odznacz wszystkie pigmenty
                 this.selectedPigments = [];
@@ -6181,10 +8404,11 @@
 
                 document.getElementById('resultsCardFarby').style.display = 'none';
                 document.getElementById('chartCardFarby').style.display = 'none';
+                document.getElementById('pigmentBarsFarby').innerHTML = '';
+                document.getElementById('farbyTotalBadge').textContent = '0 kg';
 
                 // Ukryj przyciski drukowania i udostępniania
-                document.getElementById('printBtnFarby').style.display = 'none';
-                document.getElementById('shareBtnFarby').style.display = 'none';
+                document.getElementById('printBtnFarby').disabled = true;
 
                 if (this.chart) {
                     this.chart.destroy();
@@ -6198,6 +8422,15 @@
             closeSaveModal() {
                 document.getElementById('saveMixtureModalFarby').style.display = 'none';
                 document.getElementById('mixtureNameFarby').value = '';
+            },
+
+            showPresetsModal() {
+                this.renderSavedMixtures();
+                document.getElementById('presetsModalFarby').style.display = 'flex';
+            },
+
+            closePresetsModal() {
+                document.getElementById('presetsModalFarby').style.display = 'none';
             },
 
             saveMixture() {
@@ -6254,6 +8487,7 @@
                             </div>
                         </div>
                     `;
+                    AppI18n.applyLanguage(AppI18n.lang);
                     return;
                 }
 
@@ -6263,19 +8497,24 @@
                 saved.forEach(mixture => {
                     const card = document.createElement('div');
                     card.className = 'mixture-card-farby';
+                    const pigmentCount = Object.keys(mixture.pigments || {}).length;
+                    const modeLabel = mixture.mode === 'skalowanie' ? 'Skalowanie' : 'Beczka';
+                    const amountInfo = mixture.mode === 'skalowanie'
+                        ? `Cel: ${mixture.targetAmount || '-'} kg`
+                        : `Wiaderko: ${mixture.bucketAmount || '-'} kg | Beczka: ${mixture.barrelAmount || '-'} kg`;
                     card.innerHTML = `
                         <div class="mixture-card-title-farby">${mixture.name}</div>
-                        <div class="mixture-card-info-farby">Wiaderko: ${mixture.bucketAmount}kg</div>
-                        <div class="mixture-card-info-farby">Beczka: ${mixture.barrelAmount}kg</div>
-                        <div class="mixture-card-info-farby">Data: ${new Date(mixture.date).toLocaleDateString('pl-PL')}</div>
-                        <div class="mixture-card-info-farby">Pigmenty: ${Object.keys(mixture.pigments).length}</div>
+                        <div class="mixture-card-info-farby">${modeLabel} • ${pigmentCount} pigmentów</div>
+                        <div class="mixture-card-info-farby">${amountInfo}</div>
+                        <div class="mixture-card-info-farby">${new Date(mixture.date).toLocaleDateString('pl-PL')}</div>
                         <div class="mixture-card-actions-farby">
                             <button class="btn-load-farby" onclick="FarbyApp.loadMixture(${mixture.id})">Wczytaj</button>
-                            <button class="btn-delete-farby" onclick="FarbyApp.deleteMixture(${mixture.id})">Usuń</button>
+                            <button class="btn-delete-farby" onclick="FarbyApp.deleteMixture(${mixture.id})">×</button>
                         </div>
                     `;
                     list.appendChild(card);
                 });
+                AppI18n.applyLanguage(AppI18n.lang);
             },
 
             loadMixture(id) {
@@ -6313,6 +8552,7 @@
                         }
                     });
 
+                    this.closePresetsModal();
                     setTimeout(() => this.calculate(), 100);
                 }
             },
@@ -6326,29 +8566,157 @@
                 }
             },
 
-            printMixture() {
-                window.print();
-            },
-
-            shareMixture() {
+            buildPrintSheet() {
                 const bucket = document.getElementById('bucketAmountFarby').value;
                 const barrel = document.getElementById('barrelAmountFarby').value;
+                const target = document.getElementById('targetAmountFarby').value;
+                const total = document.getElementById('farbyTotalBadge')?.textContent || '';
+                const title = document.querySelector('#resultsCardFarby .calculator-header')?.textContent || 'Dolewka do Beczki';
+                const printSheet = document.getElementById('farbyPrintSheet');
 
-                let text = `Sentrex - Mieszanka Farb\n\nWiaderko: ${bucket}kg\nBeczka: ${barrel}kg\n\nDolewka do Beczki:\n`;
-
-                const resultItems = document.querySelectorAll('.result-item-farby');
-                resultItems.forEach(item => {
-                    const label = item.querySelector('.result-label-farby').textContent;
-                    const value = item.querySelector('.result-value-farby').textContent;
-                    text += `${label} ${value}\n`;
+                const rows = Array.from(document.querySelectorAll('#resultsListFarby .result-item-farby')).map(item => {
+                    const label = item.querySelector('.result-label-farby')?.textContent.trim() || '';
+                    const value = item.querySelector('.result-value-farby')?.textContent.trim() || '';
+                    const dot = item.querySelector('.pigment-color');
+                    const color = dot?.style.background || '#999';
+                    return { label, value, color };
                 });
 
-                if (navigator.share) {
-                    navigator.share({ text });
-                } else {
-                    navigator.clipboard.writeText(text);
-                    alert('Skopiowano do schowka!');
+                if (!rows.length) {
+                    alert('Najpierw oblicz mieszankę.');
+                    return false;
                 }
+
+                const meta = this.currentMode === 'beczka'
+                    ? `<span>Wiaderko: <strong>${bucket || '-'} kg</strong></span><span>Beczka: <strong>${barrel || '-'} kg</strong></span>`
+                    : `<span>Tryb: <strong>Skalowanie</strong></span><span>Cel: <strong>${target || '-'} kg</strong></span>`;
+
+                printSheet.innerHTML = `
+                    <div class="farby-print-header">
+                        <div>
+                            <div class="farby-print-brand">SENTREX - Kalkulator Farb</div>
+                            <h1>${title}</h1>
+                        </div>
+                        <div class="farby-print-total">${total}</div>
+                    </div>
+                    <div class="farby-print-meta">${meta}</div>
+                    <table class="farby-print-table">
+                        <thead>
+                            <tr>
+                                <th>Pigment</th>
+                                <th>Ilość do dodania</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(row => `
+                                <tr>
+                                    <td><span class="farby-print-dot" style="background: ${row.color};"></span>${row.label}</td>
+                                    <td>${row.value}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                return true;
+            },
+
+            printMixture() {
+                if (!this.buildPrintSheet()) return;
+                window.print();
+            }
+        };
+
+        // =================================================================
+        // PALETA APP
+        // =================================================================
+        const PaletaApp = {
+            init() {
+                this.loadConfig();
+                updateConfigSummaryPaleta();
+
+                ['emptyPalletWeight', 'rollsOnPallet'].forEach(id => {
+                    const input = document.getElementById(id);
+                    input.addEventListener('input', () => {
+                        this.saveConfig();
+                        updateConfigSummaryPaleta();
+                    });
+                    input.addEventListener('wheel', event => {
+                        event.preventDefault();
+                        event.currentTarget.blur();
+                    }, { passive: false });
+                });
+
+                const grossInput = document.getElementById('grossPalletWeight');
+                grossInput.addEventListener('wheel', event => {
+                    event.preventDefault();
+                    event.currentTarget.blur();
+                }, { passive: false });
+                grossInput.addEventListener('keydown', event => {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        this.calculate(event);
+                    }
+                });
+
+                if (localStorage.getItem('paleta_configCollapsed') === 'true') {
+                    document.getElementById('configBodyPaleta').classList.add('collapsed');
+                    document.getElementById('configArrowPaleta').classList.add('rotated');
+                }
+            },
+
+            saveConfig() {
+                const config = {
+                    emptyPalletWeight: document.getElementById('emptyPalletWeight').value,
+                    rollsOnPallet: document.getElementById('rollsOnPallet').value
+                };
+                localStorage.setItem('paleta_config', JSON.stringify(config));
+            },
+
+            loadConfig() {
+                try {
+                    const config = JSON.parse(localStorage.getItem('paleta_config') || '{}');
+                    if (config.emptyPalletWeight) document.getElementById('emptyPalletWeight').value = config.emptyPalletWeight;
+                    if (config.rollsOnPallet) document.getElementById('rollsOnPallet').value = config.rollsOnPallet;
+                } catch (error) {
+                    console.error('Błąd wczytywania konfiguracji palety:', error);
+                }
+            },
+
+            calculate(event) {
+                if (event) event.preventDefault();
+
+                const emptyWeight = parseFloat(document.getElementById('emptyPalletWeight').value) || 0;
+                const rolls = parseInt(document.getElementById('rollsOnPallet').value, 10) || 0;
+                const grossWeight = parseFloat(document.getElementById('grossPalletWeight').value);
+
+                if (!grossWeight || grossWeight <= 0) {
+                    alert('Wpisz wagę palety z rolkami.');
+                    return;
+                }
+                if (emptyWeight < 0) {
+                    alert('Waga pustej palety nie może być ujemna.');
+                    return;
+                }
+                if (rolls <= 0) {
+                    alert('Ilość rolek musi być większa od zera.');
+                    return;
+                }
+                if (grossWeight <= emptyWeight) {
+                    alert('Waga brutto musi być większa niż waga pustej palety.');
+                    return;
+                }
+
+                this.saveConfig();
+                const netWeight = grossWeight - emptyWeight;
+                const exactSingleRollWeight = netWeight / rolls;
+                const singleRollWeight = Math.ceil(exactSingleRollWeight);
+
+                document.getElementById('singleRollWeightPaleta').textContent = singleRollWeight.toLocaleString('pl-PL', {
+                    maximumFractionDigits: 0
+                });
+                document.getElementById('resultDetailsPaleta').textContent =
+                    `${grossWeight.toLocaleString('pl-PL')} kg - ${emptyWeight.toLocaleString('pl-PL')} kg = ${netWeight.toLocaleString('pl-PL')} kg / ${rolls} rolki | dokładnie ${exactSingleRollWeight.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`;
+                document.getElementById('resultBoxPaleta').style.display = 'block';
             }
         };
 
@@ -6360,8 +8728,13 @@
         let rollTracker;
         let pobraneTracker;
 
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadCurrentTab();
+
             ObrazkiApp.loadHistory();
             ObrazkiApp.loadLanguage();
             ObrazkiApp.loadConfig();
@@ -6388,11 +8761,28 @@
             // Inicjalizacja FarbyApp
             FarbyApp.init();
 
+            // Inicjalizacja PaletaApp
+            PaletaApp.init();
+            keepActiveTabAtTop(currentTab);
+
             // Event listenery dla automatycznego zapisywania konfiguracji
             document.getElementById('walekObrazki').addEventListener('change', () => ObrazkiApp.saveConfig());
             document.getElementById('motywyObrazki').addEventListener('change', () => ObrazkiApp.saveConfig());
-            document.getElementById('rolkiObrazki').addEventListener('change', () => ObrazkiApp.saveConfig());
-            document.getElementById('zaokraglajObrazki').addEventListener('change', () => ObrazkiApp.saveConfig());
+            document.querySelectorAll('input[name="roundingModeObrazki"]').forEach(input => {
+                input.addEventListener('change', () => ObrazkiApp.saveConfig());
+            });
+
+            document.getElementById('metryObrazki').addEventListener('wheel', event => {
+                event.preventDefault();
+                event.currentTarget.blur();
+            }, { passive: false });
+
+            document.getElementById('metryObrazki').addEventListener('keydown', event => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    ObrazkiApp.calculate(event);
+                }
+            });
 
             // Wczytaj stan zwinięcia panelu konfiguracji Obrazki
             const obrazkiCollapsed = localStorage.getItem('obrazki_configCollapsed') === 'true';
@@ -6403,7 +8793,7 @@
             updateConfigSummaryObrazki();
 
             // Nasłuchuj zmian w polach konfiguracji Obrazki
-            ['walekObrazki', 'motywyObrazki', 'rolkiObrazki'].forEach(id => {
+            ['walekObrazki', 'motywyObrazki'].forEach(id => {
                 document.getElementById(id).addEventListener('input', updateConfigSummaryObrazki);
             });
         });
