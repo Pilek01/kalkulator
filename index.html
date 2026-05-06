@@ -1508,6 +1508,17 @@
 
         #rolkiTab .pallet-container.bag-mode {
             border-left-color: #a78bfa;
+            overflow: visible;
+        }
+
+        #rolkiTab .pallet-container.bag-mode .pallet-rolls:not(.collapsed) {
+            max-height: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .bag-mode-disabled {
+            opacity: 0.35;
+            pointer-events: none;
         }
 
         #rolkiTab .pallet-header {
@@ -3397,6 +3408,125 @@
             max-width: 1760px;
         }
 
+        /* ============================================================
+           METRY TAB REDESIGN
+           ============================================================ */
+        .metry-workspace {
+            display: grid;
+            grid-template-columns: minmax(360px, 1.4fr) minmax(240px, 0.8fr);
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .metry-config-panel { order: 2; }
+        .metry-main-panel   { order: 1; }
+
+        .metry-panel {
+            border: 1px solid rgba(91, 179, 217, 0.24);
+            border-radius: 8px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(91, 179, 217, 0.12), transparent 34%),
+                linear-gradient(145deg, rgba(27, 42, 60, 0.96), rgba(10, 19, 31, 0.96));
+            box-shadow: 0 18px 54px rgba(0,0,0,0.34);
+            padding: clamp(1rem, 1.5vw, 1.35rem);
+        }
+
+        .metry-eyebrow {
+            color: #82d8ff;
+            font-size: 0.72rem;
+            font-weight: 950;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.15rem;
+        }
+
+        .metry-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 1.1rem;
+        }
+
+        /* Mode grid */
+        .metry-mode-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.45rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .metry-mode-card {
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(91, 179, 217, 0.18);
+            border-radius: 8px;
+            background: rgba(5, 12, 21, 0.52);
+            padding: 0.7rem 0.75rem;
+            transition: border-color 0.18s, background 0.18s, transform 0.15s, box-shadow 0.18s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            user-select: none;
+        }
+
+        .metry-mode-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+        }
+
+        .metry-mode-card:hover {
+            border-color: rgba(91, 179, 217, 0.5);
+            background: rgba(91, 179, 217, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .metry-mode-card:has(input:checked) {
+            border-color: rgba(0, 191, 255, 0.72);
+            background: rgba(0, 191, 255, 0.11);
+            box-shadow: 0 0 0 1px rgba(0, 191, 255, 0.28), 0 6px 18px rgba(0, 191, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .metry-mode-card-icon {
+            font-size: 1.1rem;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .metry-mode-card-title {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .metry-mode-card:has(input:checked) .metry-mode-card-title {
+            color: #00e5ff;
+        }
+
+        .metry-mode-card-desc {
+            font-size: 0.70rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+            margin-top: 0.1rem;
+        }
+
+        @media (max-width: 900px) {
+            .metry-workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .metry-mode-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .farby-workspace {
             display: grid;
             grid-template-columns: minmax(260px, 0.85fr) minmax(420px, 1.45fr) minmax(320px, 0.95fr);
@@ -3979,6 +4109,76 @@
                 padding: 0.65rem 0.7rem;
             }
         }
+        /* ============================================================
+           CUSTOM MODAL (replaces native alert/confirm)
+           ============================================================ */
+        .app-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .app-modal-overlay.app-modal-visible {
+            animation: appModalFadeIn 0.18s ease forwards;
+        }
+
+        @keyframes appModalFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .app-modal-box {
+            background:
+                radial-gradient(circle at 10% 0%, rgba(91, 179, 217, 0.13), transparent 55%),
+                linear-gradient(145deg, rgba(27, 42, 60, 0.99), rgba(8, 16, 28, 0.99));
+            border: 1px solid rgba(91, 179, 217, 0.32);
+            border-radius: 14px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(91,179,217,0.08);
+            padding: 2rem 2rem 1.6rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            animation: appModalSlideIn 0.24s cubic-bezier(0.34, 1.46, 0.64, 1) forwards;
+        }
+
+        @keyframes appModalSlideIn {
+            from { transform: scale(0.82) translateY(12px); opacity: 0; }
+            to   { transform: scale(1)    translateY(0);    opacity: 1; }
+        }
+
+        .app-modal-icon {
+            font-size: 2.4rem;
+            line-height: 1;
+            margin-bottom: 0.85rem;
+        }
+
+        .app-modal-message {
+            font-size: 0.98rem;
+            color: #dbe7f4;
+            line-height: 1.6;
+            margin-bottom: 1.6rem;
+            white-space: pre-wrap;
+        }
+
+        .app-modal-buttons {
+            display: flex;
+            gap: 0.65rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .app-modal-buttons .btn {
+            min-width: 108px;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -4118,9 +4318,9 @@
                 </div>
 
                 <div class="history-section">
-                    <div class="history-header">
+                    <div class="history-header" style="padding: 1rem 0.75rem 0;">
                         <div class="history-title" data-translate-key="history_title">📜 Historia obliczeń</div>
-                        <button class="btn btn-danger" onclick="ObrazkiApp.clearHistory()" style="width: auto; padding: 0.6rem 1.2rem;">
+                        <button class="btn btn-danger btn-small" onclick="ObrazkiApp.clearHistory()">
                             <span data-translate-key="clear_history_button">🗑️ Wyczyść historię</span>
                         </button>
                     </div>
@@ -4371,10 +4571,10 @@
 
                                 <!-- Rząd 2: Kontynuacja -->
                                 <div class="config-continuation">
-                                    <label class="checkbox-label">
+                                    <div class="checkbox-label">
                                         <input type="checkbox" id="continuationModeRolki">
-                                        <span>Kontynuacja zlecenia po poprzedniej zmianie</span>
-                                    </label>
+                                        <span style="cursor: default;">Kontynuacja zlecenia po poprzedniej zmianie</span>
+                                    </div>
 
                                     <!-- Pola kontynuacji (widoczne gdy checkbox zaznaczony) -->
                                     <div class="continuation-fields" id="continuationFields">
@@ -4534,231 +4734,144 @@
     <!-- METRY TAB CONTENT -->
     <div id="metryTab" class="tab-content">
         <div class="container">
-            <div class="calculator-card">
-                <div class="calculator-header">Kalkulator Metrów</div>
+            <div class="metry-workspace">
 
-                <form id="calculatorFormMetry" onsubmit="MetryApp.calculate(event)">
-                    <!-- Panel konfiguracji -->
-                    <div class="config-panel" id="configPanelMetry">
-                        <div class="config-header" onclick="toggleConfigPanelMetry()">
-                            <div class="config-header-left">
-                                <span class="config-icon">⚙️</span>
-                                <span class="config-title">KONFIGURACJA</span>
-                            </div>
-                            <div class="config-header-right">
-                                <span class="config-summary" id="configSummaryMetry"></span>
-                                <span class="toggle-arrow" id="configArrowMetry">▼</span>
-                            </div>
+                <!-- LEFT: Config panel -->
+                <aside class="metry-panel metry-config-panel">
+                    <div class="metry-panel-header" onclick="toggleConfigPanelMetry()" style="cursor:pointer;">
+                        <div>
+                            <div class="metry-eyebrow">KONFIGURACJA</div>
+                            <div class="calculator-header" style="margin:0; font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.15;">Parametry papieru</div>
                         </div>
-
-                        <div class="config-body" id="configBodyMetry">
-                            <!-- Gramatura z presetami -->
-                            <div class="form-group" style="margin-bottom: 1.5rem;">
-                                <label style="font-size: 0.9rem;">📊 Gramatura (g/m²)</label>
-                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
-                                    <button type="button" class="btn-preset" data-value="60" onclick="MetryApp.setGramatura(60)">60</button>
-                                    <button type="button" class="btn-preset" data-value="70" onclick="MetryApp.setGramatura(70)">70</button>
-                                    <button type="button" class="btn-preset" data-value="75" onclick="MetryApp.setGramatura(75)">75</button>
-                                    <button type="button" class="btn-preset active" data-value="80" onclick="MetryApp.setGramatura(80)">80</button>
-                                    <button type="button" class="btn-preset" data-value="85" onclick="MetryApp.setGramatura(85)">85</button>
-                                    <button type="button" class="btn-preset" data-value="90" onclick="MetryApp.setGramatura(90)">90</button>
-                                    <button type="button" class="btn-preset" data-value="110" onclick="MetryApp.setGramatura(110)">110</button>
-                                </div>
-                                <input
-                                    type="number"
-                                    id="gramaturaMetry"
-                                    name="gramatura"
-                                    step="1"
-                                    required
-                                    placeholder="80"
-                                    value="80"
-                                    style="font-size: 1rem; padding: 0.7rem;">
-                            </div>
-
-                            <!-- Szerokość -->
-                            <div class="form-group" style="margin-bottom: 1rem;">
-                                <label for="szerokoscMetry" style="font-size: 0.9rem;">📏 Szerokość papieru (cm)</label>
-                                <input
-                                    type="number"
-                                    id="szerokoscMetry"
-                                    name="szerokosc"
-                                    step="0.1"
-                                    required
-                                    placeholder="71"
-                                    value="71"
-                                    style="font-size: 1rem; padding: 0.7rem;">
-                            </div>
-
-                            <!-- Pola dla trybu Obrazki → Metry -->
-                            <div id="obrazkiFieldsMetry" style="display: none;">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                    <div class="form-group" style="margin-bottom: 0;">
-                                        <label for="walekMetry" style="font-size: 0.9rem;">🔧 Wałek (cm)</label>
-                                        <input
-                                            type="number"
-                                            id="walekMetry"
-                                            name="walek"
-                                            step="0.1"
-                                            placeholder="59"
-                                            value="59"
-                                            style="font-size: 1rem; padding: 0.7rem;">
-                                    </div>
-                                    <div class="form-group" style="margin-bottom: 0;">
-                                        <label for="motywyMetry" style="font-size: 0.9rem;">🎨 Motywy</label>
-                                        <input
-                                            type="number"
-                                            id="motywyMetry"
-                                            name="motywy"
-                                            step="1"
-                                            min="1"
-                                            placeholder="2"
-                                            value="2"
-                                            style="font-size: 1rem; padding: 0.7rem;">
-                                    </div>
-                                </div>
-                            </div>
+                        <div style="display:flex; align-items:center; gap:0.6rem;">
+                            <span class="config-summary metry-config-summary" id="configSummaryMetry" style="font-size:0.75rem; color:var(--text-secondary); text-align:right;"></span>
+                            <span class="toggle-arrow" id="configArrowMetry" style="color:#82d8ff; font-size:1rem;">▼</span>
                         </div>
                     </div>
 
-                    <!-- Przełącznik trybów - POPRAWIONE TOOLTIPS -->
-                    <div style="background: var(--bg-tertiary); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; border: 2px solid var(--border);">
-                        <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">🔄 Tryb kalkulacji:</div>
-                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <div id="configBodyMetry">
+                        <!-- Gramatura -->
+                        <div class="form-group" style="margin-bottom:1.2rem;">
+                            <label style="font-size:0.82rem; color:#82d8ff; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Gramatura (g/m²)</label>
+                            <div style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:0.5rem; margin-top:0.4rem;">
+                                <button type="button" class="btn-preset" data-value="60" onclick="MetryApp.setGramatura(60)">60</button>
+                                <button type="button" class="btn-preset" data-value="70" onclick="MetryApp.setGramatura(70)">70</button>
+                                <button type="button" class="btn-preset" data-value="75" onclick="MetryApp.setGramatura(75)">75</button>
+                                <button type="button" class="btn-preset active" data-value="80" onclick="MetryApp.setGramatura(80)">80</button>
+                                <button type="button" class="btn-preset" data-value="85" onclick="MetryApp.setGramatura(85)">85</button>
+                                <button type="button" class="btn-preset" data-value="90" onclick="MetryApp.setGramatura(90)">90</button>
+                                <button type="button" class="btn-preset" data-value="110" onclick="MetryApp.setGramatura(110)">110</button>
+                            </div>
+                            <input type="number" id="gramaturaMetry" name="gramatura" step="1" required placeholder="80" value="80" style="font-size:1rem; padding:0.7rem;">
+                        </div>
 
-                            <!-- Waga → Metry -->
-                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="waga-metry" checked onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
-                                <span style="font-size: 1rem; font-weight: 600;">📦 Waga → Metry</span>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile metrów dla X kg)</span>
-                                <div class="mode-tooltip">
-                                    <div class="tooltip-title">📦 Waga → Metry</div>
-                                    <div>Potrzebujesz osiągnąć określoną wagę do końca zlecenia. Oblicz ile metrów musisz jeszcze zadrukować.</div>
-                                    <div class="tooltip-example">💡 Przykład: Brakuje 150kg do końca zlecenia → ile metrów musisz zadrukować?</div>
-                                </div>
-                            </label>
-
-                            <!-- Metry → Waga -->
-                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="metry-waga" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
-                                <span style="font-size: 1rem; font-weight: 600;">📏 Metry → Waga</span>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile będzie ważyć X metrów)</span>
-                                <div class="mode-tooltip">
-                                    <div class="tooltip-title">📏 Metry → Waga</div>
-                                    <div>Zadrukowałeś określoną liczbę metrów i chcesz sprawdzić ile to będzie ważyć, żeby porównać z wagą docelową.</div>
-                                    <div class="tooltip-example">💡 Przykład: Zadrukowałeś 5000m → ile to kg? Czy wystarczy do zlecenia?</div>
-                                </div>
-                            </label>
-
-                            <!-- Obrazki → Metry -->
-                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="obrazki-metry" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
-                                <span style="font-size: 1rem; font-weight: 600;">🖼️ Obrazki → Metry</span>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile metrów dla X obrazków)</span>
-                                <div class="mode-tooltip">
-                                    <div class="tooltip-title">🖼️ Obrazki → Metry</div>
-                                    <div>Brakuje określonej liczby obrazków do końca zlecenia. Oblicz ile metrów papieru musisz zadrukować.</div>
-                                    <div class="tooltip-example">💡 Przykład: Brakuje 3000 obrazków → ile to metrów papieru ?</div>
-                                </div>
-                            </label>
-
-                            <!-- Metry → Obrazki -->
-                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="metry-obrazki" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
-                                <span style="font-size: 1rem; font-weight: 600;">📏 Metry → Obrazki</span>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile obrazków dla X metrów)</span>
-                                <div class="mode-tooltip">
-                                    <div class="tooltip-title">📏 Metry → Obrazki</div>
-                                    <div>Masz przygotowaną rolkę o określonej długości. Sprawdź ile obrazków z niej wyjdzie.</div>
-                                    <div class="tooltip-example">💡 Przykład: Przygotowałeś 8000m papieru → ile obrazków się zmieści?</div>
-                                </div>
-                            </label>
-
-                            <!-- Obrazki → Waga -->
-                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="obrazki-waga" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
-                                <span style="font-size: 1rem; font-weight: 600;">🖼️ Obrazki → Waga</span>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile będzie ważyć X obrazków)</span>
-                                <div class="mode-tooltip">
-                                    <div class="tooltip-title">🖼️ Obrazki → Waga</div>
-                                    <div>Brakuje określonej liczby obrazków do zlecenia. Oblicz ile będzie ważyć papier potrzebny do ich produkcji.</div>
-                                    <div class="tooltip-example">💡 Przykład: Brakuje 5000 obrazków → jaka waga papieru potrzebna?</div>
-                                </div>
-                            </label>
-
-                            <!-- Waga → Obrazki -->
-                            <label class="mode-label" style="display: flex; align-items: center; cursor: pointer; padding: 0.5rem; border-radius: 5px; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,191,255,0.1)'" onmouseout="this.style.background='transparent'">
-                                <input type="radio" name="modeMetry" value="waga-obrazki" onclick="MetryApp.handleModeChange()" style="width: 20px; height: 20px; margin-right: 0.8rem; cursor: pointer; accent-color: #00bfff;">
-                                <span style="font-size: 1rem; font-weight: 600;">📦 Waga → Obrazki</span>
-                                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-left: 0.5rem;">(Ile obrazków dla X kg)</span>
-                                <div class="mode-tooltip">
-                                    <div class="tooltip-title">📦 Waga → Obrazki</div>
-                                    <div>Brakuje określonej wagi papieru do końca zlecenia. Sprawdź szybko ile obrazków z tego wyjdzie.</div>
-                                    <div class="tooltip-example">💡 Przykład: Brakuje 75kg do końca → ile obrazków da się zrobić?</div>
-                                </div>
-                            </label>
-
+                        <!-- 2-col grid for the rest -->
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label style="font-size:0.82rem; color:#82d8ff; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Szerokość (cm)</label>
+                                <input type="number" id="szerokoscMetry" name="szerokosc" step="0.1" required placeholder="71" value="71" style="font-size:1rem; padding:0.7rem;">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label style="font-size:0.82rem; color:#82d8ff; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Wałek (cm)</label>
+                                <input type="number" id="walekMetry" name="walek" step="0.1" placeholder="59" value="59" style="font-size:1rem; padding:0.7rem;">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0; grid-column:1/-1;">
+                                <label style="font-size:0.82rem; color:#82d8ff; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Motywy</label>
+                                <input type="number" id="motywyMetry" name="motywy" step="1" min="1" placeholder="2" value="2" style="font-size:1rem; padding:0.7rem;">
+                            </div>
                         </div>
                     </div>
+                </aside>
 
-                    <!-- DUŻE POLE WEJŚCIOWE -->
-                    <div class="form-group">
-                        <label for="inputMetry" id="inputLabelMetry">📦 Waga (kg)</label>
-                        <input
-                            type="number"
-                            id="inputMetry"
-                            name="input"
-                            step="0.01"
-                            required
-                            placeholder="500"
-                            autofocus
-                            style="font-size: 2.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0, 191, 255, 0.15), rgba(0, 191, 255, 0.05)); border: 3px solid rgba(0, 191, 255, 0.3); font-weight: 700;">
-                    </div>
+                <!-- RIGHT: Mode + Calculator -->
+                <main class="metry-panel metry-main-panel">
+                    <form id="calculatorFormMetry" onsubmit="MetryApp.calculate(event)">
+                        <div class="metry-panel-header" style="margin-bottom:1rem; padding-bottom:0.8rem; border-bottom:1px solid rgba(91,179,217,0.15);">
+                            <div>
+                                <div class="metry-eyebrow">KALKULATOR</div>
+                                <div class="calculator-header" style="margin:0; font-size:clamp(1rem,1.5vw,1.25rem); line-height:1.15;">Kalkulator Metrów</div>
+                            </div>
+                        </div>
 
-                    <!-- WYNIK -->
-                    <div id="resultBoxMetry" class="result-box" style="display: none; background: linear-gradient(135deg, #00bfff 0%, #4dd0e1 100%);">
-                        <div class="result-label" id="resultLabelMetry">Wynik</div>
-                        <div class="result-value" id="resultValueMetry">0</div>
-                        <div class="result-unit" id="resultUnitMetry">m</div>
+                        <!-- Mode grid 2x3 -->
+                        <div class="metry-mode-grid">
+                            <label class="metry-mode-card">
+                                <input type="radio" name="modeMetry" value="waga-metry" checked onchange="MetryApp.handleModeChange()">
+                                <div class="metry-mode-card-icon">📦</div>
+                                <div class="metry-mode-card-title">Waga → Metry</div>
+                                <div class="metry-mode-card-desc">Ile metrów dla X kg</div>
+                            </label>
+                            <label class="metry-mode-card">
+                                <input type="radio" name="modeMetry" value="metry-waga" onchange="MetryApp.handleModeChange()">
+                                <div class="metry-mode-card-icon">📏</div>
+                                <div class="metry-mode-card-title">Metry → Waga</div>
+                                <div class="metry-mode-card-desc">Ile kg dla X metrów</div>
+                            </label>
+                            <label class="metry-mode-card">
+                                <input type="radio" name="modeMetry" value="obrazki-metry" onchange="MetryApp.handleModeChange()">
+                                <div class="metry-mode-card-icon">🖼️</div>
+                                <div class="metry-mode-card-title">Obrazki → Metry</div>
+                                <div class="metry-mode-card-desc">Ile metrów dla X obrazków</div>
+                            </label>
+                            <label class="metry-mode-card">
+                                <input type="radio" name="modeMetry" value="metry-obrazki" onchange="MetryApp.handleModeChange()">
+                                <div class="metry-mode-card-icon">📐</div>
+                                <div class="metry-mode-card-title">Metry → Obrazki</div>
+                                <div class="metry-mode-card-desc">Ile obrazków dla X metrów</div>
+                            </label>
+                            <label class="metry-mode-card">
+                                <input type="radio" name="modeMetry" value="obrazki-waga" onchange="MetryApp.handleModeChange()">
+                                <div class="metry-mode-card-icon">🖼️</div>
+                                <div class="metry-mode-card-title">Obrazki → Waga</div>
+                                <div class="metry-mode-card-desc">Ile kg dla X obrazków</div>
+                            </label>
+                            <label class="metry-mode-card">
+                                <input type="radio" name="modeMetry" value="waga-obrazki" onchange="MetryApp.handleModeChange()">
+                                <div class="metry-mode-card-icon">📦</div>
+                                <div class="metry-mode-card-title">Waga → Obrazki</div>
+                                <div class="metry-mode-card-desc">Ile obrazków dla X kg</div>
+                            </label>
+                        </div>
 
-                        <button type="button" class="btn" onclick="MetryApp.copyResult(event)" style="margin-top: 1.5rem; background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4);">
-                            📋 Skopiuj wynik
-                        </button>
-                    </div>
+                        <!-- Big input -->
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label for="inputMetry" id="inputLabelMetry" style="font-size:0.85rem; color:#82d8ff; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">📦 Waga (kg)</label>
+                            <input
+                                type="number"
+                                id="inputMetry"
+                                name="input"
+                                step="0.01"
+                                required
+                                placeholder="500"
+                                autofocus
+                                style="font-size:2.2rem; padding:1.2rem 1rem; font-weight:700; background:rgba(0,191,255,0.08); border:2px solid rgba(0,191,255,0.25); border-radius:10px; letter-spacing:-0.02em;">
+                        </div>
 
-                    <button type="submit" class="btn">🔢 Oblicz</button>
-                </form>
+                        <button type="submit" class="btn" style="width:100%; padding:0.9rem; font-size:1rem;">🔢 Oblicz</button>
+
+                        <!-- Result -->
+                        <div id="resultBoxMetry" class="result-box" style="display:none; margin-top:1rem;">
+                            <div class="result-label" id="resultLabelMetry">Wynik</div>
+                            <div class="result-value" id="resultValueMetry">0</div>
+                            <div class="result-unit" id="resultUnitMetry">m</div>
+                            <button type="button" class="btn" onclick="MetryApp.copyResult(event)" style="margin-top:1.2rem; background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3); width:auto; padding:0.5rem 1.2rem; font-size:0.9rem;">
+                                📋 Skopiuj wynik
+                            </button>
+                        </div>
+                    </form>
+                </main>
             </div>
 
             <!-- HISTORIA -->
             <div class="history-section">
-                <div class="calculator-card" style="margin-bottom: 2rem; padding: 1.5rem;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📊 Ilość obliczeń</div>
-                            <div style="font-size: 2rem; font-weight: 700; color: #00bfff;" id="statTodayMetry">0</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.3rem;">📏 Łącznie metrów</div>
-                            <div style="font-size: 2rem; font-weight: 700; color: #4dd0e1;" id="statTotalMetry">0 m</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.3rem;">⚖️ Średnia gramatura</div>
-                            <div style="font-size: 2rem; font-weight: 700; color: #00bfff;" id="statAvgMetry">0 g/m²</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="history-header">
+                <div class="history-header" style="padding: 1rem 0.75rem 0;">
                     <div class="history-title">📜 Historia obliczeń</div>
-                    <button class="btn btn-danger" onclick="MetryApp.clearHistory()" style="width: auto; padding: 0.6rem 1.2rem;">
-                        🗑️ Wyczyść historię
+                    <button class="btn btn-danger btn-small" onclick="MetryApp.clearHistory()">
+                        <span>🗑️ Wyczyść historię</span>
                     </button>
                 </div>
-
                 <div id="historyContainerMetry">
-                    <div class="empty-history">
-                        Brak historii obliczeń. Wykonaj pierwsze obliczenie!
-                    </div>
+                    <div class="empty-history">Brak historii obliczeń. Wykonaj pierwsze obliczenie!</div>
                 </div>
             </div>
         </div>
@@ -4919,7 +5032,7 @@
     </div>
 
     <footer>
-        Made by Kamil Matysek | v2.0.0 <span style="opacity: 0.5; font-size: 0.85em;">(2026-05-05)</span>
+        Made by Kamil Matysek | v2.0.1 <span style="opacity: 0.5; font-size: 0.85em;">(06-05-2026)</span>
     </footer>
 
     <!-- Modal edycji palety -->
@@ -5026,25 +5139,25 @@
             const orderLength = document.getElementById('orderLengthRolki') ? document.getElementById('orderLengthRolki').value : '';
             const orderUnit = document.getElementById('orderUnitRolki') ? document.getElementById('orderUnitRolki').value : 'images';
 
-            let summaryText = `Ilość: ${quantity}`;
+            let summaryText = `${AppI18n.t('Ilość:')} ${quantity}`;
 
             // Tryb "pod torby" lub normalny tryb z paletami
             if (parseInt(rollsPerPallet) === 0) {
-                summaryText += ` | Pod torby`;
+                summaryText += ` | ${AppI18n.t('Pod torby')}`;
             } else {
-                summaryText += ` | ${rollsPerPallet} rolki/paletę`;
+                summaryText += ` | ${rollsPerPallet} ${AppI18n.t('rolki/paletę')}`;
             }
 
             if (isContinuation) {
-                summaryText += ` | Kont. od #${lastRollNumber}, paleta #${startingPalletNumber}`;
+                summaryText += ` | ${AppI18n.t('Kont. od #')}${lastRollNumber}, ${AppI18n.t('paleta #')}${startingPalletNumber}`;
                 if (parseInt(inheritedCount) > 0) {
-                    summaryText += ` (${inheritedCount} na pal.)`;
+                    summaryText += ` (${inheritedCount} ${AppI18n.t('na pal.')})`;
                 }
             }
 
             if (parseFloat(orderLength) > 0) {
-                const unitShort = orderUnit === 'images' ? 'obr.' : 'kg';
-                summaryText += ` | Zlec: ${formatOrderLength(orderLength)}${unitShort}`;
+                const unitShort = orderUnit === 'images' ? AppI18n.t('obr.') : 'kg';
+                summaryText += ` | ${AppI18n.t('Zlec:')} ${formatOrderLength(orderLength)}${unitShort}`;
             }
 
             document.getElementById('configSummary').textContent = summaryText;
@@ -5095,7 +5208,7 @@
             const motywy = document.getElementById('motywyObrazki').value || '-';
 
             document.getElementById('configSummaryObrazki').textContent =
-                `Wałek: ${walek}cm | Motywy: ${motywy}`;
+                `${AppI18n.t('Wałek:')} ${walek}cm | ${AppI18n.t('Motywy:')} ${motywy}`;
         }
 
         function toggleConfigPanelMetry() {
@@ -5119,7 +5232,7 @@
             const szerokosc = document.getElementById('szerokoscMetry').value || '-';
 
             document.getElementById('configSummaryMetry').textContent =
-                `Gramatura: ${gramatura} g/m² | Szerokość: ${szerokosc} cm`;
+                `${AppI18n.t('Gramatura:')} ${gramatura} g/m² | ${AppI18n.t('Szerokość:')} ${szerokosc} cm`;
         }
 
         function toggleConfigPanelPaleta() {
@@ -5142,7 +5255,7 @@
             const emptyWeight = document.getElementById('emptyPalletWeight').value || '-';
             const rolls = document.getElementById('rollsOnPallet').value || '-';
             document.getElementById('configSummaryPaleta').textContent =
-                `Paleta: ${emptyWeight} kg | Rolek: ${rolls}`;
+                `${AppI18n.t('Paleta:')} ${emptyWeight} kg | ${AppI18n.t('Rolek:')} ${rolls}`;
         }
 
         // =================================================================
@@ -5219,7 +5332,185 @@
                     'Ilość rolek na palecie': 'Кількість рулонів на палеті',
                     'Waga palety z rolkami (kg)': 'Вага палети з рулонами (кг)',
                     'kg / rolka': 'кг / рулон',
-                    'Made by Kamil Matysek | v2.0.0': 'Made by Kamil Matysek | v2.0.0'
+                    'Made by Kamil Matysek | v2.0.0': 'Made by Kamil Matysek | v2.0.0',
+                    'Szybkie dodawanie': 'Швидке додавання',
+                    'Status zmiany': 'Статус зміни',
+                    'Podsumowanie': 'Підсумок',
+                    'Palety': 'Палети',
+                    'Rolki': 'Рулони',
+                    'Suma kg': 'Сума кг',
+                    'Śr. kg/rolkę': 'Сер. кг/рулон',
+                    '📋 Lista rolek na paletach': '📋 Список рулонів на палетах',
+                    'Brak rolek. Dodaj pierwszą rolkę powyżej.': 'Немає рулонів. Додайте перший рулон вище.',
+                    '🗑️ Wyczyść wszystko': '🗑️ Очистити все',
+                    'Pobrane': 'Отримані',
+                    'Baza': 'База',
+                    '🗄️ Baza rolek': '🗄️ База рулонів',
+                    'Ręczne wpisy, średnie i sugestie do kolejnych rolek': 'Ручні записи, середні та підказки для наступних рулонів',
+                    'Dodaj ręcznie': 'Додати вручну',
+                    'Rolka będzie uwzględniana w sugestii wagi, ale nie w statystykach produkcji': 'Рулон буде враховуватися в підказці ваги, але не в статистиці виробництва',
+                    'Statystyki bazy': 'Статистика бази',
+                    '📥 Rolki pobrane na zmianie': '📥 Рулони, взяті на зміну',
+                    'Szybka suma rolek pobranych z magazynu': 'Швидка сума рулонів, взятих зі складу',
+                    'Suma pobranych': 'Сума отриманих',
+                    'Dodaj pobraną rolkę': 'Додати отриманий рулон',
+                    '🔢 Ilość rolek': '🔢 Кількість рулонів',
+                    '📦 Rolek na paletę': '📦 Рулонів на палету',
+                    'Wpisz 0 dla trybu "pod torby" (bez palet)': 'Введіть 0 для режиму "під торби" (без палет)',
+                    'Kontynuacja zlecenia po poprzedniej zmianie': 'Продовження замовлення після попередньої зміни',
+                    'Ostatnia rolka ze zlecenia': 'Останній рулон із замовлення',
+                    'Twoje rolki zaczną się od tego numeru + 1': 'Ваші рулони почнуться з цього номера + 1',
+                    'Numer palety do kontynuacji': 'Номер палети для продовження',
+                    'Od której palety zaczynasz (np. #8)': 'З якої палети починаєте (напр. #8)',
+                    'Rolek już na palecie': 'Рулонів вже на палеті',
+                    'Ile rolek jest już na palecie': 'Скільки рулонів вже на палеті',
+                    'Ich łączna waga (kg)': 'Їхня загальна вага (кг)',
+                    'Suma wagi rolek z poprzedniej zmiany': 'Сума ваги рулонів з попередньої зміни',
+                    '📋 Długość zlecenia': '📋 Довжина замовлення',
+                    'Zostaw puste jeśli nie chcesz śledzić postępu': 'Залиште порожнім, якщо не хочете відстежувати прогрес',
+                    '📏 Jednostka': '📏 Одиниця',
+                    'Kilogramy (kg)': 'Кілограми (кг)',
+                    '✅ Już wykonano': '✅ Вже виконано',
+                    'Ile zostało zrobione przed Twoją zmianą': 'Скільки зроблено до вашої зміни',
+                    'Edytuj paletę': 'Редагувати палету',
+                    'Liczba rolek na tej palecie': 'Кількість рулонів на цій палеті',
+                    'Zmień liczbę rolek, a pozostałe zostaną przesunięte do następnej palety': 'Змініть кількість рулонів, а решта буде переміщена до наступної палети',
+                    'Kalkulator Metrów': 'Калькулятор метрів',
+                    '📊 Gramatura (g/m²)': '📊 Граматура (г/м²)',
+                    '📏 Szerokość papieru (cm)': '📏 Ширина паперу (см)',
+                    '🔧 Wałek (cm)': '🔧 Валек (см)',
+                    '🎨 Motywy': '🎨 Мотиви',
+                    '🔄 Tryb kalkulacji:': '🔄 Режим розрахунку:',
+                    '📦 Waga → Metry': '📦 Вага → Метри',
+                    '(Ile metrów dla X kg)': '(Скільки метрів для X кг)',
+                    '📏 Metry → Waga': '📏 Метри → Вага',
+                    '(Ile będzie ważyć X metrów)': '(Скільки важитимуть X метрів)',
+                    '🖼️ Obrazki → Metry': '🖼️ Зображення → Метри',
+                    '(Ile metrów dla X obrazków)': '(Скільки метрів для X зображень)',
+                    '📏 Metry → Obrazki': '📏 Метри → Зображення',
+                    '(Ile obrazków dla X metrów)': '(Скільки зображень для X метрів)',
+                    '🖼️ Obrazki → Waga': '🖼️ Зображення → Вага',
+                    '(Ile będzie ważyć X obrazków)': '(Скільки важитимуть X зображень)',
+                    '📦 Waga → Obrazki': '📦 Вага → Зображення',
+                    '(Ile obrazków dla X kg)': '(Скільки зображень для X кг)',
+                    '📦 Waga (kg)': '📦 Вага (кг)',
+                    '📋 Skopiuj wynik': '📋 Скопіювати результат',
+                    '🔢 Oblicz': '🔢 Обчислити',
+                    '📊 Ilość obliczeń': '📊 Кількість обчислень',
+                    '📏 Łącznie metrów': '📏 Загалом метрів',
+                    '⚖️ Średnia gramatura': '⚖️ Середня граматура',
+                    '📜 Historia obliczeń': '📜 Історія обчислень',
+                    '🗑️ Wyczyść historię': '🗑️ Очистити історію',
+                    'Brak historii obliczeń. Wykonaj pierwsze obliczenie!': 'Немає історії обчислень. Виконайте перше обчислення!',
+                    'Potrzebujesz osiągnąć określoną wagę do końca zlecenia. Oblicz ile metrów musisz jeszcze zadrukować.': 'Потрібно досягти певної ваги до кінця замовлення. Обчисліть, скільки метрів ще потрібно задрукувати.',
+                    '💡 Przykład: Brakuje 150kg do końca zlecenia → ile metrów musisz zadrukować?': '💡 Приклад: Не вистачає 150кг до кінця замовлення → скільки метрів потрібно задрукувати?',
+                    'Zadrukowałeś określoną liczbę metrów i chcesz sprawdzić ile to będzie ważyć, żeby porównać z wagą docelową.': 'Ви задрукували певну кількість метрів і хочете перевірити, скільки це важить, щоб порівняти з цільовою вагою.',
+                    '💡 Przykład: Zadrukowałeś 5000m → ile to kg? Czy wystarczy do zlecenia?': '💡 Приклад: Задрукували 5000м → скільки це кг? Чи вистачить до замовлення?',
+                    'Brakuje określonej liczby obrazków do końca zlecenia. Oblicz ile metrów papieru musisz zadrukować.': 'Не вистачає певної кількості зображень до кінця замовлення. Обчисліть, скільки метрів паперу потрібно задрукувати.',
+                    '💡 Przykład: Brakuje 3000 obrazków → ile to metrów papieru ?': '💡 Приклад: Не вистачає 3000 зображень → скільки це метрів паперу?',
+                    'Masz przygotowaną rolkę o określonej długości. Sprawdź ile obrazków z niej wyjdzie.': 'Є підготовлений рулон певної довжини. Перевірте, скільки зображень із нього вийде.',
+                    '💡 Przykład: Przygotowałeś 8000m papieru → ile obrazków się zmieści?': '💡 Приклад: Підготували 8000м паперу → скільки зображень вміститься?',
+                    'Brakuje określonej liczby obrazków do zlecenia. Oblicz ile będzie ważyć papier potrzebny do ich produkcji.': 'Не вистачає певної кількості зображень до замовлення. Обчисліть, скільки важить папір, потрібний для їх виробництва.',
+                    '💡 Przykład: Brakuje 5000 obrazków → jaka waga papieru potrzebna?': '💡 Приклад: Не вистачає 5000 зображень → яка вага паперу потрібна?',
+                    'Brakuje określonej wagi papieru do końca zlecenia. Sprawdź szybko ile obrazków z tego wyjdzie.': 'Не вистачає певної ваги паперу до кінця замовлення. Швидко перевірте, скільки зображень із цього вийде.',
+                    '💡 Przykład: Brakuje 75kg do końca → ile obrazków da się zrobić?': '💡 Приклад: Не вистачає 75кг до кінця → скільки зображень можна зробити?',
+                    'Dolewka do beczki': 'Доливання до бочки',
+                    'Presety': 'Пресети',
+                    'Gramatura:': 'Граматура:',
+                    'Szerokość:': 'Ширина:',
+                    'Wałek:': 'Валек:',
+                    'Motywy:': 'Мотиви:',
+                    '🗑️ Usuń': '🗑️ Видалити',
+                    '➡️ Wynik:': '➡️ Результат:',
+                    'Pod torby': 'Під торби',
+                    'Rolek:': 'Рулонів:',
+                    'Waga:': 'Вага:',
+                    'Obrazki:': 'Зображення:',
+                    'Status:': 'Статус:',
+                    'Edytuj': 'Редагувати',
+                    'Rolka (zlecenie):': 'Рулон (замовлення):',
+                    'Rolka (zmiana):': 'Рулон (зміна):',
+                    'Dodano:': 'Додано:',
+                    'Usuń': 'Видалити',
+                    'Edycja rolki': 'Редагування рулону',
+                    'Waga (kg)': 'Вага (кг)',
+                    '📋 Z poprzedniej zmiany': '📋 З попередньої зміни',
+                    '⊘ Wykluczona': '⊘ Виключена',
+                    '✓ Włącz do obliczeń': '✓ Включити до обчислень',
+                    '✕ Wyklucz z obliczeń': '✕ Виключити з обчислень',
+                    'Włącz tę rolkę do obliczeń średniej': 'Включити цей рулон до обчислень середнього',
+                    'Wyklucz tę rolkę z obliczeń średniej': 'Виключити цей рулон з обчислень середнього',
+                    'Brak pobranych rolek': 'Немає отриманих рулонів',
+                    'Metry potrzebne': 'Необхідна кількість метрів',
+                    'Waga papieru': 'Вага паперу',
+                    'Dolewka do Beczki': 'Доливання до бочки',
+                    'Skalowanie recepty': 'Масштабування рецепту',
+                    'Cel:': 'Ціль:',
+                    'Wiaderko:': 'Відро:',
+                    'pigmentów': 'пігментів',
+                    'Wczytaj': 'Завантажити',
+                    'Rolka #': 'Рулон #',
+                    'Lista Rolek (': 'Список рулонів (',
+                    ' rolek)': ' рулонів)',
+                    'Paleta #': 'Палета #',
+                    'Rolka (zlecenie): #': 'Рулон (замовлення): #',
+                    'Rolka (zmiana): #': 'Рулон (зміна): #',
+                    'Wpisz wagę rolki lub wprowadź obrazki aby uzyskać sugestię wagi': 'Введіть вагу рулону або введіть зображення для отримання підказки ваги',
+                    'Waga musi być większa niż 0': 'Вага повинна бути більше 0',
+                    'Ilość rolek musi być większa niż 0': 'Кількість рулонів повинна бути більше 0',
+                    'Czy na pewno chcesz usunąć tę rolkę?': 'Ви впевнені, що хочете видалити цей рулон?',
+                    'Czy na pewno chcesz usunąć wszystkie rolki? Tej operacji nie można cofnąć.': 'Ви впевнені, що хочете видалити всі рулони? Цю операцію неможливо скасувати.',
+                    'Liczba rolek musi być większa niż 0': 'Кількість рулонів повинна бути більше 0',
+                    'Wpisz prawidłową wagę': 'Введіть правильну вагу',
+                    'Nie udało się zapisać danych. Sprawdź ustawienia przeglądarki.': 'Не вдалося зберегти дані. Перевірте налаштування браузера.',
+                    'Czy na pewno chcesz usunąć tę rolkę z bazy?': 'Ви впевнені, що хочете видалити цей рулон з бази?',
+                    'Czy na pewno chcesz usunąć wszystkie pobrane rolki?': 'Ви впевнені, що хочете видалити всі отримані рулони?',
+                    'Wartość wejściowa musi być większa od 0': 'Вхідне значення повинно бути більше 0',
+                    'Gramatura musi być większa od 0': 'Граматура повинна бути більше 0',
+                    'Szerokość musi być większa od 0': 'Ширина повинна бути більше 0',
+                    'Wałek musi być większy od 0': 'Валек повинен бути більше 0',
+                    'Motywy muszą być większe od 0': 'Мотиви повинні бути більше 0',
+                    'Czy na pewno chcesz usunąć to obliczenie z historii?': 'Ви впевнені, що хочете видалити це обчислення з історії?',
+                    'Historia jest już pusta!': 'Історія вже порожня!',
+                    'Podaj nazwę pigmentu!': 'Введіть назву пігменту!',
+                    'Czy na pewno chcesz usunąć ten pigment?': 'Ви впевнені, що хочете видалити цей пігмент?',
+                    'Podaj ilość farby w wiaderku i beczce!': 'Введіть кількість фарби у відрі та бочці!',
+                    'Podaj ilości pigmentów!': 'Введіть кількості пігментів!',
+                    'Najpierw podaj ilości pigmentów w oryginalnej recepcie!': 'Спочатку введіть кількості пігментів в оригінальному рецепті!',
+                    'Podaj docelową ilość farby!': 'Введіть цільову кількість фарби!',
+                    'Podaj nazwę mieszanki!': 'Введіть назву суміші!',
+                    'Mieszanka została zapisana!': 'Суміш збережена!',
+                    'Czy na pewno chcesz usunąć tę mieszankę?': 'Ви впевнені, що хочете видалити цю суміш?',
+                    'Najpierw oblicz mieszankę.': 'Спочатку обчисліть суміш.',
+                    'Wpisz wagę palety z rolkami.': 'Введіть вагу палети з рулонами.',
+                    'Waga pustej palety nie może być ujemna.': 'Вага порожньої палети не може бути від\'ємною.',
+                    'Ilość rolek musi być większa od zera.': 'Кількість рулонів повинна бути більше нуля.',
+                    'Waga brutto musi być większa niż waga pustej palety.': 'Вага брутто повинна бути більшою за вагу порожньої палети.',
+                    '✓ Zlecenie ukończone': '✓ Замовлення виконано',
+                    'wyrzut': 'викид',
+                    'wyrzuty': 'викиди',
+                    'wyrzutów': 'викидів',
+                    '(wstępnie)': '(попередньо)',
+                    'więcej': 'більше',
+                    'mniej': 'менше',
+                    'obrazków': 'зображень',
+                    'Ilość:': 'Кількість:',
+                    'rolki/paletę': 'рулони/палету',
+                    'Kont. od #': 'Прод. від #',
+                    'paleta #': 'палета #',
+                    'na pal.': 'на пал.',
+                    'Zlec:': 'Замов:',
+                    'obr.': 'зобр.',
+                    'Paleta:': 'Палета:',
+                    '📏 Metry (m)': '📏 Метри (м)',
+                    '🖼️ Obrazki': '🖼️ Зображення',
+                    '✅ Skopiowano:': '✅ Скопійовано:',
+                    'Ilości dla': 'Кількості для',
+                    'farby (skala:': 'фарби (масштаб:',
+                    'rolki': 'рулони',
+                    'rolek': 'рулонів',
+                    'dokładnie': 'точно',
+                    'obecnie': 'зараз'
                 },
                 ru: {
                     'SENTREX - Kalkulatory Produkcji': 'SENTREX - Производственные калькуляторы',
@@ -5288,9 +5579,188 @@
                     'Ilość rolek na palecie': 'Количество рулонов на палете',
                     'Waga palety z rolkami (kg)': 'Вес палеты с рулонами (кг)',
                     'kg / rolka': 'кг / рулон',
-                    'Made by Kamil Matysek | v2.0.0': 'Made by Kamil Matysek | v2.0.0'
+                    'Made by Kamil Matysek | v2.0.0': 'Made by Kamil Matysek | v2.0.0',
+                    'Szybkie dodawanie': 'Быстрое добавление',
+                    'Status zmiany': 'Статус смены',
+                    'Podsumowanie': 'Итог',
+                    'Palety': 'Паллеты',
+                    'Rolki': 'Рулоны',
+                    'Suma kg': 'Сумма кг',
+                    'Śr. kg/rolkę': 'Ср. кг/рулон',
+                    '📋 Lista rolek na paletach': '📋 Список рулонов на паллетах',
+                    'Brak rolek. Dodaj pierwszą rolkę powyżej.': 'Нет рулонов. Добавьте первый рулон выше.',
+                    '🗑️ Wyczyść wszystko': '🗑️ Очистить всё',
+                    'Pobrane': 'Взятые',
+                    'Baza': 'База',
+                    '🗄️ Baza rolek': '🗄️ База рулонов',
+                    'Ręczne wpisy, średnie i sugestie do kolejnych rolek': 'Ручные записи, средние и подсказки для следующих рулонов',
+                    'Dodaj ręcznie': 'Добавить вручную',
+                    'Rolka będzie uwzględniana w sugestii wagi, ale nie w statystykach produkcji': 'Рулон будет учитываться в подсказке веса, но не в статистике производства',
+                    'Statystyki bazy': 'Статистика базы',
+                    '📥 Rolki pobrane na zmianie': '📥 Рулоны, взятые на смену',
+                    'Szybka suma rolek pobranych z magazynu': 'Быстрая сумма рулонов, взятых со склада',
+                    'Suma pobranych': 'Сумма взятых',
+                    'Dodaj pobraną rolkę': 'Добавить взятый рулон',
+                    '🔢 Ilość rolek': '🔢 Количество рулонов',
+                    '📦 Rolek na paletę': '📦 Рулонов на паллету',
+                    'Wpisz 0 dla trybu "pod torby" (bez palet)': 'Введите 0 для режима "под мешки" (без паллет)',
+                    'Kontynuacja zlecenia po poprzedniej zmianie': 'Продолжение заказа после предыдущей смены',
+                    'Ostatnia rolka ze zlecenia': 'Последний рулон из заказа',
+                    'Twoje rolki zaczną się od tego numeru + 1': 'Ваши рулоны начнутся с этого номера + 1',
+                    'Numer palety do kontynuacji': 'Номер паллеты для продолжения',
+                    'Od której palety zaczynasz (np. #8)': 'С какой паллеты начинаете (напр. #8)',
+                    'Rolek już na palecie': 'Рулонов уже на паллете',
+                    'Ile rolek jest już na palecie': 'Сколько рулонов уже на паллете',
+                    'Ich łączna waga (kg)': 'Их общий вес (кг)',
+                    'Suma wagi rolek z poprzedniej zmiany': 'Сумма веса рулонов с предыдущей смены',
+                    '📋 Długość zlecenia': '📋 Длина заказа',
+                    'Zostaw puste jeśli nie chcesz śledzić postępu': 'Оставьте пустым, если не хотите отслеживать прогресс',
+                    '📏 Jednostka': '📏 Единица',
+                    'Kilogramy (kg)': 'Килограммы (кг)',
+                    '✅ Już wykonano': '✅ Уже выполнено',
+                    'Ile zostało zrobione przed Twoją zmianą': 'Сколько сделано до вашей смены',
+                    'Edytuj paletę': 'Редактировать паллету',
+                    'Liczba rolek na tej palecie': 'Количество рулонов на этой паллете',
+                    'Zmień liczbę rolek, a pozostałe zostaną przesunięte do następnej palety': 'Измените количество рулонов, остальные переместятся на следующую паллету',
+                    'Kalkulator Metrów': 'Калькулятор метров',
+                    '📊 Gramatura (g/m²)': '📊 Граматура (г/м²)',
+                    '📏 Szerokość papieru (cm)': '📏 Ширина бумаги (см)',
+                    '🔧 Wałek (cm)': '🔧 Вал (см)',
+                    '🎨 Motywy': '🎨 Мотивы',
+                    '🔄 Tryb kalkulacji:': '🔄 Режим расчёта:',
+                    '📦 Waga → Metry': '📦 Вес → Метры',
+                    '(Ile metrów dla X kg)': '(Сколько метров для X кг)',
+                    '📏 Metry → Waga': '📏 Метры → Вес',
+                    '(Ile będzie ważyć X metrów)': '(Сколько будет весить X метров)',
+                    '🖼️ Obrazki → Metry': '🖼️ Изображения → Метры',
+                    '(Ile metrów dla X obrazków)': '(Сколько метров для X изображений)',
+                    '📏 Metry → Obrazki': '📏 Метры → Изображения',
+                    '(Ile obrazków dla X metrów)': '(Сколько изображений для X метров)',
+                    '🖼️ Obrazki → Waga': '🖼️ Изображения → Вес',
+                    '(Ile będzie ważyć X obrazków)': '(Сколько будет весить X изображений)',
+                    '📦 Waga → Obrazki': '📦 Вес → Изображения',
+                    '(Ile obrazków dla X kg)': '(Сколько изображений для X кг)',
+                    '📦 Waga (kg)': '📦 Вес (кг)',
+                    '📋 Skopiuj wynik': '📋 Скопировать результат',
+                    '🔢 Oblicz': '🔢 Рассчитать',
+                    '📊 Ilość obliczeń': '📊 Количество расчётов',
+                    '📏 Łącznie metrów': '📏 Всего метров',
+                    '⚖️ Średnia gramatura': '⚖️ Средняя граматура',
+                    '📜 Historia obliczeń': '📜 История расчётов',
+                    '🗑️ Wyczyść historię': '🗑️ Очистить историю',
+                    'Brak historii obliczeń. Wykonaj pierwsze obliczenie!': 'История расчётов пуста. Сделайте первый расчёт!',
+                    'Potrzebujesz osiągnąć określoną wagę do końca zlecenia. Oblicz ile metrów musisz jeszcze zadrukować.': 'Нужно достичь определённого веса к концу заказа. Рассчитайте, сколько метров ещё нужно напечатать.',
+                    '💡 Przykład: Brakuje 150kg do końca zlecenia → ile metrów musisz zadrukować?': '💡 Пример: Не хватает 150кг до конца заказа → сколько метров нужно напечатать?',
+                    'Zadrukowałeś określoną liczbę metrów i chcesz sprawdzić ile to będzie ważyć, żeby porównać z wagą docelową.': 'Вы напечатали определённое количество метров и хотите проверить вес для сравнения с целевым.',
+                    '💡 Przykład: Zadrukowałeś 5000m → ile to kg? Czy wystarczy do zlecenia?': '💡 Пример: Напечатали 5000м → сколько это кг? Хватит ли для заказа?',
+                    'Brakuje określonej liczby obrazków do końca zlecenia. Oblicz ile metrów papieru musisz zadrukować.': 'Не хватает определённого количества изображений до конца заказа. Рассчитайте, сколько метров бумаги нужно напечатать.',
+                    '💡 Przykład: Brakuje 3000 obrazków → ile to metrów papieru ?': '💡 Пример: Не хватает 3000 изображений → сколько это метров бумаги?',
+                    'Masz przygotowaną rolkę o określonej długości. Sprawdź ile obrazków z niej wyjdzie.': 'Есть подготовленный рулон определённой длины. Проверьте, сколько изображений из него выйдет.',
+                    '💡 Przykład: Przygotowałeś 8000m papieru → ile obrazków się zmieści?': '💡 Пример: Подготовили 8000м бумаги → сколько изображений поместится?',
+                    'Brakuje określonej liczby obrazków do zlecenia. Oblicz ile będzie ważyć papier potrzebny do ich produkcji.': 'Не хватает определённого количества изображений до заказа. Рассчитайте вес бумаги, необходимой для их производства.',
+                    '💡 Przykład: Brakuje 5000 obrazków → jaka waga papieru potrzebna?': '💡 Пример: Не хватает 5000 изображений → какой вес бумаги нужен?',
+                    'Brakuje określonej wagi papieru do końca zlecenia. Sprawdź szybko ile obrazków z tego wyjdzie.': 'Не хватает определённого веса бумаги до конца заказа. Быстро проверьте, сколько изображений из этого выйдет.',
+                    '💡 Przykład: Brakuje 75kg do końca → ile obrazków da się zrobić?': '💡 Пример: Не хватает 75кг до конца → сколько изображений можно сделать?',
+                    'Dolewka do beczki': 'Доливка в бочку',
+                    'Presety': 'Пресеты',
+                    'Gramatura:': 'Граматура:',
+                    'Szerokość:': 'Ширина:',
+                    'Wałek:': 'Вал:',
+                    'Motywy:': 'Мотивы:',
+                    '🗑️ Usuń': '🗑️ Удалить',
+                    '➡️ Wynik:': '➡️ Результат:',
+                    'Pod torby': 'Под мешки',
+                    'Rolek:': 'Рулонов:',
+                    'Waga:': 'Вес:',
+                    'Obrazki:': 'Изображения:',
+                    'Status:': 'Статус:',
+                    'Edytuj': 'Редактировать',
+                    'Rolka (zlecenie):': 'Рулон (заказ):',
+                    'Rolka (zmiana):': 'Рулон (смена):',
+                    'Dodano:': 'Добавлено:',
+                    'Usuń': 'Удалить',
+                    'Edycja rolki': 'Редактирование рулона',
+                    'Waga (kg)': 'Вес (кг)',
+                    '📋 Z poprzedniej zmiany': '📋 С предыдущей смены',
+                    '⊘ Wykluczona': '⊘ Исключена',
+                    '✓ Włącz do obliczeń': '✓ Включить в расчёты',
+                    '✕ Wyklucz z obliczeń': '✕ Исключить из расчётов',
+                    'Włącz tę rolkę do obliczeń średniej': 'Включить этот рулон в расчёты среднего',
+                    'Wyklucz tę rolkę z obliczeń średniej': 'Исключить этот рулон из расчётов среднего',
+                    'Brak pobranych rolek': 'Нет взятых рулонов',
+                    'Metry potrzebne': 'Нужное количество метров',
+                    'Waga papieru': 'Вес бумаги',
+                    'Dolewka do Beczki': 'Доливка в бочку',
+                    'Skalowanie recepty': 'Масштабирование рецепта',
+                    'Cel:': 'Цель:',
+                    'Wiaderko:': 'Ведро:',
+                    'pigmentów': 'пигментов',
+                    'Wczytaj': 'Загрузить',
+                    'Rolka #': 'Рулон #',
+                    'Lista Rolek (': 'Список рулонов (',
+                    ' rolek)': ' рулонов)',
+                    'Paleta #': 'Паллета #',
+                    'Rolka (zlecenie): #': 'Рулон (заказ): #',
+                    'Rolka (zmiana): #': 'Рулон (смена): #',
+                    'Wpisz wagę rolki lub wprowadź obrazki aby uzyskać sugestię wagi': 'Введите вес рулона или введите изображения для получения подсказки веса',
+                    'Waga musi być większa niż 0': 'Вес должен быть больше 0',
+                    'Ilość rolek musi być większa niż 0': 'Количество рулонов должно быть больше 0',
+                    'Czy na pewno chcesz usunąć tę rolkę?': 'Вы уверены, что хотите удалить этот рулон?',
+                    'Czy na pewno chcesz usunąć wszystkie rolki? Tej operacji nie można cofnąć.': 'Вы уверены, что хотите удалить все рулоны? Эту операцию нельзя отменить.',
+                    'Liczba rolek musi być większa niż 0': 'Количество рулонов должно быть больше 0',
+                    'Wpisz prawidłową wagę': 'Введите правильный вес',
+                    'Nie udało się zapisać danych. Sprawdź ustawienia przeglądarki.': 'Не удалось сохранить данные. Проверьте настройки браузера.',
+                    'Czy na pewno chcesz usunąć tę rolkę z bazy?': 'Вы уверены, что хотите удалить этот рулон из базы?',
+                    'Czy na pewno chcesz usunąć wszystkie pobrane rolki?': 'Вы уверены, что хотите удалить все взятые рулоны?',
+                    'Wartość wejściowa musi być większa od 0': 'Входное значение должно быть больше 0',
+                    'Gramatura musi być większa od 0': 'Граматура должна быть больше 0',
+                    'Szerokość musi być większa od 0': 'Ширина должна быть больше 0',
+                    'Wałek musi być większy od 0': 'Вал должен быть больше 0',
+                    'Motywy muszą być większe od 0': 'Мотивы должны быть больше 0',
+                    'Czy na pewno chcesz usunąć to obliczenie z historii?': 'Вы уверены, что хотите удалить этот расчёт из истории?',
+                    'Historia jest już pusta!': 'История уже пуста!',
+                    'Podaj nazwę pigmentu!': 'Введите название пигмента!',
+                    'Czy na pewno chcesz usunąć ten pigment?': 'Вы уверены, что хотите удалить этот пигмент?',
+                    'Podaj ilość farby w wiaderku i beczce!': 'Введите количество краски в ведре и бочке!',
+                    'Podaj ilości pigmentów!': 'Введите количества пигментов!',
+                    'Najpierw podaj ilości pigmentów w oryginalnej recepcie!': 'Сначала введите количества пигментов в оригинальном рецепте!',
+                    'Podaj docelową ilość farby!': 'Введите целевое количество краски!',
+                    'Podaj nazwę mieszanki!': 'Введите название смеси!',
+                    'Mieszanka została zapisana!': 'Смесь сохранена!',
+                    'Czy na pewno chcesz usunąć tę mieszankę?': 'Вы уверены, что хотите удалить эту смесь?',
+                    'Najpierw oblicz mieszankę.': 'Сначала рассчитайте смесь.',
+                    'Wpisz wagę palety z rolkami.': 'Введите вес паллеты с рулонами.',
+                    'Waga pustej palety nie może być ujemna.': 'Вес пустой паллеты не может быть отрицательным.',
+                    'Ilość rolek musi być większa od zera.': 'Количество рулонов должно быть больше нуля.',
+                    'Waga brutto musi być większa niż waga pustej palety.': 'Вес брутто должен быть больше веса пустой паллеты.',
+                    '✓ Zlecenie ukończone': '✓ Заказ выполнен',
+                    'wyrzut': 'выброс',
+                    'wyrzuty': 'выброса',
+                    'wyrzutów': 'выбросов',
+                    '(wstępnie)': '(предварительно)',
+                    'więcej': 'больше',
+                    'mniej': 'меньше',
+                    'obrazków': 'изображений',
+                    'Ilość:': 'Количество:',
+                    'rolki/paletę': 'рулонов/паллету',
+                    'Kont. od #': 'Прод. от #',
+                    'paleta #': 'паллета #',
+                    'na pal.': 'на пал.',
+                    'Zlec:': 'Зак:',
+                    'obr.': 'изобр.',
+                    'Paleta:': 'Паллета:',
+                    '📏 Metry (m)': '📏 Метры (м)',
+                    '🖼️ Obrazki': '🖼️ Изображения',
+                    '✅ Skopiowano:': '✅ Скопировано:',
+                    'Ilości dla': 'Количества для',
+                    'farby (skala:': 'краски (масштаб:',
+                    'rolki': 'рулонов',
+                    'rolek': 'рулонов',
+                    'dokładnie': 'точно',
+                    'obecnie': 'сейчас'
                 }
             },
+            t(s) { return this.translateText(s, this.lang); },
             shouldSkip(node) {
                 return node.parentElement?.closest(this.skipSelector);
             },
@@ -5397,6 +5867,83 @@
 
             keepActiveTabAtTop(savedTab);
         }
+
+        // ================================================================
+        // CUSTOM MODAL SYSTEM (replaces native alert / confirm)
+        // ================================================================
+        const AppModal = {
+            _keyHandler: null,
+
+            alert(message, icon = '⚠️') {
+                return new Promise(resolve => {
+                    this._show({
+                        icon,
+                        message,
+                        buttons: [
+                            { label: 'OK', classes: 'btn', action: () => { this._hide(); resolve(); } }
+                        ]
+                    });
+                });
+            },
+
+            confirm(message, icon = '❓') {
+                return new Promise(resolve => {
+                    const cancelLabel = (typeof AppI18n !== 'undefined') ? AppI18n.t('Anuluj') : 'Anuluj';
+                    this._show({
+                        icon,
+                        message,
+                        buttons: [
+                            { label: cancelLabel,  classes: 'btn btn-secondary', action: () => { this._hide(); resolve(false); } },
+                            { label: 'Tak, usuń',  classes: 'btn btn-danger',    action: () => { this._hide(); resolve(true);  } }
+                        ]
+                    });
+                });
+            },
+
+            _show({ icon, message, buttons }) {
+                const overlay = document.getElementById('appModalOverlay');
+                if (!overlay) return;
+                document.getElementById('appModalIcon').textContent = icon;
+                document.getElementById('appModalMessage').textContent = message;
+                const btnContainer = document.getElementById('appModalButtons');
+                btnContainer.innerHTML = '';
+                buttons.forEach((btn, i) => {
+                    const el = document.createElement('button');
+                    el.textContent = btn.label;
+                    el.className = btn.classes;
+                    el.addEventListener('click', btn.action);
+                    btnContainer.appendChild(el);
+                    if (i === buttons.length - 1) setTimeout(() => el.focus(), 50);
+                });
+                overlay.style.display = 'flex';
+                overlay.onclick = (e) => {
+                    if (e.target === overlay) {
+                        const cancel = btnContainer.querySelector('.btn-secondary');
+                        (cancel || btnContainer.firstChild).click();
+                    }
+                };
+                if (this._keyHandler) document.removeEventListener('keydown', this._keyHandler);
+                this._keyHandler = (e) => {
+                    if (e.key === 'Escape') {
+                        const cancel = btnContainer.querySelector('.btn-secondary');
+                        (cancel || btnContainer.firstChild).click();
+                    } else if (e.key === 'Enter') {
+                        if (btnContainer.contains(document.activeElement)) return;
+                        (btnContainer.lastChild).click();
+                    }
+                };
+                document.addEventListener('keydown', this._keyHandler);
+            },
+
+            _hide() {
+                const overlay = document.getElementById('appModalOverlay');
+                if (overlay) overlay.style.display = 'none';
+                if (this._keyHandler) {
+                    document.removeEventListener('keydown', this._keyHandler);
+                    this._keyHandler = null;
+                }
+            }
+        };
 
         // =================================================================
         // OBRAZKI APP
@@ -5665,7 +6212,7 @@
                 }
             },
 
-            calculate(event) {
+            async calculate(event) {
                 event.preventDefault();
 
                 const metry = parseFloat(document.getElementById('metryObrazki').value);
@@ -5677,7 +6224,7 @@
                 this.saveConfig();
 
                 if (walek <= 0) {
-                    alert(this.translations[this.currentLang].error_invalid_sleeve);
+                    await AppModal.alert(this.translations[this.currentLang].error_invalid_sleeve);
                     return;
                 }
 
@@ -5795,8 +6342,8 @@
                 // Statystyki rolek przejął dedykowany tab "Licznik Rolek".
             },
 
-            deleteHistoryItem(id) {
-                if (confirm(this.translations[this.currentLang].confirm_delete_item)) {
+            async deleteHistoryItem(id) {
+                if (await AppModal.confirm(this.translations[this.currentLang].confirm_delete_item)) {
                     this.history = this.history.filter(item => item.id !== id);
                     this.saveHistory();
                     this.renderHistory();
@@ -5804,14 +6351,14 @@
                 }
             },
 
-            clearHistory() {
+            async clearHistory() {
                 if (this.history.length === 0) {
-                    alert(this.translations[this.currentLang].alert_history_empty);
+                    await AppModal.alert(this.translations[this.currentLang].alert_history_empty);
                     return;
                 }
 
                 const confirmMsg = this.translations[this.currentLang].confirm_clear_history.replace('{count}', this.history.length);
-                if (confirm(confirmMsg)) {
+                if (await AppModal.confirm(confirmMsg)) {
                     this.history = [];
                     this.saveHistory();
                     this.renderHistory();
@@ -5871,6 +6418,7 @@
                 this.loadQuantitySettings();
                 this.loadConfigCollapsedState();
                 this.updateWeightSuggestion();
+                this.updateBagModeState();
             }
 
             initOrderElements() {
@@ -5908,6 +6456,18 @@
                 return isNaN(parsedValue) ? 3 : parsedValue;
             }
 
+            updateBagModeState() {
+                const isBagMode = this.getRollsPerPallet() === 0;
+                const palletOnlyGroups = [
+                    this.startingPalletNumberInput?.closest('.form-group'),
+                    this.inheritedRollsCountInput?.closest('.form-group'),
+                    this.inheritedRollsWeightInput?.closest('.form-group'),
+                ];
+                palletOnlyGroups.forEach(el => {
+                    if (el) el.classList.toggle('bag-mode-disabled', isBagMode);
+                });
+            }
+
             attachEventListeners() {
                 this.form.addEventListener('submit', (e) => this.handleSubmit(e));
                 this.clearAllBtn.addEventListener('click', () => this.clearAll());
@@ -5935,9 +6495,13 @@
                     this.updateWeightSuggestion();
                     this.updateProgressBar();
                 });
+                this.rollsPerPalletInput.addEventListener('input', () => {
+                    this.updateBagModeState();
+                });
                 this.rollsPerPalletInput.addEventListener('change', () => {
                     this.savePalletSettings();
                     updateConfigSummary();
+                    this.updateBagModeState();
                 });
 
                 this.imagesInput.addEventListener('input', () => {
@@ -6160,7 +6724,7 @@
                 }
             }
 
-            handleSubmit(e) {
+            async handleSubmit(e) {
                 e.preventDefault();
 
                 const weight = parseFloat(this.weightInput.value);
@@ -6177,19 +6741,19 @@
                         finalWeight = suggestedWeight;
                         fromSuggestion = true;
                     } else {
-                        alert('Wpisz wagę rolki lub wprowadź obrazki aby uzyskać sugestię wagi');
+                        await AppModal.alert(AppI18n.t('Wpisz wagę rolki lub wprowadź obrazki aby uzyskać sugestię wagi'));
                         this.weightInput.focus();
                         return;
                     }
                 }
 
                 if (finalWeight <= 0) {
-                    alert('Waga musi być większa niż 0');
+                    await AppModal.alert(AppI18n.t('Waga musi być większa niż 0'));
                     return;
                 }
 
                 if (quantity <= 0) {
-                    alert('Ilość rolek musi być większa niż 0');
+                    await AppModal.alert(AppI18n.t('Ilość rolek musi być większa niż 0'));
                     return;
                 }
 
@@ -6297,16 +6861,16 @@
                 }
             }
 
-            deleteRoll(id) {
-                if (confirm('Czy na pewno chcesz usunąć tę rolkę?')) {
+            async deleteRoll(id) {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć tę rolkę?'))) {
                     this.rolls = this.rolls.filter(roll => roll.id !== id);
                     this.saveToStorage();
                     this.render();
                 }
             }
 
-            clearAll() {
-                if (confirm('Czy na pewno chcesz usunąć wszystkie rolki? Tej operacji nie można cofnąć.')) {
+            async clearAll() {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć wszystkie rolki? Tej operacji nie można cofnąć.'))) {
                     this.rolls = [];
                     this.palletCustomSizes = {};
                     this.orderLengthInput.value = '';
@@ -6322,7 +6886,7 @@
             openEditPalletModal(palletIndex, currentSize) {
                 this.currentEditingPalletIndex = palletIndex;
                 this.editRollsPerPallet.value = currentSize;
-                this.modalPalletInfo.textContent = `Paleta #${palletIndex + 1} (obecnie ${currentSize} rolek)`;
+                this.modalPalletInfo.textContent = `${AppI18n.t('Paleta #')}${palletIndex + 1} (${AppI18n.t('obecnie')} ${currentSize} ${AppI18n.t('rolek')})`;
                 this.editPalletModal.classList.add('show');
             }
 
@@ -6331,10 +6895,10 @@
                 this.currentEditingPalletIndex = null;
             }
 
-            saveEditPallet() {
+            async saveEditPallet() {
                 const newSize = parseInt(this.editRollsPerPallet.value);
                 if (!newSize || newSize < 1) {
-                    alert('Liczba rolek musi być większa niż 0');
+                    await AppModal.alert(AppI18n.t('Liczba rolek musi być większa niż 0'));
                     return;
                 }
 
@@ -6507,6 +7071,7 @@
                 const palletsForDisplay = [...pallets].reverse();
 
                 this.rollsList.innerHTML = palletsForDisplay.map(pallet => this.createPalletElement(pallet)).join('');
+                AppI18n.applyLanguage(AppI18n.lang);
 
                 this.rollsList.querySelectorAll('.btn-delete').forEach(btn => {
                     btn.addEventListener('click', (e) => {
@@ -6563,12 +7128,12 @@
                 const percentage = Math.min((currentProgress / orderLength) * 100, 100);
                 const remaining = Math.max(orderLength - currentProgress, 0);
 
-                const unitText = orderUnit === 'images' ? 'obrazków' : 'kg';
+                const unitText = orderUnit === 'images' ? AppI18n.t('obrazków') : 'kg';
                 this.progressCurrent.textContent = this.formatNumber(currentProgress, orderUnit);
                 this.progressTotal.textContent = this.formatNumber(orderLength, orderUnit);
                 this.progressUnit.textContent = unitText;
                 this.progressPercentage.textContent = `(${percentage.toFixed(1)}%)`;
-                this.progressRemaining.innerHTML = `Pozostało: <strong>${this.formatNumber(remaining, orderUnit)}</strong>`;
+                this.progressRemaining.innerHTML = `${AppI18n.t('Pozostało:')} <strong>${this.formatNumber(remaining, orderUnit)}</strong>`;
                 this.progressRemainingUnit.textContent = unitText;
 
                 this.progressBar.style.width = `${percentage}%`;
@@ -6591,35 +7156,35 @@
                 if (cutsInfo) {
                     if (cutsInfo.count === 0) {
                         // Order completed
-                        this.progressRemaining.innerHTML = `<span class="cuts-complete">✓ Zlecenie ukończone</span>`;
+                        this.progressRemaining.innerHTML = `<span class="cuts-complete">${AppI18n.t('✓ Zlecenie ukończone')}</span>`;
                         this.progressRemainingUnit.textContent = '';
                     } else {
                         // Determine proper declension for "wyrzut"
                         let cutsWord;
                         if (cutsInfo.count === 1) {
-                            cutsWord = 'wyrzut';
+                            cutsWord = AppI18n.t('wyrzut');
                         } else if (cutsInfo.count >= 2 && cutsInfo.count <= 4) {
-                            cutsWord = 'wyrzuty';
+                            cutsWord = AppI18n.t('wyrzuty');
                         } else {
-                            cutsWord = 'wyrzutów';
+                            cutsWord = AppI18n.t('wyrzutów');
                         }
 
                         // NOWE: Oznaczenie "wstępnie" dla < 3 wyrzutów danych
-                        let preliminaryTag = cutsInfo.isPreliminary ? '<span style="color: #ffc107; font-size: 0.85rem;"> (wstępnie)</span>' : '';
+                        let preliminaryTag = cutsInfo.isPreliminary ? `<span style="color: #ffc107; font-size: 0.85rem;"> (${AppI18n.t('wstępnie')})</span>` : '';
 
                         let cutsText = `<span class="cuts-info">~ ${cutsInfo.count} ${cutsWord}${preliminaryTag}</span>`;
 
                         if (cutsInfo.shortage !== null && cutsInfo.shortage !== 0) {
                             if (cutsInfo.shortage > 0) {
                                 // NADWYŻKA - wyprodukujesz więcej niż potrzeba
-                                cutsText += ` <span class="shortage-info surplus">(wyjdzie ~${this.formatNumber(cutsInfo.shortage, orderUnit)} ${cutsInfo.unit} więcej)</span>`;
+                                cutsText += ` <span class="shortage-info surplus">(wyjdzie ~${this.formatNumber(cutsInfo.shortage, orderUnit)} ${cutsInfo.unit} ${AppI18n.t('więcej')})</span>`;
                             } else {
                                 // NIEDOBÓR - wyprodukujesz mniej niż potrzeba
-                                cutsText += ` <span class="shortage-info deficit">(wyjdzie ~${this.formatNumber(Math.abs(cutsInfo.shortage), orderUnit)} ${cutsInfo.unit} mniej)</span>`;
+                                cutsText += ` <span class="shortage-info deficit">(wyjdzie ~${this.formatNumber(Math.abs(cutsInfo.shortage), orderUnit)} ${cutsInfo.unit} ${AppI18n.t('mniej')})</span>`;
                             }
                         }
 
-                        this.progressRemaining.innerHTML = `Pozostało: <strong>${this.formatNumber(remaining, orderUnit)}</strong> ${unitText} ${cutsText}`;
+                        this.progressRemaining.innerHTML = `${AppI18n.t('Pozostało:')} <strong>${this.formatNumber(remaining, orderUnit)}</strong> ${unitText} ${cutsText}`;
                         this.progressRemainingUnit.textContent = '';
                     }
                 }
@@ -6949,14 +7514,14 @@
                 `;
             }
 
-            saveEditMainRoll(rollId) {
+            async saveEditMainRoll(rollId) {
                 const weightInput = document.getElementById(`edit-main-weight-${rollId}`);
                 const imagesInput = document.getElementById(`edit-main-images-${rollId}`);
                 const newWeight = parseFloat(weightInput?.value);
                 const newImages = parseInt(imagesInput?.value) || 0;
 
                 if (!newWeight || newWeight <= 0) {
-                    alert('Wpisz prawidłową wagę');
+                    await AppModal.alert(AppI18n.t('Wpisz prawidłową wagę'));
                     return;
                 }
 
@@ -6974,7 +7539,7 @@
                     localStorage.setItem('rolki_rollTrackerData', JSON.stringify(this.rolls));
                 } catch (e) {
                     console.error('Błąd zapisu do localStorage:', e);
-                    alert('Nie udało się zapisać danych. Sprawdź ustawienia przeglądarki.');
+                    AppModal.alert(AppI18n.t('Nie udało się zapisać danych. Sprawdź ustawienia przeglądarki.'));
                 }
             }
 
@@ -7122,7 +7687,7 @@
             }
 
             // Dodaj rolkę ręcznie
-            handleManualAdd(event) {
+            async handleManualAdd(event) {
                 event.preventDefault();
 
                 const weight = parseFloat(document.getElementById('manualWeightRolki').value);
@@ -7130,7 +7695,7 @@
                 const fromPrevious = document.getElementById('manualFromPreviousRolki').checked;
 
                 if (!weight || weight <= 0) {
-                    alert('Wpisz prawidłową wagę');
+                    await AppModal.alert(AppI18n.t('Wpisz prawidłową wagę'));
                     return;
                 }
 
@@ -7167,12 +7732,12 @@
             }
 
             // Zapisz edytowaną rolkę
-            saveEditRoll(rollId) {
+            async saveEditRoll(rollId) {
                 const newWeight = parseFloat(document.getElementById(`edit-weight-${rollId}`).value);
                 const newImages = parseInt(document.getElementById(`edit-images-${rollId}`).value) || 0;
 
                 if (!newWeight || newWeight <= 0) {
-                    alert('Wpisz prawidłową wagę');
+                    await AppModal.alert(AppI18n.t('Wpisz prawidłową wagę'));
                     return;
                 }
 
@@ -7192,8 +7757,8 @@
             }
 
             // Usuń rolkę z bazy danych
-            deleteRollFromDatabase(rollId) {
-                if (confirm('Czy na pewno chcesz usunąć tę rolkę z bazy?')) {
+            async deleteRollFromDatabase(rollId) {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć tę rolkę z bazy?'))) {
                     this.rolls = this.rolls.filter(r => r.id !== rollId);
                     this.saveToStorage();
                     this.render();
@@ -7241,13 +7806,13 @@
                 modal.classList.remove('show');
             }
 
-            handleAdd(event) {
+            async handleAdd(event) {
                 event.preventDefault();
 
                 const weight = parseFloat(document.getElementById('pobraneWeight').value);
 
                 if (!weight || weight <= 0) {
-                    alert('Wpisz prawidłową wagę');
+                    await AppModal.alert(AppI18n.t('Wpisz prawidłową wagę'));
                     return;
                 }
 
@@ -7267,8 +7832,8 @@
                 document.getElementById('pobraneWeight').focus();
             }
 
-            clearAll() {
-                if (confirm('Czy na pewno chcesz usunąć wszystkie pobrane rolki?')) {
+            async clearAll() {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć wszystkie pobrane rolki?'))) {
                     this.rolls = [];
                     this.saveToStorage();
                     this.render();
@@ -7276,8 +7841,8 @@
                 }
             }
 
-            deleteRoll(id) {
-                if (confirm('Czy na pewno chcesz usunąć tę rolkę?')) {
+            async deleteRoll(id) {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć tę rolkę?'))) {
                     this.rolls = this.rolls.filter(r => r.id !== id);
                     this.saveToStorage();
                     this.render();
@@ -7306,11 +7871,11 @@
                 `;
             }
 
-            saveEdit(id) {
+            async saveEdit(id) {
                 const newWeight = parseFloat(document.getElementById(`edit-pobrane-weight-${id}`).value);
 
                 if (!newWeight || newWeight <= 0) {
-                    alert('Wpisz prawidłową wagę');
+                    await AppModal.alert(AppI18n.t('Wpisz prawidłową wagę'));
                     return;
                 }
 
@@ -7356,6 +7921,7 @@
                         </div>
                     </div>
                 `).join('');
+                AppI18n.applyLanguage(AppI18n.lang);
 
                 // Oblicz sumę
                 const total = this.rolls.reduce((sum, roll) => sum + roll.weight, 0);
@@ -7416,6 +7982,11 @@
             },
 
             attachEventListeners() {
+                // Zablokuj scroll wheel na number inputach
+                document.querySelectorAll('#metryTab input[type="number"]').forEach(input => {
+                    input.addEventListener('wheel', e => e.preventDefault(), { passive: false });
+                });
+
                 // Nasłuchuj zmian trybu
                 document.querySelectorAll('input[name="modeMetry"]').forEach(radio => {
                     radio.addEventListener('change', (e) => {
@@ -7457,58 +8028,51 @@
                 const inputField = document.getElementById('inputMetry');
                 const resultLabel = document.getElementById('resultLabelMetry');
                 const resultUnit = document.getElementById('resultUnitMetry');
-                const obrazkiFields = document.getElementById('obrazkiFieldsMetry');
 
                 // Resetuj wynik
                 document.getElementById('resultBoxMetry').style.display = 'none';
 
                 switch(this.currentMode) {
                     case 'waga-metry':
-                        inputLabel.textContent = '📦 Waga (kg)';
+                        inputLabel.textContent = AppI18n.t('📦 Waga (kg)');
                         inputField.placeholder = '500';
-                        resultLabel.textContent = 'Metry potrzebne';
+                        resultLabel.textContent = AppI18n.t('Metry potrzebne');
                         resultUnit.textContent = 'm';
-                        obrazkiFields.style.display = 'none';
                         break;
 
                     case 'metry-waga':
-                        inputLabel.textContent = '📏 Metry (m)';
+                        inputLabel.textContent = AppI18n.t('📏 Metry (m)');
                         inputField.placeholder = '6289';
-                        resultLabel.textContent = 'Waga papieru';
+                        resultLabel.textContent = AppI18n.t('Waga papieru');
                         resultUnit.textContent = 'kg';
-                        obrazkiFields.style.display = 'none';
                         break;
 
                     case 'obrazki-metry':
-                        inputLabel.textContent = '🖼️ Obrazki';
+                        inputLabel.textContent = AppI18n.t('🖼️ Obrazki');
                         inputField.placeholder = '5000';
-                        resultLabel.textContent = 'Metry potrzebne';
+                        resultLabel.textContent = AppI18n.t('Metry potrzebne');
                         resultUnit.textContent = 'm';
-                        obrazkiFields.style.display = 'block';
                         break;
 
                     case 'metry-obrazki':
-                        inputLabel.textContent = '📏 Metry (m)';
+                        inputLabel.textContent = AppI18n.t('📏 Metry (m)');
                         inputField.placeholder = '5000';
-                        resultLabel.textContent = 'Obrazki';
-                        resultUnit.textContent = 'obrazków';
-                        obrazkiFields.style.display = 'block';
+                        resultLabel.textContent = AppI18n.t('Obrazki');
+                        resultUnit.textContent = AppI18n.t('obrazków');
                         break;
 
                     case 'obrazki-waga':
-                        inputLabel.textContent = '🖼️ Obrazki';
+                        inputLabel.textContent = AppI18n.t('🖼️ Obrazki');
                         inputField.placeholder = '10000';
-                        resultLabel.textContent = 'Waga papieru';
+                        resultLabel.textContent = AppI18n.t('Waga papieru');
                         resultUnit.textContent = 'kg';
-                        obrazkiFields.style.display = 'block';
                         break;
 
                     case 'waga-obrazki':
-                        inputLabel.textContent = '📦 Waga (kg)';
+                        inputLabel.textContent = AppI18n.t('📦 Waga (kg)');
                         inputField.placeholder = '400';
-                        resultLabel.textContent = 'Obrazki';
-                        resultUnit.textContent = 'obrazków';
-                        obrazkiFields.style.display = 'block';
+                        resultLabel.textContent = AppI18n.t('Obrazki');
+                        resultUnit.textContent = AppI18n.t('obrazków');
                         break;
                 }
 
@@ -7525,7 +8089,7 @@
                 updateConfigSummaryMetry();
             },
 
-            calculate(event) {
+            async calculate(event) {
                 event.preventDefault();
 
                 const inputValue = parseFloat(document.getElementById('inputMetry').value);
@@ -7533,17 +8097,17 @@
                 const szerokosc = parseFloat(document.getElementById('szerokoscMetry').value);
 
                 if (!inputValue || inputValue <= 0) {
-                    alert('Wartość wejściowa musi być większa od 0');
+                    await AppModal.alert(AppI18n.t('Wartość wejściowa musi być większa od 0'));
                     return;
                 }
 
                 if (!gramatura || gramatura <= 0) {
-                    alert('Gramatura musi być większa od 0');
+                    await AppModal.alert(AppI18n.t('Gramatura musi być większa od 0'));
                     return;
                 }
 
                 if (!szerokosc || szerokosc <= 0) {
-                    alert('Szerokość musi być większa od 0');
+                    await AppModal.alert(AppI18n.t('Szerokość musi być większa od 0'));
                     return;
                 }
 
@@ -7582,12 +8146,12 @@
                         const motywy1 = parseInt(document.getElementById('motywyMetry').value);
 
                         if (!walek1 || walek1 <= 0) {
-                            alert('Wałek musi być większy od 0');
+                            await AppModal.alert(AppI18n.t('Wałek musi być większy od 0'));
                             return;
                         }
 
                         if (!motywy1 || motywy1 <= 0) {
-                            alert('Motywy muszą być większe od 0');
+                            await AppModal.alert(AppI18n.t('Motywy muszą być większe od 0'));
                             return;
                         }
 
@@ -7602,12 +8166,12 @@
                         const motywy2 = parseInt(document.getElementById('motywyMetry').value);
 
                         if (!walek2 || walek2 <= 0) {
-                            alert('Wałek musi być większy od 0');
+                            await AppModal.alert(AppI18n.t('Wałek musi być większy od 0'));
                             return;
                         }
 
                         if (!motywy2 || motywy2 <= 0) {
-                            alert('Motywy muszą być większe od 0');
+                            await AppModal.alert(AppI18n.t('Motywy muszą być większe od 0'));
                             return;
                         }
 
@@ -7622,12 +8186,12 @@
                         const motywy3 = parseInt(document.getElementById('motywyMetry').value);
 
                         if (!walek3 || walek3 <= 0) {
-                            alert('Wałek musi być większy od 0');
+                            await AppModal.alert(AppI18n.t('Wałek musi być większy od 0'));
                             return;
                         }
 
                         if (!motywy3 || motywy3 <= 0) {
-                            alert('Motywy muszą być większe od 0');
+                            await AppModal.alert(AppI18n.t('Motywy muszą być większe od 0'));
                             return;
                         }
 
@@ -7645,12 +8209,12 @@
                         const motywy4 = parseInt(document.getElementById('motywyMetry').value);
 
                         if (!walek4 || walek4 <= 0) {
-                            alert('Wałek musi być większy od 0');
+                            await AppModal.alert(AppI18n.t('Wałek musi być większy od 0'));
                             return;
                         }
 
                         if (!motywy4 || motywy4 <= 0) {
-                            alert('Motywy muszą być większe od 0');
+                            await AppModal.alert(AppI18n.t('Motywy muszą być większe od 0'));
                             return;
                         }
 
@@ -7725,7 +8289,7 @@
                 navigator.clipboard.writeText(resultText).then(() => {
                     const btn = event.target.closest('.btn');
                     const originalText = btn.innerHTML;
-                    btn.innerHTML = `✅ Skopiowano: ${resultText}`;
+                    btn.innerHTML = `${AppI18n.t('✅ Skopiowano:')} ${resultText}`;
                     btn.style.background = 'rgba(76, 175, 80, 0.3)';
                     setTimeout(() => {
                         btn.innerHTML = originalText;
@@ -7736,9 +8300,12 @@
 
             getModeLabel(mode) {
                 const labels = {
-                    'waga-metry': '📦 Waga → Metry',
-                    'metry-waga': '📏 Metry → Waga',
-                    'obrazki-metry': '🖼️ Obrazki → Metry'
+                    'waga-metry': AppI18n.t('📦 Waga → Metry'),
+                    'metry-waga': AppI18n.t('📏 Metry → Waga'),
+                    'obrazki-metry': AppI18n.t('🖼️ Obrazki → Metry'),
+                    'metry-obrazki': AppI18n.t('📏 Metry → Obrazki'),
+                    'obrazki-waga': AppI18n.t('🖼️ Obrazki → Waga'),
+                    'waga-obrazki': AppI18n.t('📦 Waga → Obrazki'),
                 };
                 return labels[mode] || mode;
             },
@@ -7783,31 +8350,15 @@
                         </div>
                     `;
                 }).join('');
+                AppI18n.applyLanguage(AppI18n.lang);
             },
 
             updateStats() {
-                const statToday = this.history.length;
-
-                // Suma metrów (tylko z wyników w metrach)
-                const totalMeters = Math.round(this.history
-                    .filter(item => item.resultUnit === 'm')
-                    .reduce((sum, item) => sum + item.result, 0));
-
-                // Średnia gramatura
-                const avgGramatura = this.history.length > 0
-                    ? Math.round(this.history.reduce((sum, item) => sum + item.gramatura, 0) / this.history.length)
-                    : 0;
-
-                document.getElementById('statTodayMetry').textContent = statToday;
-                document.getElementById('statTotalMetry').textContent = totalMeters.toLocaleString('pl-PL', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                }) + ' m';
-                document.getElementById('statAvgMetry').textContent = avgGramatura + ' g/m²';
+                // Stats section removed from UI
             },
 
-            deleteHistoryItem(id) {
-                if (confirm('Czy na pewno chcesz usunąć to obliczenie z historii?')) {
+            async deleteHistoryItem(id) {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć to obliczenie z historii?'))) {
                     this.history = this.history.filter(item => item.id !== id);
                     this.saveHistory();
                     this.renderHistory();
@@ -7815,13 +8366,13 @@
                 }
             },
 
-            clearHistory() {
+            async clearHistory() {
                 if (this.history.length === 0) {
-                    alert('Historia jest już pusta!');
+                    await AppModal.alert(AppI18n.t('Historia jest już pusta!'));
                     return;
                 }
 
-                if (confirm(`Czy na pewno chcesz usunąć całą historię (${this.history.length} obliczeń)?`)) {
+                if (await AppModal.confirm(AppI18n.t(`Czy na pewno chcesz usunąć całą historię (${this.history.length} obliczeń)?`))) {
                     this.history = [];
                     this.saveHistory();
                     this.renderHistory();
@@ -8018,7 +8569,7 @@
 
                 const headerEl = document.querySelector('.farby-recipe-panel .calculator-header');
                 if (headerEl) {
-                    headerEl.textContent = selectedMode === 'beczka' ? 'Przerabianie na beczkę' : 'Skalowanie recepty';
+                    headerEl.textContent = selectedMode === 'beczka' ? AppI18n.t('Przerabianie na beczkę') : AppI18n.t('Skalowanie recepty');
                 }
                 this.updateOriginalTotal();
 
@@ -8216,12 +8767,12 @@
                 document.getElementById('newPigmentColorFarby').value = '#FF0000';
             },
 
-            addCustomPigment() {
+            async addCustomPigment() {
                 const name = document.getElementById('newPigmentNameFarby').value.trim();
                 const color = document.getElementById('newPigmentColorFarby').value;
 
                 if (!name) {
-                    alert('Podaj nazwę pigmentu!');
+                    await AppModal.alert(AppI18n.t('Podaj nazwę pigmentu!'));
                     return;
                 }
 
@@ -8234,8 +8785,8 @@
                 this.renderPigmentList();
             },
 
-            deleteCustomPigment(name) {
-                if (confirm('Czy na pewno chcesz usunąć ten pigment?')) {
+            async deleteCustomPigment(name) {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć ten pigment?'))) {
                     const customPigments = this.getCustomPigments();
                     const updated = customPigments.filter(p => p.name !== name);
                     localStorage.setItem('farby_customPigments', JSON.stringify(updated));
@@ -8255,12 +8806,12 @@
                 }
             },
 
-            calculateBeczka() {
+            async calculateBeczka() {
                 const bucket = parseFloat(document.getElementById('bucketAmountFarby').value) || 0;
                 const barrel = parseFloat(document.getElementById('barrelAmountFarby').value) || 0;
 
                 if (bucket === 0 || barrel === 0) {
-                    alert('Podaj ilość farby w wiaderku i beczce!');
+                    await AppModal.alert(AppI18n.t('Podaj ilość farby w wiaderku i beczce!'));
                     return;
                 }
 
@@ -8276,26 +8827,26 @@
                 });
 
                 if (Object.keys(results).length === 0) {
-                    alert('Podaj ilości pigmentów!');
+                    await AppModal.alert(AppI18n.t('Podaj ilości pigmentów!'));
                     return;
                 }
 
-                this.displayResults(results, 'Dolewka do Beczki');
+                this.displayResults(results, AppI18n.t('Dolewka do Beczki'));
                 this.drawChart(results);
                 this.showActionButtons();
             },
 
-            calculateSkalowanie() {
+            async calculateSkalowanie() {
                 const originalTotal = parseFloat(document.getElementById('originalTotalFarby').value) || 0;
                 const targetAmount = parseFloat(document.getElementById('targetAmountFarby').value) || 0;
 
                 if (originalTotal === 0) {
-                    alert('Najpierw podaj ilości pigmentów w oryginalnej recepcie!');
+                    await AppModal.alert(AppI18n.t('Najpierw podaj ilości pigmentów w oryginalnej recepcie!'));
                     return;
                 }
 
                 if (targetAmount === 0) {
-                    alert('Podaj docelową ilość farby!');
+                    await AppModal.alert(AppI18n.t('Podaj docelową ilość farby!'));
                     return;
                 }
 
@@ -8311,11 +8862,11 @@
                 });
 
                 if (Object.keys(results).length === 0) {
-                    alert('Podaj ilości pigmentów!');
+                    await AppModal.alert(AppI18n.t('Podaj ilości pigmentów!'));
                     return;
                 }
 
-                this.displayResults(results, `Ilości dla ${targetAmount}kg farby (skala: ${ratio.toFixed(2)}x)`);
+                this.displayResults(results, `${AppI18n.t('Ilości dla')} ${targetAmount}kg ${AppI18n.t('farby (skala:')} ${ratio.toFixed(2)}x)`);
                 this.drawChart(results);
                 this.showActionButtons();
             },
@@ -8433,10 +8984,10 @@
                 document.getElementById('presetsModalFarby').style.display = 'none';
             },
 
-            saveMixture() {
+            async saveMixture() {
                 const name = document.getElementById('mixtureNameFarby').value.trim();
                 if (!name) {
-                    alert('Podaj nazwę mieszanki!');
+                    await AppModal.alert(AppI18n.t('Podaj nazwę mieszanki!'));
                     return;
                 }
 
@@ -8469,7 +9020,7 @@
                 saved.push(mixture);
                 localStorage.setItem('farby_savedMixtures', JSON.stringify(saved));
 
-                alert('Mieszanka została zapisana!');
+                await AppModal.alert(AppI18n.t('Mieszanka została zapisana!'), '✅');
                 this.closeSaveModal();
                 this.renderSavedMixtures();
             },
@@ -8557,8 +9108,8 @@
                 }
             },
 
-            deleteMixture(id) {
-                if (confirm('Czy na pewno chcesz usunąć tę mieszankę?')) {
+            async deleteMixture(id) {
+                if (await AppModal.confirm(AppI18n.t('Czy na pewno chcesz usunąć tę mieszankę?'))) {
                     const saved = JSON.parse(localStorage.getItem('farby_savedMixtures') || '[]');
                     const updated = saved.filter(m => m.id !== id);
                     localStorage.setItem('farby_savedMixtures', JSON.stringify(updated));
@@ -8583,7 +9134,7 @@
                 });
 
                 if (!rows.length) {
-                    alert('Najpierw oblicz mieszankę.');
+                    AppModal.alert(AppI18n.t('Najpierw oblicz mieszankę.'));
                     return false;
                 }
 
@@ -8682,7 +9233,7 @@
                 }
             },
 
-            calculate(event) {
+            async calculate(event) {
                 if (event) event.preventDefault();
 
                 const emptyWeight = parseFloat(document.getElementById('emptyPalletWeight').value) || 0;
@@ -8690,19 +9241,19 @@
                 const grossWeight = parseFloat(document.getElementById('grossPalletWeight').value);
 
                 if (!grossWeight || grossWeight <= 0) {
-                    alert('Wpisz wagę palety z rolkami.');
+                    await AppModal.alert(AppI18n.t('Wpisz wagę palety z rolkami.'));
                     return;
                 }
                 if (emptyWeight < 0) {
-                    alert('Waga pustej palety nie może być ujemna.');
+                    await AppModal.alert(AppI18n.t('Waga pustej palety nie może być ujemna.'));
                     return;
                 }
                 if (rolls <= 0) {
-                    alert('Ilość rolek musi być większa od zera.');
+                    await AppModal.alert(AppI18n.t('Ilość rolek musi być większa od zera.'));
                     return;
                 }
                 if (grossWeight <= emptyWeight) {
-                    alert('Waga brutto musi być większa niż waga pustej palety.');
+                    await AppModal.alert(AppI18n.t('Waga brutto musi być większa niż waga pustej palety.'));
                     return;
                 }
 
@@ -8715,7 +9266,7 @@
                     maximumFractionDigits: 0
                 });
                 document.getElementById('resultDetailsPaleta').textContent =
-                    `${grossWeight.toLocaleString('pl-PL')} kg - ${emptyWeight.toLocaleString('pl-PL')} kg = ${netWeight.toLocaleString('pl-PL')} kg / ${rolls} rolki | dokładnie ${exactSingleRollWeight.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`;
+                    `${grossWeight.toLocaleString('pl-PL')} kg - ${emptyWeight.toLocaleString('pl-PL')} kg = ${netWeight.toLocaleString('pl-PL')} kg / ${rolls} ${AppI18n.t('rolki')} | ${AppI18n.t('dokładnie')} ${exactSingleRollWeight.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kg`;
                 document.getElementById('resultBoxPaleta').style.display = 'block';
             }
         };
@@ -8798,5 +9349,14 @@
             });
         });
     </script>
+
+    <!-- CUSTOM MODAL -->
+    <div id="appModalOverlay" class="app-modal-overlay" style="display:none;" role="dialog" aria-modal="true">
+        <div class="app-modal-box">
+            <div class="app-modal-icon" id="appModalIcon"></div>
+            <div class="app-modal-message" id="appModalMessage"></div>
+            <div class="app-modal-buttons" id="appModalButtons"></div>
+        </div>
+    </div>
 </body>
 </html>
